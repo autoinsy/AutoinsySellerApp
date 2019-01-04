@@ -77,7 +77,24 @@
 
     <!--发布服务-->
     <string name="publish_service">发布服务</string>
+    <string name="service_name">服务名称&#058;</string>
+    <string name="input_service_name">请输入服务名称</string>
+    <string name="service_area">服务区域</string>
+    <string name="service_store_name">商家名称&#058;</string>
+    <string name="input_store_name">请输入商家名称</string>
+    <string name="contact">联系人&#058;</string>
+    <string name="input_contact">请输入联系人</string>
+    <string name="contact_phone_num">联系电话&#058;</string>
+    <string name="input_contact_phone">请输入联系电话</string>
+    <string name="service_address">服务地址&#058;</string>
+    <string name="input_service_address">请输入商家地址</string>
+    <string name="service_type">服务种类</string>
+    <string name="service_describe">服务描述&#058;</string>
+    <string name="input_service_describe">请输入描述(100个字符)</string>
+
+    <!--上传图片-->
     <string name="upload_image">上传图片</string>
+    <string name="submit">提交</string>
 
     <!--发布商品-->
     <string name="publish_goods">发布商品</string>
@@ -89,7 +106,5 @@
     <string name="input_goods_product_place">请输入商品产地</string>
     <string name="type">商品种类&#058;</string>
     <string name="goods_brand">品牌</string>
-
-    <!--发布服务-->
 
 </resources>

@@ -3,6 +3,8 @@ package com.autionsy.seller.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,24 @@ public class PublishGoodsActivity extends BaseActivity{
     GridViewInScrollView upload_image_gv;
     @BindView(R.id.title_tv)
     TextView title_tv;
+    @BindView(R.id.submit_tv)
+    TextView submit_tv;
+
+    @BindView(R.id.goods_name_et)
+    EditText goods_name_et;
+    @BindView(R.id.goods_quantity_et)
+    EditText goods_quantity_et;
+    @BindView(R.id.goods_product_place_et)
+    EditText goods_product_place_et;
+
+    @BindView(R.id.goods_type_tv)
+    TextView goods_type_tv;
+    @BindView(R.id.goods_brand_tv)
+    TextView goods_brand_tv;
+
+    private String goodsName;
+    private String goodsQuantity;
+    private String goodsProductPlace;
 
     private static final int REQUEST_CODE_SELECT_IMG = 1;
     private static final int MAX_SELECT_COUNT = 9;
@@ -50,9 +70,18 @@ public class PublishGoodsActivity extends BaseActivity{
     private void initView(){
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.publish_goods);
+        submit_tv.setVisibility(View.VISIBLE);
+
+        goodsName = goods_name_et.getText().toString().trim();
+        goodsQuantity = goods_quantity_et.getText().toString().trim();
+        goodsProductPlace = goods_product_place_et.getText().toString().trim();
     }
 
-    @OnClick({R.id.back_btn,R.id.image_selector_layout})
+    @OnClick({R.id.back_btn,
+            R.id.image_selector_layout,
+            R.id.submit_tv,
+            R.id.type_selector_layout,
+            R.id.brand_selector_layout})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.back_btn:
@@ -60,6 +89,15 @@ public class PublishGoodsActivity extends BaseActivity{
                 break;
             case R.id.image_selector_layout:
                 ImageSelector.show(this, REQUEST_CODE_SELECT_IMG, MAX_SELECT_COUNT);
+                break;
+            case R.id.submit_tv:
+
+                break;
+            case R.id.type_selector_layout:
+
+                break;
+            case R.id.brand_selector_layout:
+
                 break;
         }
     }

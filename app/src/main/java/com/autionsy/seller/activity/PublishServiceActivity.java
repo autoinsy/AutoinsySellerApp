@@ -3,12 +3,14 @@ package com.autionsy.seller.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.adapter.UploadImageAdapter;
+import com.autionsy.seller.views.GridViewInScrollView;
 import com.scrat.app.selectorlibrary.ImageSelector;
 
 import java.io.File;
@@ -30,9 +32,28 @@ import okhttp3.Response;
 public class PublishServiceActivity extends BaseActivity {
 
     @BindView(R.id.upload_image_gv)
-    GridView upload_image_gv;
+    GridViewInScrollView upload_image_gv;
     @BindView(R.id.title_tv)
     TextView title_tv;
+    @BindView(R.id.submit_tv)
+    TextView submit_tv;
+
+    @BindView(R.id.service_name_et)
+    EditText service_name_et;
+    @BindView(R.id.service_store_et)
+    EditText service_store_et;
+    @BindView(R.id.contact_et)
+    EditText contact_et;
+    @BindView(R.id.contact_phone_num_et)
+    EditText contact_phone_num_et;
+    @BindView(R.id.service_address_et)
+    EditText service_address_et;
+    @BindView(R.id.service_describe_et)
+    EditText service_describe_et;
+    @BindView(R.id.service_area_tv)
+    TextView service_area_tv;
+    @BindView(R.id.service_type_tv)
+    TextView service_type_tv;
 
     private static final int REQUEST_CODE_SELECT_IMG = 1;
     private static final int MAX_SELECT_COUNT = 9;
@@ -51,9 +72,13 @@ public class PublishServiceActivity extends BaseActivity {
     private void initView(){
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.publish_service);
+        submit_tv.setVisibility(View.VISIBLE);
     }
 
-    @OnClick({R.id.back_btn,R.id.image_selector_layout})
+    @OnClick({R.id.back_btn,
+            R.id.image_selector_layout,
+            R.id.submit_tv,
+            R.id.service_area_selector_layout})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.back_btn:
@@ -61,6 +86,15 @@ public class PublishServiceActivity extends BaseActivity {
                 break;
             case R.id.image_selector_layout:
                 ImageSelector.show(this, REQUEST_CODE_SELECT_IMG, MAX_SELECT_COUNT);
+                break;
+            case R.id.submit_tv:
+
+                break;
+            case R.id.service_area_selector_layout:
+
+                break;
+            case R.id.service_type_selector_layout:
+
                 break;
         }
     }
