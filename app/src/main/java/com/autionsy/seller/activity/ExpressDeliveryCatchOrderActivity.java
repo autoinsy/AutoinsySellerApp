@@ -25,7 +25,7 @@ public class ExpressDeliveryCatchOrderActivity extends BaseActivity {
 
     private void initView(){
         title_tv.setVisibility(View.VISIBLE);
-        title_tv.setText(R.string.order_express_delivery);
+        title_tv.setText(R.string.publish_catch_order_text);
     }
 
     @OnClick({R.id.back_btn})
