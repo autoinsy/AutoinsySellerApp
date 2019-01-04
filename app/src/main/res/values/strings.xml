@@ -1,0 +1,95 @@
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="TypographyDashes,ExtraTranslation,MissingTranslation">
+    <string name="app_name">英沈汽配商家版</string>
+
+    <string name="home">首页</string>
+    <string name="discovery">发现</string>
+    <string name="message">消息</string>
+    <string name="mine">我的</string>
+
+    <!--Title-->
+    <string name="back">返回</string>
+    <string name="login_title_text">登录</string>
+
+    <!--login-->
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="input_search_word">请输入搜索关键字</string>
+    <string name="telephone_number">服务热线：024-31040888</string>
+    <string name="input_mobile_num">手机号</string>
+    <string name="input_password">密码（6-20位字母，数字或组合）</string>
+    <string name="sms_code_login">短信验证码登录</string>
+    <string name="user_register">用户注册</string>
+    <string name="other_login">其他登录方式</string>
+    <string name="weichat">微信</string>
+    <string name="qq">QQ</string>
+    <string name="sina_blog">微博</string>
+
+    <!--首页-->
+    <string name="publish_goods_text">发布商品</string>
+    <string name="publish_service_text">发布服务</string>
+    <string name="wheel_service_text">轮胎服务</string>
+    <string name="publish_lease_text">发布租赁</string>
+    <string name="publish_recruit_text">发布招聘</string>
+    <string name="publish_trim_text">发布内饰</string>
+    <string name="order_delivery_text">快递下单</string>
+    <string name="publish_catch_order_text">发布抢单</string>
+    <string name="news_text">新闻咨询</string>
+    <string name="more_news">更多</string>
+
+    <!--注册-->
+    <string name="area">国家/地区</string>
+    <string name="area_code">中国（+86）</string>
+    <string name="verify_code">验证码</string>
+    <string name="get_verify_code">获取验证码</string>
+    <string name="next">下一步</string>
+    <string name="already_read">我已阅读并同意</string>
+    <string name="protocol">《英沈汽配用户协议》</string>
+    <string name="remark">备注&#058;请将密码设置为6-20位，并且由字母，数字和符号两种以上组合。</string>
+    <string name="id_number">输入身份证号码</string>
+    <string name="upload_id_front">上传身份证正面</string>
+    <string name="upload_id_back">上传身份中背面</string>
+    <string name="input_business_licence_number">输入营业执照号码</string>
+    <string name="user_service_protocol">用户服务协议</string>
+
+    <string name="message_text">消息</string>
+
+    <!--我的-->
+    <string name="all_order_text">全部订单</string>
+    <string name="check_order">查看订单</string>
+    <string name="wait_send_stock">待发货</string>
+    <string name="wait_receive_stock">待签收</string>
+    <string name="wait_comment_stock">待评论</string>
+    <string name="exchange_stock">退货/换货</string>
+    <string name="product_management_text">产品管理</string>
+    <string name="my_datum_text">我的资料</string>
+    <string name="address_management_text">地址管理</string>
+    <string name="change_pay_password_text">修改支付密码</string>
+
+    <!--发现-->
+    <string name="add_friend">加好友</string>
+    <string name="already_friend">好友</string>
+
+    <!--新闻-->
+    <string name="news_title_text">新闻</string>
+
+    <!--发布服务-->
+    <string name="publish_service">发布服务</string>
+    <string name="upload_image">上传图片</string>
+
+    <!--发布商品-->
+    <string name="publish_goods">发布商品</string>
+    <string name="goods_name">商品名称&#058;</string>
+    <string name="input_goods_name">请输入商品名称</string>
+    <string name="goods_quantity">商品数量&#058;</string>
+    <string name="input_goods_quantity">请输入商品数量</string>
+    <string name="product_place">商品产地&#058;</string>
+    <string name="input_goods_product_place">请输入商品产地</string>
+    <string name="type">商品种类&#058;</string>
+    <string name="goods_brand">品牌</string>
+
+    <!--发布服务-->
+
+</resources>
