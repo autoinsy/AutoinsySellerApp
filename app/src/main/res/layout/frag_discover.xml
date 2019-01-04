@@ -38,7 +38,7 @@
                     android:layout_marginLeft="@dimen/dp_10" />
             </LinearLayout>
 
-            <com.autionsy.seller.utils.ListViewInScrollView
+            <com.autionsy.seller.views.ListViewInScrollView
                 android:id="@+id/discover_lv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
