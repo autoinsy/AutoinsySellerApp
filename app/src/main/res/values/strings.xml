@@ -110,5 +110,28 @@
     <!--快递下单-->
     <string name="order_express_delivery">快递下单</string>
 
+    <!--空白页-->
     <string name="not_open">暂无开放，敬请期待</string>
+
+    <!--发布招聘-->
+    <string name="recruit_title">招聘标题&#058;</string>
+    <string name="input_recruit_title">请输入标题</string>
+    <string name="company_name">公司名称&#058;</string>
+    <string name="input_company_name">请输入公司名称</string>
+    <string name="salary_scope">薪资范围&#058;</string>
+    <string name="start_salary">最低薪资</string>
+    <string name="end_salary">最高薪资</string>
+    <string name="seller_address">公司地址&#058;</string>
+    <string name="input_company_address">请输入公司地址</string>
+    <string name="recruit_person_number">招聘人数&#058;</string>
+    <string name="input_person_number">请输入招聘人数</string>
+    <string name="contact_phone_number">联系电话&#058;</string>
+    <string name="input_contact_phone_number">请输入联系电话</string>
+    <string name="work_experience">工作经验&#058;</string>
+    <string name="input_work_experience">请输入工作经验</string>
+    <string name="education">学历要求&#058;</string>
+    <string name="input_education">请输入学历要求</string>
+    <string name="company_person_number">公司人数&#058;</string>
+    <string name="input_company_person_number">请输入公司人数</string>
+    <string name="line">--</string>
 </resources>

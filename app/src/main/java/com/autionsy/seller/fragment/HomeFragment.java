@@ -17,6 +17,7 @@ import com.autionsy.seller.activity.ExpressDeliveryCatchOrderActivity;
 import com.autionsy.seller.activity.NewsActivity;
 import com.autionsy.seller.activity.OrderExpressDeliveryActivity;
 import com.autionsy.seller.activity.PublishGoodsActivity;
+import com.autionsy.seller.activity.PublishRecruitActivity;
 import com.autionsy.seller.activity.PublishServiceActivity;
 import com.autionsy.seller.adapter.HomeAdapter;
 import com.autionsy.seller.entity.News;
@@ -162,7 +163,8 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
 
                 break;
             case R.id.publish_recruit_layout:
-
+                intent = new Intent(getActivity(),PublishRecruitActivity.class);
+                startActivity(intent);
                 break;
             case R.id.publish_trim_layout:
 
