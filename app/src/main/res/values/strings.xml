@@ -137,4 +137,19 @@
     <string name="line">--</string>
 
     <!--发布租赁-->
+    <string name="lease_title">租赁标题&#058;</string>
+    <string name="input_lease_title">请输入租赁标题</string>
+    <string name="lease_stall_position">商铺位置&#058;</string>
+    <string name="input_lease_stall_position">请输入租赁商铺位置</string>
+    <string name="lease_price">租赁价格&#058;</string>
+    <string name="input_lease_price">请输入租赁价格</string>
+    <string name="lease_descript">租赁描述&#058;</string>
+    <string name="input_lease_descript">请输入租赁描述</string>
+    <string name="lease_contact">联系人&#058;</string>
+    <string name="input_lease_contact">请输入联系人</string>
+    <string name="lease_mobile_phone_num">联系电话&#058;</string>
+    <string name="lease_term">租期</string>
+    <string name="acreage">面积</string>
+    <string name="input_lease_mobile_phone_num">请输入联系电话</string>
+    <string name="lease_info_source">信息来源</string>
 </resources>
