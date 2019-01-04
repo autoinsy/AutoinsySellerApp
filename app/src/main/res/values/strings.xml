@@ -35,7 +35,7 @@
     <string name="publish_recruit_text">发布招聘</string>
     <string name="publish_trim_text">发布内饰</string>
     <string name="order_delivery_text">快递下单</string>
-    <string name="publish_catch_order_text">发布抢单</string>
+    <string name="publish_catch_order_text">快递抢单</string>
     <string name="news_text">新闻咨询</string>
     <string name="more_news">更多</string>
 
@@ -107,4 +107,8 @@
     <string name="type">商品种类&#058;</string>
     <string name="goods_brand">品牌</string>
 
+    <!--快递下单-->
+    <string name="order_express_delivery">快递下单</string>
+
+    <string name="not_open">暂无开放，敬请期待</string>
 </resources>
