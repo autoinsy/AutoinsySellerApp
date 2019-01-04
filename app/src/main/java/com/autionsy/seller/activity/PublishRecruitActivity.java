@@ -62,7 +62,7 @@ public class PublishRecruitActivity extends BaseActivity{
 
     private void initView(){
         title_tv.setVisibility(View.VISIBLE);
-        title_tv.setText(R.string.publish_goods);
+        title_tv.setText(R.string.publish_recruit);
         submit_tv.setVisibility(View.VISIBLE);
 
         recruitTile = recruit_title_et.getText().toString().trim();
