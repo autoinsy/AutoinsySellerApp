@@ -135,4 +135,6 @@
     <string name="company_person_number">公司人数&#058;</string>
     <string name="input_company_person_number">请输入公司人数</string>
     <string name="line">--</string>
+
+    <!--发布租赁-->
 </resources>
