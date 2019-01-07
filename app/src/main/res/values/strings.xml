@@ -30,7 +30,7 @@
     <!--首页-->
     <string name="publish_goods_text">发布商品</string>
     <string name="publish_service_text">发布服务</string>
-    <string name="wheel_service_text">轮胎服务</string>
+    <string name="wheel_service_text">发布救援</string>
     <string name="publish_lease_text">发布租赁</string>
     <string name="publish_recruit_text">发布招聘</string>
     <string name="publish_trim_text">发布内饰</string>
@@ -106,6 +106,8 @@
     <string name="input_goods_product_place">请输入商品产地</string>
     <string name="type">商品种类&#058;</string>
     <string name="goods_brand">品牌</string>
+    <string name="motocycle_frame_code">车架号&#058;</string>
+    <string name="input_motocycle_frame_code">请输入车架号</string>
 
     <!--快递下单-->
     <string name="order_express_delivery">快递下单</string>
