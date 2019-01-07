@@ -64,9 +64,14 @@
     <string name="wait_comment_stock">待评论</string>
     <string name="exchange_stock">退货/换货</string>
     <string name="goods_management_text">汽配商品管理</string>
+    <string name="ornament_management_text">内饰商品管理</string>
     <string name="my_datum_text">我的资料</string>
     <string name="address_management_text">地址管理</string>
     <string name="change_pay_password_text">修改支付密码</string>
+    <string name="service_management_text">服务管理</string>
+    <string name="lease_management_text">租赁管理</string>
+    <string name="recuit_management_text">招聘管理</string>
+    <string name="rescue_mangement_text">救援管理</string>
 
     <!--发现-->
     <string name="add_friend">加好友</string>
