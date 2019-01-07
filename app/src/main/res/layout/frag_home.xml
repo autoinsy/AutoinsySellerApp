@@ -71,7 +71,7 @@
                             android:layout_marginTop="@dimen/dp_10"/>
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/wheel_service_layout"
+                        android:id="@+id/road_rescue_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -137,7 +137,7 @@
                             android:layout_marginTop="@dimen/dp_10"/>
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/publish_trim_layout"
+                        android:id="@+id/publish_ornament_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"

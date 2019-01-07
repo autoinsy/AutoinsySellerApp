@@ -178,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dp_15"
-                android:text="@string/product_management_text"
+                android:text="@string/goods_management_text"
                 android:layout_toRightOf="@id/mine_product_management_iv"
                 android:layout_centerVertical="true"/>
 

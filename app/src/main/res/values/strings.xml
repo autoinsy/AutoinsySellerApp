@@ -63,7 +63,7 @@
     <string name="wait_receive_stock">待签收</string>
     <string name="wait_comment_stock">待评论</string>
     <string name="exchange_stock">退货/换货</string>
-    <string name="product_management_text">产品管理</string>
+    <string name="goods_management_text">汽配商品管理</string>
     <string name="my_datum_text">我的资料</string>
     <string name="address_management_text">地址管理</string>
     <string name="change_pay_password_text">修改支付密码</string>
@@ -104,10 +104,12 @@
     <string name="input_goods_quantity">请输入商品数量</string>
     <string name="product_place">商品产地&#058;</string>
     <string name="input_goods_product_place">请输入商品产地</string>
-    <string name="type">商品种类&#058;</string>
+    <string name="type">商品类型</string>
     <string name="goods_brand">品牌</string>
-    <string name="motocycle_frame_code">车架号&#058;</string>
-    <string name="input_motocycle_frame_code">请输入车架号</string>
+    <string name="motorcycle_frame_code">车架号&#058;</string>
+    <string name="input_motorcycle_frame_code">请输入车架号</string>
+    <string name="goods_price">商品价格&#058;</string>
+    <string name="input_goods_price">请输入商品价格</string>
 
     <!--快递下单-->
     <string name="order_express_delivery">快递下单</string>
@@ -154,4 +156,11 @@
     <string name="lease_term">租期</string>
     <string name="acreage">面积</string>
     <string name="lease_info_source">信息来源</string>
+
+    <!--发布内饰商品-->
+    <string name="goods_weight">商品重量&#058;</string>
+    <string name="input_goods_weight">请输入重量(kg)</string>
+    <string name="motorcycle_type">适用车型&#058;</string>
+    <string name="input_motorcycle_type">请输入适用车型</string>
+    <string name="ornament_type">饰品类型</string>
 </resources>

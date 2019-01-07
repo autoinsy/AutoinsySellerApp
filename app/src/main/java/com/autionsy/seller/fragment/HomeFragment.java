@@ -18,6 +18,7 @@ import com.autionsy.seller.activity.NewsActivity;
 import com.autionsy.seller.activity.OrderExpressDeliveryActivity;
 import com.autionsy.seller.activity.PublishGoodsActivity;
 import com.autionsy.seller.activity.PublishLeaseActivity;
+import com.autionsy.seller.activity.PublishOrnamentActivity;
 import com.autionsy.seller.activity.PublishRecruitActivity;
 import com.autionsy.seller.activity.PublishServiceActivity;
 import com.autionsy.seller.adapter.HomeAdapter;
@@ -131,10 +132,10 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
             R.id.notice_btn,
             R.id.publish_goods_layout,
             R.id.publish_service_layout,
-            R.id.wheel_service_layout,
+            R.id.road_rescue_layout,
             R.id.publish_lease_layout,
             R.id.publish_recruit_layout,
-            R.id.publish_trim_layout,
+            R.id.publish_ornament_layout,
             R.id.order_delivery_layout,
             R.id.publish_catch_order_layout,
             R.id.more_news})
@@ -157,7 +158,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
                 intent = new Intent(getActivity(),PublishServiceActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.wheel_service_layout:
+            case R.id.road_rescue_layout:
 
                 break;
             case R.id.publish_lease_layout:
@@ -168,8 +169,9 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
                 intent = new Intent(getActivity(),PublishRecruitActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.publish_trim_layout:
-
+            case R.id.publish_ornament_layout:
+                intent = new Intent(getActivity(),PublishOrnamentActivity.class);
+                startActivity(intent);
                 break;
             case R.id.order_delivery_layout:
                 intent = new Intent(getActivity(),OrderExpressDeliveryActivity.class);
