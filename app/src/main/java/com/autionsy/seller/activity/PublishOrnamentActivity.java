@@ -69,7 +69,7 @@ public class PublishOrnamentActivity extends BaseActivity{
 
     private void initView(){
         title_tv.setVisibility(View.VISIBLE);
-        title_tv.setText(R.string.publish_goods);
+        title_tv.setText(R.string.publish_ornament);
         submit_tv.setVisibility(View.VISIBLE);
 
         ornamentName = ornament_name_et.getText().toString().trim();

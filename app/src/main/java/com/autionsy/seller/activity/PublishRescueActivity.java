@@ -72,7 +72,7 @@ public class PublishRescueActivity extends BaseActivity {
 
     private void initView(){
         title_tv.setVisibility(View.VISIBLE);
-        title_tv.setText(R.string.publish_goods);
+        title_tv.setText(R.string.publish_rescue);
         submit_tv.setVisibility(View.VISIBLE);
 
         title = rescue_rescue_title_et.getText().toString().trim();

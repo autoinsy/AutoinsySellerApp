@@ -158,6 +158,7 @@
     <string name="lease_info_source">信息来源</string>
 
     <!--发布内饰商品-->
+    <string name="publish_ornament">发布内饰</string>
     <string name="goods_weight">商品重量&#058;</string>
     <string name="input_goods_weight">请输入重量(kg)</string>
     <string name="motorcycle_type">适用车型&#058;</string>
@@ -165,6 +166,7 @@
     <string name="ornament_type">饰品类型</string>
 
     <!--道路救援-->
+    <string name="publish_rescue">发布救援</string>
     <string name="rescue_title">标题&#058;</string>
     <string name="input_title">请输入标题</string>
     <string name="rescue_phone_number">联系电话&#058;</string>

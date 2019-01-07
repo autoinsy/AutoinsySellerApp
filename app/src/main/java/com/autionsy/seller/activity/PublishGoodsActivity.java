@@ -58,6 +58,8 @@ public class PublishGoodsActivity extends BaseActivity{
     private File file;
     private List<String> path;//路径集合
 
+    private Intent intent;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +99,8 @@ public class PublishGoodsActivity extends BaseActivity{
 
                 break;
             case R.id.brand_selector_layout:
-
+                intent = new Intent(PublishGoodsActivity.this, BrandActivity.class);
+                startActivity(intent);
                 break;
         }
     }
