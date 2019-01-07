@@ -20,6 +20,7 @@ import com.autionsy.seller.activity.PublishGoodsActivity;
 import com.autionsy.seller.activity.PublishLeaseActivity;
 import com.autionsy.seller.activity.PublishOrnamentActivity;
 import com.autionsy.seller.activity.PublishRecruitActivity;
+import com.autionsy.seller.activity.PublishRescueActivity;
 import com.autionsy.seller.activity.PublishServiceActivity;
 import com.autionsy.seller.adapter.HomeAdapter;
 import com.autionsy.seller.entity.News;
@@ -132,7 +133,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
             R.id.notice_btn,
             R.id.publish_goods_layout,
             R.id.publish_service_layout,
-            R.id.road_rescue_layout,
+            R.id.publish_rescue_layout,
             R.id.publish_lease_layout,
             R.id.publish_recruit_layout,
             R.id.publish_ornament_layout,
@@ -158,8 +159,9 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
                 intent = new Intent(getActivity(),PublishServiceActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.road_rescue_layout:
-
+            case R.id.publish_rescue_layout:
+                intent = new Intent(getActivity(),PublishRescueActivity.class);
+                startActivity(intent);
                 break;
             case R.id.publish_lease_layout:
                 intent = new Intent(getActivity(),PublishLeaseActivity.class);

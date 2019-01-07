@@ -163,4 +163,18 @@
     <string name="motorcycle_type">适用车型&#058;</string>
     <string name="input_motorcycle_type">请输入适用车型</string>
     <string name="ornament_type">饰品类型</string>
+
+    <!--道路救援-->
+    <string name="rescue_title">标题&#058;</string>
+    <string name="input_title">请输入标题</string>
+    <string name="rescue_phone_number">联系电话&#058;</string>
+    <string name="input_contact_phone_num">请输入联系电话</string>
+    <string name="address_detail">详细地址&#058;</string>
+    <string name="input_address_detail">请输入详细地址</string>
+    <string name="service_scope">服务范围&#058;</string>
+    <string name="input_service_scope">请输入服务范围</string>
+    <string name="company_introduce">公司介绍&#058;</string>
+    <string name="input_company_introduce">请输入公司介绍(100个字符)</string>
+    <string name="rescue_company_name">公司名称&#058;</string>
+    <string name="input_rescue_company_name">请输入公司名称</string>
 </resources>
