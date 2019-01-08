@@ -98,7 +98,8 @@
     <string name="input_service_describe">请输入描述(100个字符)</string>
 
     <!--上传图片-->
-    <string name="upload_image">上传图片</string>
+    <string name="upload_image">上传商品详情图片</string>
+    <string name="upload_video">上传视频文件</string>
     <string name="submit">提交</string>
 
     <!--发布商品-->
@@ -111,6 +112,7 @@
     <string name="input_goods_product_place">请输入商品产地</string>
     <string name="type">商品类型</string>
     <string name="goods_brand">品牌</string>
+    <string name="upload_single_image">上传商品图片</string>
     <string name="motorcycle_frame_code">车架号&#058;</string>
     <string name="input_motorcycle_frame_code">请输入车架号</string>
     <string name="goods_price">商品价格&#058;</string>

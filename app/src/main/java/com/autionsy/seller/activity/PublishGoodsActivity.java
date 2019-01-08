@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,11 @@ public class PublishGoodsActivity extends BaseActivity{
     TextView goods_type_tv;
     @BindView(R.id.goods_brand_tv)
     TextView goods_brand_tv;
+
+    @BindView(R.id.goods_upload_image_iv)
+    ImageView goods_upload_image_iv;
+    @BindView(R.id.goods_upload_video_iv)
+    ImageView goods_upload_video_iv;
 
     private String goodsName;
     private String goodsQuantity;
