@@ -186,4 +186,13 @@
     <string name="input_company_introduce">请输入公司介绍(100个字符)</string>
     <string name="rescue_company_name">公司名称&#058;</string>
     <string name="input_rescue_company_name">请输入公司名称</string>
+
+    <!--设置-->
+    <string name="setting_text">设置</string>
+    <string name="upload_header">上传头像</string>
+    <string name="receive_address">收货地址</string>
+    <string name="account_binding">账户绑定</string>
+    <string name="nick_name">昵称</string>
+    <string name="bank_account_binding">绑定银行账号</string>
+    <string name="logout">退出登录</string>
 </resources>

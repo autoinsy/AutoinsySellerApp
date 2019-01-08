@@ -9,6 +9,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.autionsy.seller.R;
+import com.autionsy.seller.activity.SettingActivity;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -54,7 +56,8 @@ public class MineFragment extends BaseFragment {
     public void onClick(View view){
         switch (view.getId()){
             case R.id.mine_setting_iv:
-
+                intent = new Intent(getActivity(),SettingActivity.class);
+                startActivity(intent);
                 break;
             case R.id.wait_send_stock:
 
