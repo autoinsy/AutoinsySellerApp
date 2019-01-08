@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +47,11 @@ public class PublishOrnamentActivity extends BaseActivity{
     EditText ornament_motorcycle_type_et;
     @BindView(R.id.ornament_motorcycle_frame_code_et)
     EditText ornament_motorcycle_frame_code_et;
+
+    @BindView(R.id.ornament_upload_image_iv)
+    ImageView ornament_upload_image_iv;
+    @BindView(R.id.ornament_upload_video_iv)
+    ImageView ornament_upload_video_iv;
 
     private String ornamentName;
     private String ornamentPrice;
