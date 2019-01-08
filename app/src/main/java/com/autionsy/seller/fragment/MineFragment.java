@@ -42,7 +42,15 @@ public class MineFragment extends BaseFragment {
             R.id.wait_receive_stock,
             R.id.wait_comment_stock,
             R.id.exchange_stock,
-            R.id.check_order_tv})
+            R.id.check_order_tv,
+            R.id.mine_product_management_layout,
+            R.id.mine_ornament_management_text_layout,
+            R.id.mine_service_management_text_layout,
+            R.id.mine_lease_management_text_layout,
+            R.id.mine_recuit_management_text_layout,
+            R.id.mine_rescue_management_text_layout,
+            R.id.mine_datum_layout,
+            R.id.mine_address_management_layout})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.mine_setting_iv:
@@ -61,6 +69,30 @@ public class MineFragment extends BaseFragment {
 
                 break;
             case R.id.check_order_tv:
+
+                break;
+            case R.id.mine_product_management_layout:
+
+                break;
+            case R.id.mine_ornament_management_text_layout:
+
+                break;
+            case R.id.mine_service_management_text_layout:
+
+                break;
+            case R.id.mine_lease_management_text_layout:
+
+                break;
+            case  R.id.mine_recuit_management_text_layout:
+
+                break;
+            case R.id.mine_rescue_management_text_layout:
+
+                break;
+            case  R.id.mine_datum_layout:
+
+                break;
+            case R.id.mine_address_management_layout:
 
                 break;
         }

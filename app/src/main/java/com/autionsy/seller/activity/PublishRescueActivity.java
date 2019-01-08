@@ -85,9 +85,7 @@ public class PublishRescueActivity extends BaseActivity {
 
     @OnClick({R.id.back_btn,
             R.id.image_selector_layout,
-            R.id.submit_tv,
-            R.id.type_selector_layout,
-            R.id.brand_selector_layout})
+            R.id.submit_tv})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.back_btn:
@@ -97,12 +95,6 @@ public class PublishRescueActivity extends BaseActivity {
                 ImageSelector.show(this, REQUEST_CODE_SELECT_IMG, MAX_SELECT_COUNT);
                 break;
             case R.id.submit_tv:
-
-                break;
-            case R.id.type_selector_layout:
-
-                break;
-            case R.id.brand_selector_layout:
 
                 break;
         }
