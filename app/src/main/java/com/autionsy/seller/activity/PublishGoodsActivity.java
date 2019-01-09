@@ -79,9 +79,9 @@ public class PublishGoodsActivity extends BaseActivity{
     private File file;
     private List<String> path;//路径集合
 
-    private static final int PHOTO_REQUEST_CAREMA = 1;// 拍照
-    private static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
-    private static final int PHOTO_REQUEST_CUT = 3;// 结果
+    private static final int PHOTO_REQUEST_CAREMA = 2;// 拍照
+    private static final int PHOTO_REQUEST_GALLERY = 3;// 从相册中选择
+    private static final int PHOTO_REQUEST_CUT = 4;// 结果
     /* 头像名称 */
     private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
     private File tempFile;
