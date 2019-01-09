@@ -5,4 +5,5 @@ public class Constant {
     public static String HOME_NEWS = "news/allNews";
 
     public static String BRAND = "";
+    public static String UPLOAD_HEADER_IMAGE = "";
 }

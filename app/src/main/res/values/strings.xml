@@ -195,4 +195,6 @@
     <string name="nick_name">昵称</string>
     <string name="bank_account_binding">绑定银行账号</string>
     <string name="logout">退出登录</string>
+    <string name="nick_name_text">昵称&#058;</string>
+    <string name="input_nick_name">请输入昵称</string>
 </resources>
