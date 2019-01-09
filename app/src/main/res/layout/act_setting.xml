@@ -8,6 +8,7 @@
     tools:ignore="ScrollViewSize,SpUsage,RtlHardcoded">
     <include layout="@layout/title_bar"/>
     <RelativeLayout
+        android:id="@+id/setting_upload_header_image"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_105"
         android:orientation="horizontal"
