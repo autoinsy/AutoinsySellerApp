@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.autionsy.seller.R;
 import com.autionsy.seller.activity.SettingActivity;
+import com.autionsy.seller.entity.UserInfo;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +40,15 @@ public class MineFragment extends BaseFragment {
 
     private void initView(){
 
+        UserInfo userInfo = new UserInfo();
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.mipmap.default_header)
+                .error(R.mipmap.default_header);
+        Glide.with(getActivity())
+                .load(userInfo.getHeaderImage())
+                .apply(RequestOptions.circleCropTransform())
+                .apply(options)
+                .into(mine_header_iv);
     }
 
     @OnClick({R.id.mine_setting_iv,

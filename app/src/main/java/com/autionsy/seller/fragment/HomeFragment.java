@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.autionsy.seller.R;
 import com.autionsy.seller.activity.ExpressDeliveryCatchOrderActivity;
 import com.autionsy.seller.activity.NewsActivity;
+import com.autionsy.seller.activity.NoticeActivity;
 import com.autionsy.seller.activity.OrderExpressDeliveryActivity;
 import com.autionsy.seller.activity.PublishGoodsActivity;
 import com.autionsy.seller.activity.PublishLeaseActivity;
@@ -149,7 +150,8 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
 
                 break;
             case R.id.notice_btn:
-
+                intent = new Intent(getActivity(),NoticeActivity.class);
+                startActivity(intent);
                 break;
             case R.id.publish_goods_layout:
                 intent = new Intent(getActivity(),PublishGoodsActivity.class);
