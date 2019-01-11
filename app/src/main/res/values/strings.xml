@@ -198,4 +198,7 @@
     <string name="logout">退出登录</string>
     <string name="nick_name_text">昵称&#058;</string>
     <string name="input_nick_name">请输入昵称</string>
+
+    <!--通知-->
+    <string name="notice_center">消息中心</string>
 </resources>

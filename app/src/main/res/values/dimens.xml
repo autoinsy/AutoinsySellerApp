@@ -67,6 +67,8 @@
     <dimen name="dp_155">155dp</dimen>
     <dimen name="dp_195">195dp</dimen>
     <dimen name="dp_200">200dp</dimen>
+    <dimen name="dp_250">250dp</dimen>
+    <dimen name="dp_300">300dp</dimen>
 
     <!--圆形图片-->
     <dimen name="circle_image_width_height">50dp</dimen>
