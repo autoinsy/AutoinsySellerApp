@@ -96,9 +96,10 @@
     <string name="service_type">服务种类</string>
     <string name="service_describe">服务描述&#058;</string>
     <string name="input_service_describe">请输入描述(100个字符)</string>
+    <string name="upload_seller_shop_photo">上传店铺照片</string>
 
     <!--上传图片-->
-    <string name="upload_image">上传商品详情图片</string>
+    <string name="upload_image">上传多张图片</string>
     <string name="upload_video">上传视频文件</string>
     <string name="submit">提交</string>
 

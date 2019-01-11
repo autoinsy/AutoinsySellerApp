@@ -54,6 +54,8 @@ public class PublishServiceActivity extends BaseActivity {
     TextView service_area_tv;
     @BindView(R.id.service_type_tv)
     TextView service_type_tv;
+    @BindView(R.id.upload_image_textview)
+    TextView upload_image_textview;
 
     private static final int REQUEST_CODE_SELECT_IMG = 1;
     private static final int MAX_SELECT_COUNT = 9;
@@ -73,6 +75,7 @@ public class PublishServiceActivity extends BaseActivity {
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.publish_service);
         submit_tv.setVisibility(View.VISIBLE);
+        upload_image_textview.setText(R.string.upload_seller_shop_photo);
     }
 
     @OnClick({R.id.back_btn,
