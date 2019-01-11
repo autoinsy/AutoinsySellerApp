@@ -142,6 +142,7 @@ public class PublishGoodsActivity extends BaseActivity{
         }
     }
 
+    //====Okhttp3上传单张图片======================================================================================================
     private void UploadSingleImage(){
         new PhotoPickDialog(PublishGoodsActivity.this).builder().setCancelable(true).setTakePhotoListener(new PhotoPickDialog.TakePhotoListener() {
             @Override
@@ -203,6 +204,7 @@ public class PublishGoodsActivity extends BaseActivity{
         // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CUT
         startActivityForResult(intent, PHOTO_REQUEST_CUT);
     }
+    //====Okhttp3上传单张图片======================================================================================================
 
     /**回调并上传多张或者单张图片*/
     @Override
