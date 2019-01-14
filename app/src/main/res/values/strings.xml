@@ -79,6 +79,7 @@
 
     <!--新闻-->
     <string name="news_title_text">新闻</string>
+    <string name="news_detail_text">新闻详情</string>
 
     <!--发布服务-->
     <string name="publish_service">发布服务</string>
