@@ -37,9 +37,7 @@ public class NoticeDetailActivity extends BaseActivity {
         title_tv.setText(R.string.notice_center);
 
         Bundle bundle = this.getIntent().getExtras();
-        String noticeTitle = bundle.getString("notice_title");
-        String noticeContent = bundle.getString("notice_content");
-        String noticeTime = bundle.getString("notice_time");
+        String noticeId = bundle.getString("notice_id");
     }
 
     @OnClick({R.id.back_btn})

@@ -26,9 +26,7 @@ public class NoticeActivity extends BaseActivity {
     private NoticeAdapter noticeAdapter;
     private List<Notice> mList = new ArrayList<>();
 
-    private String noticeTitle;
-    private String noticeContent;
-    private String noticeTime;
+    private String noticeId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,9 +54,7 @@ public class NoticeActivity extends BaseActivity {
                 // 实例化一个Bundle
                 Bundle bundle = new Bundle();
                 Intent intent = new Intent(NoticeActivity.this,NoticeDetailActivity.class);
-                bundle.putString("notice_title",noticeTitle);
-                bundle.putString("notice_content",noticeContent);
-                bundle.putString("notice_time",noticeTime);
+                bundle.putString("notice_id",noticeId);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
