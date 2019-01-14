@@ -1,5 +1,6 @@
 package com.autionsy.seller.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,6 +26,10 @@ public class NoticeActivity extends BaseActivity {
     private NoticeAdapter noticeAdapter;
     private List<Notice> mList = new ArrayList<>();
 
+    private String noticeTitle;
+    private String noticeContent;
+    private String noticeTime;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,17 +43,24 @@ public class NoticeActivity extends BaseActivity {
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.notice_center);
 
-        mList.add(new Notice("http://pic.sc.chinaz.com/files/pic/pic9/201901/hpic480.jpg","春节放假通知","2019-1-12","春节放假10天"));
-        mList.add(new Notice("http://pic.sc.chinaz.com/files/pic/pic9/201803/zzpic11139.jpg","春节放假通知","2019-1-12","春节放假10天"));
-        mList.add(new Notice("http://pic.sc.chinaz.com/files/pic/pic9/201803/wpic014.jpg","春节放假通知","2019-1-12","春节放假10天"));
-        mList.add(new Notice("http://pic.sc.chinaz.com/files/pic/pic9/201803/wpic008.jpg","春节放假通知","2019-1-12","春节放假10天"));
+        mList.add(new Notice("基于vue-easytable实现数据的增删改查","2018-12-14 10:10:10","设置表格总宽度，最后一列不设置，那么自动一列宽度将会自动计算"));
+        mList.add(new Notice("基于vue-easytable实现数据的增删改查","2018-12-14 10:10:10","设置表格总宽度，最后一列不设置，那么自动一列宽度将会自动计算"));
+        mList.add(new Notice("基于vue-easytable实现数据的增删改查","2018-12-14 10:10:10","设置表格总宽度，最后一列不设置，那么自动一列宽度将会自动计算"));
+        mList.add(new Notice("基于vue-easytable实现数据的增删改查","2018-12-14 10:10:10","设置表格总宽度，最后一列不设置，那么自动一列宽度将会自动计算"));
 
         noticeAdapter = new NoticeAdapter(NoticeActivity.this,mList);
         notice_lv.setAdapter(noticeAdapter);
         notice_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                // 实例化一个Bundle
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent(NoticeActivity.this,NoticeDetailActivity.class);
+                bundle.putString("notice_title",noticeTitle);
+                bundle.putString("notice_content",noticeContent);
+                bundle.putString("notice_time",noticeTime);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }

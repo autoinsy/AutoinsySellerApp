@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:background="@color/bg_gray"
     tools:ignore="ScrollViewSize,SpUsage,RtlHardcoded">
     <include layout="@layout/title_bar"/>
     <ScrollView
