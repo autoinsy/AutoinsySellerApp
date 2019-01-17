@@ -66,15 +66,15 @@ public class NoticeAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-//        RequestOptions options = new RequestOptions()
-//                .placeholder(R.mipmap.default_header)
-//                .transform(new GlideRoundTransform(8))
-//                .override(300, 300)
-//                .error(R.mipmap.default_header);
-//        Glide.with(context)
-//                .load(noticesList.get(position).getHeader())
-//                .apply(options)
-//                .into(holder.notice_header_iv);
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.mipmap.default_header)
+                .transform(new GlideRoundTransform(8))
+                .override(300, 300)
+                .error(R.mipmap.default_header);
+        Glide.with(context)
+                .load(noticesList.get(position).getHeader())
+                .apply(options)
+                .into(holder.notice_header_iv);
 
         holder.notice_title_tv.setText(noticesList.get(position).getTitle());
         holder.notice_time.setText(noticesList.get(position).getTime());
@@ -84,6 +84,8 @@ public class NoticeAdapter extends BaseAdapter {
     }
 
     public class ViewHolder{
+        @BindView(R.id.notice_header_iv)
+        ImageView notice_header_iv;
         @BindView(R.id.notice_title_tv)
         TextView notice_title_tv;
         @BindView(R.id.notice_time)

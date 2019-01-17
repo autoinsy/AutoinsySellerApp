@@ -41,10 +41,10 @@ public class NoticeActivity extends BaseActivity {
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.notice_center);
 
-        mList.add(new Notice("基于vue-easytable实现数据的增删改查","2018-12-14 10:10:10","设置表格总宽度，最后一列不设置，那么自动一列宽度将会自动计算"));
-        mList.add(new Notice("基于vue-easytable实现数据的增删改查","2018-12-14 10:10:10","设置表格总宽度，最后一列不设置，那么自动一列宽度将会自动计算"));
-        mList.add(new Notice("基于vue-easytable实现数据的增删改查","2018-12-14 10:10:10","设置表格总宽度，最后一列不设置，那么自动一列宽度将会自动计算"));
-        mList.add(new Notice("基于vue-easytable实现数据的增删改查","2018-12-14 10:10:10","设置表格总宽度，最后一列不设置，那么自动一列宽度将会自动计算"));
+        mList.add(new Notice("","基于vue-easytable实现数据的增删改查","2018-12-14","设置表格总宽度，最后一列不设置，那么自动一列宽度将会自动计算"));
+        mList.add(new Notice("","基于vue-easytable实现数据的增删改查","2018-12-14","设置表格总宽度，最后一列不设置，那么自动一列宽度将会自动计算"));
+        mList.add(new Notice("","基于vue-easytable实现数据的增删改查","2018-12-14","设置表格总宽度，最后一列不设置，那么自动一列宽度将会自动计算"));
+        mList.add(new Notice("","基于vue-easytable实现数据的增删改查","2018-12-14","设置表格总宽度，最后一列不设置，那么自动一列宽度将会自动计算"));
 
         noticeAdapter = new NoticeAdapter(NoticeActivity.this,mList);
         notice_lv.setAdapter(noticeAdapter);
