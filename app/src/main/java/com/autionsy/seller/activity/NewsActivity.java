@@ -1,5 +1,6 @@
 package com.autionsy.seller.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -81,6 +82,16 @@ public class NewsActivity extends BaseActivity {
         news_recycler_view.addItemDecoration(new RecyclerViewDivider(NewsActivity.this, LinearLayoutManager.HORIZONTAL, 2, ContextCompat.getColor(NewsActivity.this, R.color.gray_line_2)));
         newsAdapter = new NewsAdapter(NewsActivity.this,newsArrayList);
         news_recycler_view.setAdapter(newsAdapter);
+        newsAdapter.setOnItemClickListener(new NewsAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, News news) {
+                Intent intent = new Intent(NewsActivity.this, NewsDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("note", news);
+                intent.putExtra("data", bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     @OnClick({R.id.back_btn})

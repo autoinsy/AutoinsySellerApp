@@ -5,30 +5,55 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:ignore="HardcodedText,SpUsage"
-    android:gravity="center_horizontal">
+    tools:ignore="HardcodedText,SpUsage">
     <include layout="@layout/title_bar"/>
 
-    <TextView
-        android:id="@+id/news_detail_title_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="@dimen/dp_15"
-        android:text="fwfgewfg"
-        android:layout_marginTop="@dimen/dp_20"/>
-
-    <com.sendtion.xrichtext.RichTextView
-        android:id="@+id/tv_note_content"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginLeft="@dimen/dp_15"
-        android:layout_marginRight="@dimen/dp_15"
-        android:layout_marginBottom="@dimen/dp_15"
-        app:rt_view_text_line_space="6dp"
-        app:rt_view_image_height="0"
-        app:rt_view_image_bottom="10"
-        app:rt_view_text_size="16sp"
-        app:rt_view_text_color="@color/black"/>
+        android:orientation="vertical">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/news_detail_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dp_20"
+                    android:text="fwfgewfg"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/news_detail_time_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dp_15"
+                    android:text="2018-12-16"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:layout_gravity="center_horizontal"/>
+
+                <com.sendtion.xrichtext.RichTextView
+                    android:id="@+id/news_detail_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:layout_marginBottom="@dimen/dp_15"
+                    app:rt_view_text_line_space="6dp"
+                    app:rt_view_image_height="0"
+                    app:rt_view_image_bottom="10"
+                    app:rt_view_text_size="16sp"
+                    app:rt_view_text_color="@color/black"/>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 </LinearLayout>

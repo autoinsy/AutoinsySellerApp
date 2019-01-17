@@ -15,18 +15,28 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NewsAdapter extends RecyclerView.Adapter {
+public class NewsAdapter extends RecyclerView.Adapter implements View.OnClickListener{
 
     private Context context;
     ArrayList<News> newsList = new ArrayList<>();
+    private OnRecyclerViewItemClickListener mOnItemClickListener ;
 
     public NewsAdapter(Context context,ArrayList<News> list){
         this.context = context;
         this.newsList = list;
+    }
+
+    public interface OnRecyclerViewItemClickListener {
+        void onItemClick(View view , News news);
+    }
+
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+        this.mOnItemClickListener = listener;
     }
 
     @NonNull
@@ -56,6 +66,14 @@ public class NewsAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return newsList.size();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (mOnItemClickListener != null) {
+            //注意这里使用getTag方法获取数据
+            mOnItemClickListener.onItemClick(v,(News) v.getTag());
+        }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
