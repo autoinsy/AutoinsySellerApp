@@ -19,6 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -157,6 +158,15 @@ public class NewsDetailActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
             subscriber.onError(e);
+        }
+    }
+
+    @OnClick({R.id.back_btn})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.back_btn:
+                finish();
+                break;
         }
     }
 
