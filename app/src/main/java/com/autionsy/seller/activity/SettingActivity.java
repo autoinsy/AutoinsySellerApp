@@ -81,7 +81,7 @@ public class SettingActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.receive_address_layout:
-                intent = new Intent(SettingActivity.this, AddressActivity.class);
+                intent = new Intent(SettingActivity.this, AddressManagementActivity.class);
                 startActivity(intent);
                 break;
             case R.id.bank_account_binding_layout:
