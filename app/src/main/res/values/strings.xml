@@ -233,6 +233,7 @@
     <string name="delete_btn_text">删除</string>
     <string name="edit_btn_text">修改</string>
     <string name="add__new_address_text">新增收货地址</string>
+    <string name="save">保存</string>
 
     <!--银行卡管理-->
     <string name="bank_account_num">银行卡号&#058;</string>
