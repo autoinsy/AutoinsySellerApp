@@ -3,7 +3,7 @@
     android:id="@+id/lLayout_bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_iosdialog_bg"
+    android:background="@drawable/rect_corner_white"
     android:orientation="vertical">
 
     <TextView
