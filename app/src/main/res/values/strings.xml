@@ -219,6 +219,7 @@
     <string name="goods_unit_text">件商品</string>
 
     <!--地址管理-->
+    <string name="new_address">新建地址</string>
     <string name="address_management">地址管理</string>
     <string name="receiver">收货人&#058;</string>
     <string name="receiver_hint">请填写收货人姓名</string>

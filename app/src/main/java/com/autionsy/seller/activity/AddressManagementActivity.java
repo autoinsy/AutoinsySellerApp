@@ -41,7 +41,7 @@ public class AddressManagementActivity extends BaseActivity {
     }
 
     private void initView(){
-
+        title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.address_management);
 
         mAdapter = new AddressManagementAdapter(AddressManagementActivity.this,mList);

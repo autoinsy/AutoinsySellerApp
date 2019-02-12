@@ -39,6 +39,9 @@ public class AddressActivity extends BaseActivity {
     @BindView(R.id.address_area_tv)
     TextView address_area_tv;
 
+    @BindView(R.id.title_tv)
+    TextView title_tv;
+
     private String receiver;
     private String mobileNum;
     private String addressDetail;
@@ -61,10 +64,12 @@ public class AddressActivity extends BaseActivity {
 
     private void initView(){
 
+        title_tv.setVisibility(View.VISIBLE);
+        title_tv.setText(R.string.new_address);
+
         receiver = address_receiver_et.getText().toString().trim();
         mobileNum = address_receiver_mobile_num_et.getText().toString().trim();
         addressDetail = address_detail_et.getText().toString().trim();
-
 
     }
 
