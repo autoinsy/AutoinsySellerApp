@@ -54,7 +54,7 @@ public class OrderListAdapter extends BaseAdapter {
         ViewHolder holder = null;
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_list, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_order_list, null);
 
             holder = new ViewHolder(convertView);
 

@@ -238,4 +238,8 @@
     <!--银行卡管理-->
     <string name="bank_account_num">银行卡号&#058;</string>
     <string name="bank_account_num_hint">请输入银行卡号</string>
+
+    <!--商品管理-->
+    <string name="delete">删除</string>
+    <string name="edit">编辑</string>
 </resources>
