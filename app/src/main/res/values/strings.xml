@@ -62,9 +62,9 @@
     <string name="wait_send_stock">待发货</string>
     <string name="wait_receive_stock">待签收</string>
     <string name="wait_comment_stock">待评论</string>
-    <string name="exchange_stock">退货/换货</string>
-    <string name="goods_management_text">汽配商品管理</string>
-    <string name="ornament_management_text">内饰商品管理</string>
+    <string name="exchange_stock">退货/售后</string>
+    <string name="goods_management_text">汽配管理</string>
+    <string name="ornament_management_text">内饰管理</string>
     <string name="my_datum_text">我的资料</string>
     <string name="address_management_text">地址管理</string>
     <string name="change_pay_password_text">修改支付密码</string>
@@ -203,22 +203,18 @@
     <!--通知-->
     <string name="notice_center">通知消息</string>
 
-    <!--地址管理-->
-    <string name="address_management">地址管理</string>
-    <string name="receiver">收货人&#058;</string>
-    <string name="receiver_hint">请填写收货人姓名</string>
-    <string name="receiver_mobile_num">手机号码&#058;</string>
-    <string name="receiver_mobile_num_hint">请填写收货人手机号</string>
-    <string name="address_area">所在区域</string>
-    <string name="address_area_hint">省市区县，乡镇等</string>
-    <string name="receiver_address_detail">详细地址&#058;</string>
-    <string name="receiver_address_detail_hint">街道，楼牌号等</string>
-    <string name="set_default_text">设为默认地址</string>
-    <string name="delete_btn_text">删除</string>
-    <string name="edit_btn_text">修改</string>
-    <string name="add__new_address_text">新增收货地址</string>
-
-    <!--银行卡管理-->
-    <string name="bank_account_num">银行卡号&#058;</string>
-    <string name="bank_account_num_hint">请输入银行卡号</string>
+    <!--订单列表-->
+    <string name="all_order">全部订单</string>
+    <string name="send_goods_title">发货订单</string>
+    <string name="receive_goods_title">待收货</string>
+    <string name="appraise_title">订单评价</string>
+    <string name="refund_title">退货订单</string>
+    <string name="total">合计&#058;</string>
+    <string name="send_goods">去发货</string>
+    <string name="cancel_order">取消订单</string>
+    <string name="check_delivery">查看物流</string>
+    <string name="sign_receive">签收</string>
+    <string name="go_appraise">去评价</string>
+    <string name="refund">退款</string>
+    <string name="goods_unit_text">件商品</string>
 </resources>

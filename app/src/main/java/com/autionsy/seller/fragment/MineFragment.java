@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.autionsy.seller.R;
+import com.autionsy.seller.activity.OrderListActivity;
 import com.autionsy.seller.activity.SettingActivity;
 import com.autionsy.seller.entity.UserInfo;
 import com.bumptech.glide.Glide;
@@ -56,15 +57,13 @@ public class MineFragment extends BaseFragment {
             R.id.wait_receive_stock,
             R.id.wait_comment_stock,
             R.id.exchange_stock,
-            R.id.check_order_tv,
+            R.id.check_all_order_tv,
             R.id.mine_product_management_layout,
             R.id.mine_ornament_management_text_layout,
             R.id.mine_service_management_text_layout,
             R.id.mine_lease_management_text_layout,
             R.id.mine_recuit_management_text_layout,
-            R.id.mine_rescue_management_text_layout,
-            R.id.mine_datum_layout,
-            R.id.mine_address_management_layout})
+            R.id.mine_rescue_management_text_layout,})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.mine_setting_iv:
@@ -72,19 +71,29 @@ public class MineFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.wait_send_stock:
-
+                intent = new Intent(getActivity(), OrderListActivity.class);
+                intent.putExtra("order_state","1");
+                startActivity(intent);
                 break;
             case R.id.wait_receive_stock:
-
+                intent = new Intent(getActivity(), OrderListActivity.class);
+                intent.putExtra("order_state","2");
+                startActivity(intent);
                 break;
             case R.id.wait_comment_stock:
-
+                intent = new Intent(getActivity(), OrderListActivity.class);
+                intent.putExtra("order_state","3");
+                startActivity(intent);
                 break;
             case R.id.exchange_stock:
-
+                intent = new Intent(getActivity(), OrderListActivity.class);
+                intent.putExtra("order_state","4");
+                startActivity(intent);
                 break;
-            case R.id.check_order_tv:
-
+            case R.id.check_all_order_tv:
+                intent = new Intent(getActivity(), OrderListActivity.class);
+                intent.putExtra("order_state","0");
+                startActivity(intent);
                 break;
             case R.id.mine_product_management_layout:
 
@@ -102,12 +111,6 @@ public class MineFragment extends BaseFragment {
 
                 break;
             case R.id.mine_rescue_management_text_layout:
-
-                break;
-            case  R.id.mine_datum_layout:
-
-                break;
-            case R.id.mine_address_management_layout:
 
                 break;
         }
