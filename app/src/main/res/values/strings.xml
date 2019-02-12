@@ -242,4 +242,10 @@
     <!--商品管理-->
     <string name="delete">删除</string>
     <string name="edit">编辑</string>
+    <string name="goods_management">汽配商品管理</string>
+    <string name="ornament_management">内饰商品管理</string>
+    <string name="service_management">服务管理</string>
+    <string name="lease_management">租赁管理</string>
+    <string name="recuit_management">招聘管理</string>
+    <string name="rescue_management">道路救援管理</string>
 </resources>

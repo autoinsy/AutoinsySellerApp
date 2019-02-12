@@ -15,6 +15,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class OrderListActivity extends BaseActivity {
     @BindView(R.id.title_tv)
@@ -65,5 +66,14 @@ public class OrderListActivity extends BaseActivity {
         /**需要根据状态来发送请求*/
         mAdapter = new OrderListAdapter(OrderListActivity.this,mList);
         trade_flow_lv.setAdapter(mAdapter);
+    }
+
+    @OnClick({R.id.back_btn})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.back_btn:
+                finish();
+                break;
+        }
     }
 }
