@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:ignore="RtlHardcoded,SpUsage" >
     <include layout="@layout/title_bar"/>
     <RelativeLayout
@@ -85,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
             android:background="@drawable/rect_corner_orange"
-            android:layout_marginTop="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_60"
             android:layout_below="@id/forget_password_tv"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_15"

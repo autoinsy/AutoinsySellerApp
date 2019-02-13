@@ -28,8 +28,8 @@ public class CountDownTimerUtils extends CountDownTimer {
     @Override
     public void onTick(long millisUntilFinished) {
         mTextView.setClickable(false); //设置不可点击
-        mTextView.setText(millisUntilFinished / 1000 + "秒后可重新发送");  //设置倒计时时间
-        mTextView.setBackgroundColor(Color.parseColor("#cccccc")); //设置按钮为灰色，这时是不能点击的
+        mTextView.setText(millisUntilFinished / 1000 + "秒后重新发送");  //设置倒计时时间
+        mTextView.setBackgroundColor(Color.parseColor("#FFFFFF")); //设置按钮为灰色，这时是不能点击的
 
         /**
          * 超链接 URLSpan
@@ -57,6 +57,6 @@ public class CountDownTimerUtils extends CountDownTimer {
     public void onFinish() {
         mTextView.setText("重新获取验证码");
         mTextView.setClickable(true);//重新获得点击
-        mTextView.setBackgroundColor(Color.parseColor("#FF4081"));  //还原背景色
+        mTextView.setBackgroundColor(Color.parseColor("#FFFFFF"));  //还原背景色
     }
 }
