@@ -1,5 +1,6 @@
 package com.autionsy.seller.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,11 +8,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.entity.Commodity;
 import com.autionsy.seller.entity.Order;
+import com.autionsy.seller.utils.ScreenUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -80,14 +83,42 @@ public class CommodityManagementAdapter extends BaseAdapter {
 
             }
         });
-        holder.commodity_management_edit_btn.setOnClickListener(new View.OnClickListener() {
+        holder.commodity_management_delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showDialog();
             }
         });
 
         return convertView;
+    }
+
+    //初始化并弹出对话框方法
+    private void showDialog(){
+        View view = LayoutInflater.from(context).inflate(R.layout.dailog_delete_commodity,null,false);
+        final AlertDialog dialog = new AlertDialog.Builder(context).setView(view).create();
+
+        Button btn_cancel_high_opion = view.findViewById(R.id.btn_cancel_high_opion);
+        Button btn_agree_high_opion = view.findViewById(R.id.btn_agree_high_opion);
+
+        btn_cancel_high_opion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btn_agree_high_opion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**发送请求删除item*/
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+        //此处设置位置窗体大小，我这里设置为了手机屏幕宽度的3/4
+        dialog.getWindow().setLayout((ScreenUtils.getScreenWidth(context)/4*3), LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 
     public class ViewHolder{
