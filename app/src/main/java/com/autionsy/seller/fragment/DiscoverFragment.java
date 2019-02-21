@@ -1,5 +1,6 @@
 package com.autionsy.seller.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.autionsy.seller.R;
+import com.autionsy.seller.activity.CircleActivity;
 import com.autionsy.seller.adapter.DiscoverListAdapter;
 import com.autionsy.seller.entity.Discover;
 import com.autionsy.seller.entity.DiscoverImage;
@@ -33,6 +35,8 @@ public class DiscoverFragment extends BaseFragment {
     TextView add_blog_tv;
     @BindView(R.id.title_tv)
     TextView title_tv;
+
+    private Intent intent;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -79,7 +83,8 @@ public class DiscoverFragment extends BaseFragment {
 
                 break;
             case R.id.add_blog_tv:
-
+                intent = new Intent(getActivity(), CircleActivity.class);
+                startActivity(intent);
                 break;
         }
     }
