@@ -8,7 +8,6 @@ public class Discover implements Serializable {
     private String headerUrl;
     private String sellerName;
     private String publishTime;
-    private String isAddFriend;
     private ArrayList<DiscoverImage> imageList;
 
     public String getHeaderUrl() {
@@ -33,14 +32,6 @@ public class Discover implements Serializable {
 
     public void setPublishTime(String publishTime) {
         this.publishTime = publishTime;
-    }
-
-    public String getIsAddFriend() {
-        return isAddFriend;
-    }
-
-    public void setIsAddFriend(String isAddFriend) {
-        this.isAddFriend = isAddFriend;
     }
 
     public ArrayList<DiscoverImage> getImageList() {

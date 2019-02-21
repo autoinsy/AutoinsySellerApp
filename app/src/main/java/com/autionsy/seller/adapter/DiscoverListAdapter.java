@@ -73,30 +73,6 @@ public class DiscoverListAdapter extends BaseAdapter {
         mHolder.discover_seller_name.setText(mList.get(position).getSellerName());
         mHolder.discover_publish_time.setText(mList.get(position).getPublishTime());
 
-        String isFriend = mList.get(position).getIsAddFriend();
-
-        if("1".equals(isFriend)){
-            mHolder.discover_add_friend.setVisibility(View.VISIBLE);
-            mHolder.discover_already_friend.setVisibility(View.GONE);
-
-            mHolder.discover_add_friend.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    notifyDataSetChanged();//更新listview布局数据
-                }
-            });
-        }else if("2".equals(isFriend)){
-            mHolder.discover_already_friend.setVisibility(View.VISIBLE);
-            mHolder.discover_add_friend.setVisibility(View.GONE);
-
-            mHolder.discover_already_friend.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    notifyDataSetChanged();//更新listview布局数据
-                }
-            });
-        }
-
         if(!mList.get(position).getImageList().isEmpty()){
             discoverImageAdapter = new DiscoverGridAdapter(context, mList.get(position).getImageList());
             mHolder.item_discover_gv.setAdapter(discoverImageAdapter);
@@ -111,8 +87,6 @@ public class DiscoverListAdapter extends BaseAdapter {
         TextView discover_seller_name;
         @BindView(R.id.discover_publish_time)
         TextView discover_publish_time;
-        @BindView(R.id.discover_add_friend)
-        Button discover_add_friend;
         @BindView(R.id.discover_already_friend)
         Button discover_already_friend;
         @BindView(R.id.item_discover_gv)

@@ -47,7 +47,6 @@ public class DiscoverFragment extends BaseFragment {
             discover.setHeaderUrl("http://pic.sc.chinaz.com/files/pic/pic9/201606/apic21587.jpg");
             discover.setSellerName("美女艳照");
             discover.setPublishTime("2018-12-12");
-            discover.setIsAddFriend("1");
 
             DiscoverImage discoverImage = new DiscoverImage();
             discoverImage.setImage("http://pic.sc.chinaz.com/files/pic/pic9/201608/apic22369.jpg");
