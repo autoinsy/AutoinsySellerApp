@@ -108,4 +108,16 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/dp_10"
         android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/add_blog_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_17"
+        android:text="@string/add"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_10"
+        android:visibility="gone"/>
 </android.support.percent.PercentRelativeLayout>

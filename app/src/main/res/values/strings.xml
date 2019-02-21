@@ -248,4 +248,7 @@
     <string name="lease_management">租赁管理</string>
     <string name="recuit_management">招聘管理</string>
     <string name="rescue_management">道路救援管理</string>
+
+    <string name="add">添加</string>
+    <string name="circle">圈子</string>
 </resources>

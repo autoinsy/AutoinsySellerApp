@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.adapter.DiscoverListAdapter;
@@ -27,6 +28,11 @@ public class DiscoverFragment extends BaseFragment {
 
     @BindView(R.id.discover_lv)
     ListView discover_lv;
+
+    @BindView(R.id.add_blog_tv)
+    TextView add_blog_tv;
+    @BindView(R.id.title_tv)
+    TextView title_tv;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -58,14 +64,21 @@ public class DiscoverFragment extends BaseFragment {
     }
 
     private void initView(){
+        title_tv.setVisibility(View.VISIBLE);
+        title_tv.setText(R.string.circle);
+        add_blog_tv.setVisibility(View.VISIBLE);
+
         discoverAdapter = new DiscoverListAdapter(getActivity(),discoverList);
         discover_lv.setAdapter(discoverAdapter);
     }
 
-    @OnClick({R.id.discover_search_layout})
+    @OnClick({R.id.discover_search_layout,R.id.add_blog_tv})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.discover_search_layout:
+
+                break;
+            case R.id.add_blog_tv:
 
                 break;
         }
