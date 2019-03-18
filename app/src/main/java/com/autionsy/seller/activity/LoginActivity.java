@@ -48,7 +48,7 @@ public class LoginActivity extends BaseActivity {
         password = input_password.getText().toString().trim();
     }
 
-    @OnClick({R.id.forget_password_tv,R.id.user_register_tv,R.id.login_btn,R.id.weichat_login_btn,R.id.qq_login_btn,R.id.sina_blog_login_btn})
+    @OnClick({R.id.forget_password_tv,R.id.user_register_tv,R.id.login_btn})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.forget_password_tv:
@@ -63,15 +63,6 @@ public class LoginActivity extends BaseActivity {
                 intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
-                break;
-            case R.id.weichat_login_btn:
-
-                break;
-            case R.id.qq_login_btn:
-
-                break;
-            case R.id.sina_blog_login_btn:
-
                 break;
         }
     }
