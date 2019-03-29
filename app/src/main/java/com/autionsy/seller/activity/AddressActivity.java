@@ -77,7 +77,7 @@ public class AddressActivity extends BaseActivity {
     public void onClick(View view){
         switch(view.getId()){
             case R.id.address_area_layout:
-                //              解析数据
+//              解析数据
                 parseData();
 //              展示省市区选择器
                 showPickerView();
@@ -147,13 +147,11 @@ public class AddressActivity extends BaseActivity {
                 Toast.makeText(AddressActivity.this, tx, Toast.LENGTH_SHORT).show();
                 address_area_tv.setText(tx);
             }
-        })
-
-                .setTitleText("城市选择")
-                .setDividerColor(Color.BLACK)
-                .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
-                .setContentTextSize(20)
-                .build();
+        }).setTitleText("城市选择")
+          .setDividerColor(Color.BLACK)
+          .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
+          .setContentTextSize(20)
+          .build();
 
         /*pvOptions.setPicker(options1Items);//一级选择器
         pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
