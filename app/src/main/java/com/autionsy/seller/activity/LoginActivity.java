@@ -76,7 +76,7 @@ public class LoginActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.login_btn:
-
+                postAsynHttpLogin();
                 break;
         }
     }
