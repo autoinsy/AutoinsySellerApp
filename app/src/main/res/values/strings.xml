@@ -252,4 +252,9 @@
     <string name="add">添加</string>
     <string name="circle">圈子</string>
     <string name="publish_text">发表文字</string>
+
+    <string name="user_err_name_is_null">用户名不能为空</string>
+    <string name="password_is_empty">密码不能为空</string>
+    <string name="param_error">参数错误</string>
+    <string name="login_fail">登陆失败</string>
 </resources>
