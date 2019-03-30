@@ -6,13 +6,26 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.autionsy.seller.R;
+import com.autionsy.seller.constant.Constant;
 import com.autionsy.seller.utils.CountDownTimerUtils;
+import com.autionsy.seller.utils.OkHttp3Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class RegisterActivity extends BaseActivity {
 
@@ -58,8 +71,7 @@ public class RegisterActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.register_next_btn:
-                intent = new Intent(RegisterActivity.this,AuthenticationActivity.class);
-                startActivity(intent);
+                getRegister();
                 break;
             case R.id.autoinsy_city_protocol:
                 intent = new Intent(RegisterActivity.this,ServiceProtocolActivity.class);
@@ -68,7 +80,91 @@ public class RegisterActivity extends BaseActivity {
             case R.id.get_verify_code_tv:
                 CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(get_verify_code_tv, 60000, 1000);
                 mCountDownTimerUtils.start();
+                getVerifyCode();
                 break;
         }
     }
+
+    private void getRegister(){
+        String url = Constant.HTTP_URL + "sellerRegister";
+        Map<String,String> map = new HashMap<>();
+        map.put("username", username);
+        map.put("password", password);
+        map.put("sms_validate_code", verifyCode);
+
+        OkHttp3Utils.doPost(url, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responeString = response.body().string();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject  = new JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
+
+                            if("200".equals(resultCode)){
+                                intent = new Intent(RegisterActivity.this,AuthenticationActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }else if("411".equals(resultCode)){
+                                Toast.makeText(getApplicationContext(),R.string.user_already_register,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void getVerifyCode(){
+
+        String url = Constant.HTTP_URL + "sendValidateCode";
+        Map<String,String> map = new HashMap<>();
+        map.put("phone_number", username);
+
+        OkHttp3Utils.doPost(url, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responeString = response.body().string();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject  = new JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
+
+                            if("200".equals(resultCode)){
+                                Toast.makeText(getApplicationContext(),R.string.send_sms_code_success,Toast.LENGTH_SHORT).show();
+                            }else if("401".equals(resultCode)){
+                                Toast.makeText(getApplicationContext(),R.string.send_sms_code_fail,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+
 }

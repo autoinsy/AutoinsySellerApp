@@ -257,4 +257,7 @@
     <string name="password_is_empty">密码不能为空</string>
     <string name="param_error">参数错误</string>
     <string name="login_fail">登陆失败</string>
+    <string name="send_sms_code_fail">发送失败</string>
+    <string name="send_sms_code_success">发送成功</string>
+    <string name="user_already_register">用户已经注册</string>
 </resources>
