@@ -4,12 +4,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.autionsy.seller.R;
+import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.utils.OkHttp3Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class ForgetPasswordActivity extends BaseActivity{
     @BindView(R.id.title_tv)
@@ -50,11 +63,90 @@ public class ForgetPasswordActivity extends BaseActivity{
                 finish();
                 break;
             case R.id.forget_get_verify_code_tv:
-
+                verifyCode();
                 break;
             case R.id.forget_ok_btn:
 
                 break;
         }
+    }
+
+    private void verifyCode(){
+        String url = Constant.HTTP_URL + "sendValidateCode";
+        Map<String,String> map = new HashMap<>();
+        map.put("phone_number", mobilePhoneNum);
+
+        OkHttp3Utils.doPost(url, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responeString = response.body().string();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject  = new JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
+
+                            if("200".equals(resultCode)){
+                                Toast.makeText(getApplicationContext(),R.string.send_sms_code_success,Toast.LENGTH_SHORT).show();
+                            }else if("401".equals(resultCode)){
+                                Toast.makeText(getApplicationContext(),R.string.send_sms_code_fail,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void postAsynHttpForgetPassword(){
+        String url = Constant.HTTP_URL + "sellerForgetPassword";
+        Map<String,String> map = new HashMap<>();
+        map.put("username", mobilePhoneNum);
+        map.put("validate_code", verifyCode);
+        map.put("new_password", password);
+
+        OkHttp3Utils.doPost(url, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responeString = response.body().string();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject  = new JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
+
+                            if("200".equals(resultCode)){
+                                Toast.makeText(getApplicationContext(),R.string.send_sms_code_success,Toast.LENGTH_SHORT).show();
+                            }else if("403".equals(resultCode)){
+                                Toast.makeText(getApplicationContext(),R.string.send_sms_code_fail,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
+
     }
 }
