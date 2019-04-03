@@ -70,7 +70,7 @@ public class DiscoverListAdapter extends BaseAdapter {
                 .apply(options)
                 .into(mHolder.discover_header);
 
-        mHolder.discover_seller_name.setText(mList.get(position).getSellerName());
+        mHolder.discover_content.setText(mList.get(position).getSellerName());
         mHolder.discover_publish_time.setText(mList.get(position).getPublishTime());
 
         if(!mList.get(position).getImageList().isEmpty()){
@@ -83,12 +83,10 @@ public class DiscoverListAdapter extends BaseAdapter {
     public class ViewHolder{
         @BindView(R.id.discover_header)
         ImageView discover_header;
-        @BindView(R.id.discover_seller_name)
-        TextView discover_seller_name;
+        @BindView(R.id.discover_content)
+        TextView discover_content;
         @BindView(R.id.discover_publish_time)
         TextView discover_publish_time;
-        @BindView(R.id.discover_already_friend)
-        Button discover_already_friend;
         @BindView(R.id.item_discover_gv)
         GridView item_discover_gv;
 
