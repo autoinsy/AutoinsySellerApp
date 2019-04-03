@@ -265,10 +265,10 @@ public class PublishGoodsActivity extends BaseActivity{
                 }
                 RequestBody requestBody = new MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
-                        .addFormDataPart("file", fileName, RequestBody.create(MediaType.parse("image/jpg"), file))
+                        .addFormDataPart("uploadFiles", fileName, RequestBody.create(MediaType.parse("image/jpg"), file))
                         .build();
                 Request build = new Request.Builder()
-                        .url("http://172.16.52.10:8080/UploadDemo4/UploadFile") //TomCat服务器
+                        .url("http://192.168.0.102:8666/api/picture//multipleImageUpload") //TomCat服务器
                         .post(requestBody)
                         .build();
                 new OkHttpClient().newCall(build).enqueue(new Callback() {
