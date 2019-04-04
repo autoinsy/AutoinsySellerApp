@@ -12,7 +12,6 @@ import com.autionsy.seller.R;
 import com.autionsy.seller.activity.CommodityManagementActivity;
 import com.autionsy.seller.activity.OrderListActivity;
 import com.autionsy.seller.activity.SettingActivity;
-import com.autionsy.seller.entity.UserInfo;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
