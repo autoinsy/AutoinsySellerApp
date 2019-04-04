@@ -18,10 +18,17 @@ import android.widget.Toast;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.adapter.UploadImageAdapter;
+import com.autionsy.seller.constant.Constant;
 import com.autionsy.seller.dialog.PhotoPickDialog;
+import com.autionsy.seller.entity.Lease;
+import com.autionsy.seller.entity.Ornament;
 import com.autionsy.seller.utils.OkHttp3UploadFileUtil;
+import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.views.GridViewInScrollView;
 import com.scrat.app.selectorlibrary.ImageSelector;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -84,6 +91,8 @@ public class PublishOrnamentActivity extends BaseActivity{
     private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
     private File tempFile;
 
+    private Ornament ornament;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,12 +106,6 @@ public class PublishOrnamentActivity extends BaseActivity{
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.publish_ornament);
         submit_tv.setVisibility(View.VISIBLE);
-
-        ornamentName = ornament_name_et.getText().toString().trim();
-        ornamentPrice = ornament_price_et.getText().toString().trim();
-        ornamentWeight = ornament_weight_et.getText().toString().trim();
-        motorcycleType = ornament_motorcycle_type_et.getText().toString().trim();
-        motorcycleFrameCode = ornament_motorcycle_frame_code_et.getText().toString().trim();
     }
 
     @OnClick({R.id.back_btn,
@@ -121,7 +124,7 @@ public class PublishOrnamentActivity extends BaseActivity{
                 ImageSelector.show(this, REQUEST_CODE_SELECT_IMG, MAX_SELECT_COUNT);
                 break;
             case R.id.submit_tv:
-
+                postAsynHttpGoods();
                 break;
             case R.id.ornament_type_selector_layout:
 
@@ -136,6 +139,58 @@ public class PublishOrnamentActivity extends BaseActivity{
 
                 break;
         }
+    }
+
+    private void postAsynHttpGoods(){
+        ornament = new Ornament();
+
+        ornamentName = ornament_name_et.getText().toString().trim();
+        ornamentPrice = ornament_price_et.getText().toString().trim();
+        ornamentWeight = ornament_weight_et.getText().toString().trim();
+        motorcycleType = ornament_motorcycle_type_et.getText().toString().trim();
+        motorcycleFrameCode = ornament_motorcycle_frame_code_et.getText().toString().trim();
+
+        String url = Constant.HTTP_URL + "login";
+
+        Map<String,String> map = new HashMap<>();
+//        map.put("loginName", goodsName);
+//        map.put("passWord", goodsQuantity);
+//        map.put("passWord", goodsProductPlace);
+
+        OkHttp3Utils.doPost(url, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responeString = response.body().string();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
+
+                            if("200".equals(resultCode)){
+
+
+                            }else if("403".equals(resultCode)){
+                                Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(getApplicationContext(),R.string.login_fail,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
     }
 
     //====Okhttp3上传单张图片======================================================================================================

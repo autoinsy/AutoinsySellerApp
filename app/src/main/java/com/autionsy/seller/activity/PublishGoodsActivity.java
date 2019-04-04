@@ -107,12 +107,6 @@ public class PublishGoodsActivity extends BaseActivity{
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.publish_goods);
         submit_tv.setVisibility(View.VISIBLE);
-
-        goodsName = goods_name_et.getText().toString().trim();
-        goodsQuantity = goods_quantity_et.getText().toString().trim();
-        goodsProductPlace = goods_product_place_et.getText().toString().trim();
-
-//        getBitmapFromSharedPreferences();
     }
 
     @OnClick({R.id.back_btn,
@@ -130,7 +124,7 @@ public class PublishGoodsActivity extends BaseActivity{
                 ImageSelector.show(this, REQUEST_CODE_SELECT_IMG, MAX_SELECT_COUNT);
                 break;
             case R.id.submit_tv:
-
+                postAsynHttpGoods();
                 break;
             case R.id.type_selector_layout:
 
@@ -150,14 +144,16 @@ public class PublishGoodsActivity extends BaseActivity{
 
     private void postAsynHttpGoods(){
         goods = new Goods();
-        username = input_username.getText().toString().trim();
-        password = input_password.getText().toString().trim();
+        goodsName = goods_name_et.getText().toString().trim();
+        goodsQuantity = goods_quantity_et.getText().toString().trim();
+        goodsProductPlace = goods_product_place_et.getText().toString().trim();
 
         String url = Constant.HTTP_URL + "login";
 
         Map<String,String> map = new HashMap<>();
-        map.put("loginName", username);
-        map.put("passWord", password);
+        map.put("loginName", goodsName);
+        map.put("passWord", goodsQuantity);
+        map.put("passWord", goodsProductPlace);
 
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override
@@ -172,31 +168,22 @@ public class PublishGoodsActivity extends BaseActivity{
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (isUserNameAndPwdValid()){
-                            try {
-                                JSONObject jsonObject = new JSONObject(responeString);
-                                String resultCode = jsonObject.optString("code");
-                                String data = jsonObject.optString("data");
-                                String message = jsonObject.optString("message");
+                        try {
+                            JSONObject jsonObject = new JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
 
-                                if("200".equals(resultCode)){
-                                    //保存用户名和密码
-                                    editor.putString("USER_NAME", username);
-                                    editor.putString("PASSWORD", password);
-                                    editor.commit();
+                            if("200".equals(resultCode)){
 
-                                    intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
 
-                                }else if("403".equals(resultCode)){
-                                    Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
-                                }else {
-                                    Toast.makeText(getApplicationContext(),R.string.login_fail,Toast.LENGTH_SHORT).show();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            }else if("403".equals(resultCode)){
+                                Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(getApplicationContext(),R.string.login_fail,Toast.LENGTH_SHORT).show();
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     }
                 });

@@ -9,12 +9,21 @@ import android.widget.Toast;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.adapter.UploadImageAdapter;
+import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.entity.Goods;
+import com.autionsy.seller.entity.Lease;
+import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.views.GridViewInScrollView;
 import com.scrat.app.selectorlibrary.ImageSelector;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,6 +62,8 @@ public class PublishLeaseActivity extends BaseActivity{
     private File file;
     private List<String> path;//路径集合
 
+    private Lease lease;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +95,7 @@ public class PublishLeaseActivity extends BaseActivity{
                 ImageSelector.show(this, REQUEST_CODE_SELECT_IMG, MAX_SELECT_COUNT);
                 break;
             case R.id.submit_tv:
-
+                postAsynHttpGoods();
                 break;
             case R.id.lease_term_selector_layout:
 
@@ -96,6 +107,55 @@ public class PublishLeaseActivity extends BaseActivity{
 
                 break;
         }
+    }
+
+    private void postAsynHttpGoods(){
+        lease = new Lease();
+//        goodsName = goods_name_et.getText().toString().trim();
+//        goodsQuantity = goods_quantity_et.getText().toString().trim();
+//        goodsProductPlace = goods_product_place_et.getText().toString().trim();
+
+        String url = Constant.HTTP_URL + "login";
+
+        Map<String,String> map = new HashMap<>();
+//        map.put("loginName", goodsName);
+//        map.put("passWord", goodsQuantity);
+//        map.put("passWord", goodsProductPlace);
+
+        OkHttp3Utils.doPost(url, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responeString = response.body().string();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
+
+                            if("200".equals(resultCode)){
+
+
+                            }else if("403".equals(resultCode)){
+                                Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(getApplicationContext(),R.string.login_fail,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
     }
 
     @Override
