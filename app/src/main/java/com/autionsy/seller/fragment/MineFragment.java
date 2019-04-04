@@ -12,6 +12,7 @@ import com.autionsy.seller.R;
 import com.autionsy.seller.activity.CommodityManagementActivity;
 import com.autionsy.seller.activity.OrderListActivity;
 import com.autionsy.seller.activity.SettingActivity;
+import com.autionsy.seller.entity.Seller;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -41,12 +42,12 @@ public class MineFragment extends BaseFragment {
 
     private void initView(){
 
-        UserInfo userInfo = new UserInfo();
+        Seller seller = new Seller();
         RequestOptions options = new RequestOptions()
                 .placeholder(R.mipmap.default_header)
                 .error(R.mipmap.default_header);
         Glide.with(getActivity())
-                .load(userInfo.getHeaderImage())
+                .load(seller.getHeadUrl())
                 .apply(RequestOptions.circleCropTransform())
                 .apply(options)
                 .into(mine_header_iv);
