@@ -3,13 +3,28 @@ package com.autionsy.seller.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.autionsy.seller.R;
+import com.autionsy.seller.adapter.NoticeAdapter;
+import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.utils.OkHttp3Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class NoticeDetailActivity extends BaseActivity {
 
@@ -22,6 +37,8 @@ public class NoticeDetailActivity extends BaseActivity {
     TextView notice_detail_time_tv;
     @BindView(R.id.notice_detail_content_tv)
     TextView notice_detail_content_tv;
+
+    private String noticeId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,7 +54,9 @@ public class NoticeDetailActivity extends BaseActivity {
         title_tv.setText(R.string.notice_center);
 
         Bundle bundle = this.getIntent().getExtras();
-        String noticeId = bundle.getString("notice_id");
+        noticeId = bundle.getString("notice_id");
+
+        postAsynHttpGoods();
     }
 
     @OnClick({R.id.back_btn})
@@ -47,5 +66,47 @@ public class NoticeDetailActivity extends BaseActivity {
                 finish();
                 break;
         }
+    }
+
+    private void postAsynHttpGoods(){
+        String url = Constant.HTTP_URL + "login";
+
+        Map<String,String> map = new HashMap<>();
+        map.put("loginName", goodsName);
+
+        OkHttp3Utils.doPost(url, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responeString = response.body().string();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
+
+                            if("200".equals(resultCode)){
+
+
+                            }else if("403".equals(resultCode)){
+                                Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(getApplicationContext(),R.string.login_fail,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
     }
 }

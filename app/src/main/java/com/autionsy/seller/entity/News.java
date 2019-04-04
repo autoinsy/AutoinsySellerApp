@@ -8,13 +8,6 @@ public class News implements Serializable {
     private String content;
     private String date;
 
-    public News(String url,String title,String content,String date){
-        this.imageUrl = url;
-        this.title = title;
-        this.content = content;
-        this.date = date;
-    }
-
     public String getImageUrl() {
         return imageUrl;
     }

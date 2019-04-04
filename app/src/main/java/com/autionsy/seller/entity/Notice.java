@@ -8,13 +8,6 @@ public class Notice implements Serializable {
     private String time;
     private String content;
 
-    public Notice(String header,String title,String time,String content){
-        this.header = header;
-        this.title = title;
-        this.time = time;
-        this.content = content;
-    }
-
     public String getHeader() {
         return header;
     }
