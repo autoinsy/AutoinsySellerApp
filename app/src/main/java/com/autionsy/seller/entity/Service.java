@@ -6,11 +6,6 @@ import java.util.Set;
 public class Service implements Serializable {
 
     /**
-     * 服务名称
-     * */
-    private String title;
-
-    /**
      * 发布时间
      * */
     private String publishTime;
@@ -69,14 +64,6 @@ public class Service implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getPublishTime() {

@@ -153,9 +153,11 @@ public class PublishOrnamentActivity extends BaseActivity{
         String url = Constant.HTTP_URL + "login";
 
         Map<String,String> map = new HashMap<>();
-//        map.put("loginName", goodsName);
-//        map.put("passWord", goodsQuantity);
-//        map.put("passWord", goodsProductPlace);
+        map.put("loginName", ornamentName);
+        map.put("passWord", ornamentPrice);
+        map.put("passWord", ornamentWeight);
+        map.put("passWord", motorcycleType);
+        map.put("passWord", motorcycleFrameCode);
 
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override

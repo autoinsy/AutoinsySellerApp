@@ -47,22 +47,29 @@ public class PublishServiceActivity extends BaseActivity {
     @BindView(R.id.submit_tv)
     TextView submit_tv;
 
-    @BindView(R.id.service_name_et)
-    EditText service_name_et;
     @BindView(R.id.service_store_et)
     EditText service_store_et;
-    @BindView(R.id.contact_et)
-    EditText contact_et;
+    @BindView(R.id.service_contact_et)
+    EditText service_contact_et;
     @BindView(R.id.contact_phone_num_et)
     EditText contact_phone_num_et;
     @BindView(R.id.service_address_et)
     EditText service_address_et;
     @BindView(R.id.service_describe_et)
     EditText service_describe_et;
-    @BindView(R.id.service_area_tv)
-    TextView service_area_tv;
-    @BindView(R.id.service_type_tv)
-    TextView service_type_tv;
+    @BindView(R.id.service_area_et)
+    EditText service_area_et;
+    @BindView(R.id.service_type_et)
+    EditText service_type_et;
+
+    private String serviceStoreName;
+    private String contact;
+    private String phoneNum;
+    private String address;
+    private String describe;
+    private String serviceArea;
+    private String serviceType;
+
     @BindView(R.id.upload_image_textview)
     TextView upload_image_textview;
 
@@ -91,8 +98,7 @@ public class PublishServiceActivity extends BaseActivity {
 
     @OnClick({R.id.back_btn,
             R.id.image_selector_layout,
-            R.id.submit_tv,
-            R.id.service_area_selector_layout})
+            R.id.submit_tv,})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.back_btn:
@@ -104,27 +110,30 @@ public class PublishServiceActivity extends BaseActivity {
             case R.id.submit_tv:
                 postAsynHttpGoods();
                 break;
-            case R.id.service_area_selector_layout:
-
-                break;
-            case R.id.service_type_selector_layout:
-
-                break;
         }
     }
 
     private void postAsynHttpGoods(){
         service = new Service();
-//        goodsName = goods_name_et.getText().toString().trim();
-//        goodsQuantity = goods_quantity_et.getText().toString().trim();
-//        goodsProductPlace = goods_product_place_et.getText().toString().trim();
+
+        serviceStoreName = service_store_et.getText().toString().trim();
+        contact = service_contact_et.getText().toString().trim();
+        phoneNum = contact_phone_num_et.getText().toString().trim();
+        address = service_address_et.getText().toString().trim();
+        describe = service_describe_et.getText().toString().trim();
+        serviceArea = service_area_et.getText().toString().trim();
+        serviceType = service_type_et.getText().toString().trim();
 
         String url = Constant.HTTP_URL + "login";
 
         Map<String,String> map = new HashMap<>();
-//        map.put("loginName", goodsName);
-//        map.put("passWord", goodsQuantity);
-//        map.put("passWord", goodsProductPlace);
+        map.put("loginName", serviceStoreName);
+        map.put("passWord", contact);
+        map.put("passWord", phoneNum);
+        map.put("passWord", address);
+        map.put("passWord", describe);
+        map.put("passWord", serviceArea);
+        map.put("passWord", serviceType);
 
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override

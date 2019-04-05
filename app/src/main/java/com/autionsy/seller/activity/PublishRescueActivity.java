@@ -118,9 +118,12 @@ public class PublishRescueActivity extends BaseActivity {
         String url = Constant.HTTP_URL + "login";
 
         Map<String,String> map = new HashMap<>();
-//        map.put("loginName", goodsName);
-//        map.put("passWord", goodsQuantity);
-//        map.put("passWord", goodsProductPlace);
+        map.put("loginName", title);
+        map.put("passWord", companyName);
+        map.put("passWord", phoneNum);
+        map.put("passWord", addressDetail);
+        map.put("passWord", serviceScope);
+        map.put("passWord", companyIntroduce);
 
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override

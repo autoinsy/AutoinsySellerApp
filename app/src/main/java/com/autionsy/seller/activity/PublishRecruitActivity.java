@@ -113,9 +113,17 @@ public class PublishRecruitActivity extends BaseActivity{
         String url = Constant.HTTP_URL + "login";
 
         Map<String,String> map = new HashMap<>();
-//        map.put("loginName", goodsName);
-//        map.put("passWord", goodsQuantity);
-//        map.put("passWord", goodsProductPlace);
+        map.put("loginName", recruitTile);
+        map.put("passWord", companyName);
+        map.put("passWord", startSalary);
+        map.put("passWord", endSalary);
+        map.put("passWord", sellerAddress);
+        map.put("passWord", recruitPersonNum);
+        map.put("passWord", contactPhoneNum);
+        map.put("passWord", workExperience);
+        map.put("passWord", education);
+        map.put("passWord", companyPersonNum);
+
 
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override
