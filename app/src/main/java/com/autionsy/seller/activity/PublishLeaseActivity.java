@@ -56,6 +56,21 @@ public class PublishLeaseActivity extends BaseActivity{
     EditText lease_describe_et;
     @BindView(R.id.lease_mobile_phone_num_et)
     EditText lease_mobile_phone_num_et;
+    @BindView(R.id.lease_time_et)
+    EditText lease_time_et;
+    @BindView(R.id.acreage_et)
+    EditText acreage_et;
+    @BindView(R.id.lease_info_source_et)
+    EditText lease_info_source_et;
+
+    private String leaseTitle;
+    private String stallPosition;
+    private String leasePrice;
+    private String descrihe;
+    private String mobilePhoneNum;
+    private String leaseTime;
+    private String acreage;
+    private String infoSource;
 
     private static final int REQUEST_CODE_SELECT_IMG = 1;
     private static final int MAX_SELECT_COUNT = 9;
@@ -75,16 +90,12 @@ public class PublishLeaseActivity extends BaseActivity{
 
     private void initView(){
         title_tv.setVisibility(View.VISIBLE);
-        title_tv.setText(R.string.publish_goods);
+        title_tv.setText(R.string.publish_lease_title);
         submit_tv.setVisibility(View.VISIBLE);
-
     }
 
     @OnClick({R.id.back_btn,
             R.id.image_selector_layout,
-            R.id.lease_term_selector_layout,
-            R.id.acreage_selector_layout,
-            R.id.lease_info_source_selector_layout,
             R.id.submit_tv})
     public void onClick(View view){
         switch (view.getId()){
@@ -97,30 +108,33 @@ public class PublishLeaseActivity extends BaseActivity{
             case R.id.submit_tv:
                 postAsynHttpGoods();
                 break;
-            case R.id.lease_term_selector_layout:
-
-                break;
-            case R.id.acreage_selector_layout:
-
-                break;
-            case R.id.lease_info_source_selector_layout:
-
-                break;
         }
     }
 
     private void postAsynHttpGoods(){
         lease = new Lease();
-//        goodsName = goods_name_et.getText().toString().trim();
-//        goodsQuantity = goods_quantity_et.getText().toString().trim();
-//        goodsProductPlace = goods_product_place_et.getText().toString().trim();
+
+        leaseTitle = lease_title_et.getText().toString().trim();
+        stallPosition = lease_stall_position_et.getText().toString().trim();
+        leasePrice = lease_price_et.getText().toString().trim();
+        descrihe = lease_describe_et.getText().toString().trim();
+        mobilePhoneNum = lease_mobile_phone_num_et.getText().toString().trim();
+        leaseTime = lease_time_et.getText().toString().trim();
+        acreage = acreage_et.getText().toString().trim();
+        infoSource = lease_info_source_et.getText().toString().trim();
+
 
         String url = Constant.HTTP_URL + "login";
 
         Map<String,String> map = new HashMap<>();
-//        map.put("loginName", goodsName);
-//        map.put("passWord", goodsQuantity);
-//        map.put("passWord", goodsProductPlace);
+        map.put("loginName", leaseTitle);
+        map.put("passWord", stallPosition);
+        map.put("passWord", leasePrice);
+        map.put("passWord", descrihe);
+        map.put("passWord", mobilePhoneNum);
+        map.put("passWord", leaseTime);
+        map.put("passWord", acreage);
+        map.put("passWord", infoSource);
 
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override

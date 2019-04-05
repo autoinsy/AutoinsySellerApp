@@ -162,9 +162,13 @@
     <string name="input_lease_contact">请输入联系人</string>
     <string name="lease_mobile_phone_num">联系电话&#058;</string>
     <string name="input_lease_mobile_phone_num">请输入联系电话</string>
-    <string name="lease_term">租期</string>
-    <string name="acreage">面积</string>
-    <string name="lease_info_source">信息来源</string>
+    <string name="lease_term">租期&#058;</string>
+    <string name="lease_time_hint">请输入租期（年）</string>
+    <string name="acreage">面积&#058;</string>
+    <string name="acreage_hint">请输入面积(平方米)</string>
+    <string name="lease_info_source">信息来源&#058;</string>
+    <string name="lease_info_source_hint">请输入信息来源（个人或公司）</string>
+    <string name="publish_lease_title">发布租赁</string>
 
     <!--发布内饰商品-->
     <string name="publish_ornament">发布内饰</string>

@@ -9,12 +9,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.fragment.DiscoverFragment;
 import com.autionsy.seller.fragment.HomeFragment;
 import com.autionsy.seller.fragment.MessageFragment;
 import com.autionsy.seller.fragment.MineFragment;
@@ -46,7 +44,6 @@ public class MainActivity extends BaseActivity {
 
     private HomeFragment mHomeFragment;
     private MessageFragment mMessageFragment;
-    private DiscoverFragment mDiscoverFragment;
     private MineFragment mMineFrag;
 
     @SuppressLint("HandlerLeak")

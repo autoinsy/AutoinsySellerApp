@@ -63,6 +63,10 @@ public class PublishGoodsActivity extends BaseActivity{
     EditText goods_quantity_et;
     @BindView(R.id.goods_product_place_et)
     EditText goods_product_place_et;
+    @BindView(R.id.goods_price_et)
+    EditText goods_price_et;
+    @BindView(R.id.motocycle_frame_code_et)
+    EditText motocycle_frame_code_et;
 
     @BindView(R.id.goods_type_tv)
     TextView goods_type_tv;
@@ -77,6 +81,8 @@ public class PublishGoodsActivity extends BaseActivity{
     private String goodsName;
     private String goodsQuantity;
     private String goodsProductPlace;
+    private String goodsPrice;
+    private String goodsFrameCode;
 
     private static final int REQUEST_CODE_SELECT_IMG = 1;
     private static final int MAX_SELECT_COUNT = 9;
@@ -147,6 +153,8 @@ public class PublishGoodsActivity extends BaseActivity{
         goodsName = goods_name_et.getText().toString().trim();
         goodsQuantity = goods_quantity_et.getText().toString().trim();
         goodsProductPlace = goods_product_place_et.getText().toString().trim();
+        goodsPrice = goods_price_et.getText().toString().trim();
+        goodsFrameCode = motocycle_frame_code_et.getText().toString().trim();
 
         String url = Constant.HTTP_URL + "login";
 
@@ -154,6 +162,8 @@ public class PublishGoodsActivity extends BaseActivity{
         map.put("loginName", goodsName);
         map.put("passWord", goodsQuantity);
         map.put("passWord", goodsProductPlace);
+        map.put("passWord", goodsPrice);
+        map.put("passWord", goodsFrameCode);
 
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override
