@@ -85,22 +85,6 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
         list_title.add("我爱NBA");
         list_title.add("我爱科比布莱恩特");
 
-        newsList.add(new News("http://pic.sc.chinaz.com/files/pic/pic9/201806/zzpic12608.jpg",
-                "Okhttp3基本使用",
-                "HTTP是现代应用常用的一种交换数据和媒体的网络方式，高效地使用HTTP能让资源加载更快，节省带宽。OkHttp是一个高效的HTTP客户端，它有以下默认特性",
-                "2018-12-18"));
-        newsList.add(new News("http://pic.sc.chinaz.com/files/pic/pic9/201806/zzpic12608.jpg",
-                "Okhttp3基本使用",
-                "HTTP是现代应用常用的一种交换数据和媒体的网络方式，高效地使用HTTP能让资源加载更快，节省带宽。OkHttp是一个高效的HTTP客户端，它有以下默认特性",
-                "2018-12-18"));
-        newsList.add(new News("http://pic.sc.chinaz.com/files/pic/pic9/201806/zzpic12608.jpg",
-                "Okhttp3基本使用",
-                "HTTP是现代应用常用的一种交换数据和媒体的网络方式，高效地使用HTTP能让资源加载更快，节省带宽。OkHttp是一个高效的HTTP客户端，它有以下默认特性",
-                "2018-12-18"));
-        newsList.add(new News("http://pic.sc.chinaz.com/files/pic/pic9/201806/zzpic12608.jpg",
-                "Okhttp3基本使用",
-                "HTTP是现代应用常用的一种交换数据和媒体的网络方式，高效地使用HTTP能让资源加载更快，节省带宽。OkHttp是一个高效的HTTP客户端，它有以下默认特性",
-                "2018-12-18"));
 
         //简单使用
         banner.setImages(imageUrlList)

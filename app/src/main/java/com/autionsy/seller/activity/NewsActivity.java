@@ -99,7 +99,7 @@ public class NewsActivity extends BaseActivity {
 
                             if("200".equals(resultCode)){
 
-                                LinearLayoutManager manager=new LinearLayoutManager(this);
+                                LinearLayoutManager manager=new LinearLayoutManager(NewsActivity.this);
                                 news_recycler_view.setLayoutManager(manager);
                                 news_recycler_view.addItemDecoration(new RecyclerViewDivider(NewsActivity.this, LinearLayoutManager.HORIZONTAL, 2, ContextCompat.getColor(NewsActivity.this, R.color.gray_line_2)));
                                 newsAdapter = new NewsAdapter(NewsActivity.this,newsArrayList);
