@@ -32,8 +32,6 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.home_iv)
     ImageView home_iv;
-//    @BindView(R.id.discover_iv)
-//    ImageView discover_iv;
     @BindView(R.id.message_iv)
     ImageView message_iv;
     @BindView(R.id.mine_iv)
@@ -41,8 +39,6 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.home_tv)
     TextView home_tv;
-//    @BindView(R.id.discover_tv)
-//    TextView discover_tv;
     @BindView(R.id.message_tv)
     TextView message_tv;
     @BindView(R.id.mine_tv)
@@ -73,7 +69,6 @@ public class MainActivity extends BaseActivity {
     }
 
     @OnClick({R.id.home_layout,
-//            R.id.discover_layout,
             R.id.message_layout,
             R.id.mine_layout})
     public void onClick(View view){
@@ -81,9 +76,6 @@ public class MainActivity extends BaseActivity {
             case R.id.home_layout:
                 setChioceItem(0);
                 break;
-//            case R.id.discover_layout:
-//                setChioceItem(1);
-//                break;
             case R.id.message_layout:
                 setChioceItem(1);
                 break;
@@ -111,19 +103,6 @@ public class MainActivity extends BaseActivity {
                 }
 
                 break;
-
-//            case 1:
-//                discover_iv.setBackgroundResource(R.mipmap.discover_press);
-//                discover_tv.setTextColor(getResources().getColor(R.color.orange_text));
-//
-//                if (mDiscoverFragment == null) {
-//                    mDiscoverFragment = new DiscoverFragment();
-//                    fragmentTransaction.add(R.id.fragment_content, mDiscoverFragment);
-//                } else {
-//                    fragmentTransaction.show(mDiscoverFragment);
-//                }
-//
-//                break;
 
             case 1:
                 message_iv.setBackgroundResource(R.mipmap.message_press);
@@ -162,9 +141,6 @@ public class MainActivity extends BaseActivity {
         home_iv.setBackgroundResource(R.mipmap.home);
         home_tv.setTextColor(getResources().getColor(R.color.black));
 
-//        discover_iv.setBackgroundResource(R.mipmap.discover);
-//        discover_tv.setTextColor(getResources().getColor(R.color.black));
-
         message_iv.setBackgroundResource(R.mipmap.message);
         message_tv.setTextColor(getResources().getColor(R.color.black));
 
@@ -181,10 +157,6 @@ public class MainActivity extends BaseActivity {
         if (mHomeFragment != null) {
             fragmentTransaction.hide(mHomeFragment);
         }
-
-//        if (mDiscoverFragment != null) {
-//            fragmentTransaction.hide(mDiscoverFragment);
-//        }
 
         if (mMessageFragment != null) {
             fragmentTransaction.hide(mMessageFragment);

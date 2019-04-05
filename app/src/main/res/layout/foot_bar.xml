@@ -28,29 +28,6 @@
             android:textColor="@color/blue_text"/>
     </LinearLayout>
 
-    <!--<LinearLayout
-        android:id="@+id/discover_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
-        <ImageView
-            android:id="@+id/discover_iv"
-            android:layout_width="@dimen/icon_width"
-            android:layout_height="@dimen/icon_height"
-            android:background="@mipmap/discover" />
-        <TextView
-            android:id="@+id/discover_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/discovery"
-            android:textSize="@dimen/font_size_13"
-            android:textColor="@color/gray_text"/>
-    </LinearLayout>-->
-
     <LinearLayout
         android:id="@+id/message_layout"
         android:layout_width="match_parent"
