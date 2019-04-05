@@ -77,9 +77,6 @@ public class NoticeActivity extends BaseActivity {
         String url = Constant.HTTP_URL + "login";
 
         Map<String,String> map = new HashMap<>();
-//        map.put("loginName", goodsName);
-//        map.put("passWord", goodsQuantity);
-//        map.put("passWord", goodsProductPlace);
 
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override

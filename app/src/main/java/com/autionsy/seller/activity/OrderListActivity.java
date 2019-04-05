@@ -3,19 +3,34 @@ package com.autionsy.seller.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.autionsy.seller.R;
+import com.autionsy.seller.adapter.NoticeAdapter;
 import com.autionsy.seller.adapter.OrderListAdapter;
+import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.entity.Notice;
 import com.autionsy.seller.entity.Order;
+import com.autionsy.seller.utils.OkHttp3Utils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class OrderListActivity extends BaseActivity {
     @BindView(R.id.title_tv)
@@ -28,6 +43,8 @@ public class OrderListActivity extends BaseActivity {
     private List<Order> mList = new ArrayList<>();
 
     private String orderState;
+
+    private Order order;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,10 +79,7 @@ public class OrderListActivity extends BaseActivity {
                 title_tv.setText(R.string.refund_title);
                 break;
         }
-
-        /**需要根据状态来发送请求*/
-        mAdapter = new OrderListAdapter(OrderListActivity.this,mList);
-        trade_flow_lv.setAdapter(mAdapter);
+        postAsynHttpOrder();
     }
 
     @OnClick({R.id.back_btn})
@@ -75,5 +89,53 @@ public class OrderListActivity extends BaseActivity {
                 finish();
                 break;
         }
+    }
+
+    private void postAsynHttpOrder(){
+
+        order = new Order();
+
+        String url = Constant.HTTP_URL + "login";
+
+        Map<String,String> map = new HashMap<>();
+        map.put("orderState",orderState);
+
+        OkHttp3Utils.doPost(url, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responeString = response.body().string();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
+
+                            if("200".equals(resultCode)){
+
+                                /**需要根据状态来发送请求*/
+                                mAdapter = new OrderListAdapter(OrderListActivity.this,mList);
+                                trade_flow_lv.setAdapter(mAdapter);
+
+                            }else if("403".equals(resultCode)){
+                                Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(getApplicationContext(),R.string.login_fail,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
     }
 }
