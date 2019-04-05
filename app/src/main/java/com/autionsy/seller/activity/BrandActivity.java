@@ -62,7 +62,7 @@ public class BrandActivity extends BaseActivity {
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.publish_goods);
 
-        postAsynHttpGoods();
+        postAsynHttpBrand();
     }
 
     @OnClick({R.id.back_btn})
@@ -74,7 +74,7 @@ public class BrandActivity extends BaseActivity {
         }
     }
 
-    private void postAsynHttpGoods(){
+    private void postAsynHttpBrand(){
         brand = new Brand();
 
         String url = Constant.HTTP_URL + "login";

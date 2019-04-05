@@ -56,7 +56,7 @@ public class NoticeDetailActivity extends BaseActivity {
         Bundle bundle = this.getIntent().getExtras();
         noticeId = bundle.getString("notice_id");
 
-        postAsynHttpGoods();
+        postAsynHttpNoticeDetail();
     }
 
     @OnClick({R.id.back_btn})
@@ -68,7 +68,7 @@ public class NoticeDetailActivity extends BaseActivity {
         }
     }
 
-    private void postAsynHttpGoods(){
+    private void postAsynHttpNoticeDetail(){
         String url = Constant.HTTP_URL + "login";
 
         Map<String,String> map = new HashMap<>();

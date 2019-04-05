@@ -59,7 +59,7 @@ public class NewsActivity extends BaseActivity {
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.news_title_text);
 
-        postAsynHttpGoods();
+        postAsynHttpNews();
     }
 
     @OnClick({R.id.back_btn})
@@ -71,7 +71,7 @@ public class NewsActivity extends BaseActivity {
         }
     }
 
-    private void postAsynHttpGoods(){
+    private void postAsynHttpNews(){
         news = new News();
 
         String url = Constant.HTTP_URL + "login";

@@ -58,7 +58,7 @@ public class NoticeActivity extends BaseActivity {
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.notice_center);
 
-        postAsynHttpGoods();
+        postAsynHttpNotice();
     }
 
     @OnClick({R.id.back_btn})
@@ -70,7 +70,7 @@ public class NoticeActivity extends BaseActivity {
         }
     }
 
-    private void postAsynHttpGoods(){
+    private void postAsynHttpNotice(){
 
         notice = new Notice();
 
