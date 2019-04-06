@@ -3,6 +3,8 @@ package com.autionsy.seller.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import com.autionsy.seller.R;
 import com.autionsy.seller.activity.ExpressDeliveryCatchOrderActivity;
 import com.autionsy.seller.activity.NewsActivity;
+import com.autionsy.seller.activity.NewsDetailActivity;
 import com.autionsy.seller.activity.NoticeActivity;
 import com.autionsy.seller.activity.OrderExpressDeliveryActivity;
 import com.autionsy.seller.activity.PublishGoodsActivity;
@@ -24,8 +27,13 @@ import com.autionsy.seller.activity.PublishRecruitActivity;
 import com.autionsy.seller.activity.PublishRescueActivity;
 import com.autionsy.seller.activity.PublishServiceActivity;
 import com.autionsy.seller.adapter.HomeAdapter;
+import com.autionsy.seller.adapter.NewsAdapter;
+import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.entity.Advertisement;
 import com.autionsy.seller.entity.News;
+import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.views.ListViewInScrollView;
+import com.autionsy.seller.views.RecyclerViewDivider;
 import com.bumptech.glide.Glide;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -33,11 +41,20 @@ import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class HomeFragment extends BaseFragment implements OnBannerListener{
 
@@ -60,6 +77,9 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
 
     private ArrayList<News> newsList = new ArrayList<>();
     private HomeAdapter homeAdapter;
+
+    private News news;
+    private Advertisement advertisement;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag_home, null);
@@ -85,6 +105,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
         list_title.add("我爱NBA");
         list_title.add("我爱科比布莱恩特");
 
+//        postAsynHttpAdvertisement();
 
         //简单使用
         banner.setImages(imageUrlList)
@@ -102,14 +123,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
         search_layout.setVisibility(View.VISIBLE);
         notice_btn.setVisibility(View.VISIBLE);
 
-        homeAdapter = new HomeAdapter(getActivity(),newsList);
-        home_news_listview.setAdapter(homeAdapter);
-        home_news_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
+        postAsynHttpMainPageNews();
     }
 
 
@@ -198,4 +212,107 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
                     .into(imageView);
         }
     }
+
+    private void postAsynHttpMainPageNews(){
+        news = new News();
+
+        String url = Constant.HTTP_URL + "login";
+
+        Map<String,String> map = new HashMap<>();
+
+        OkHttp3Utils.doPost(url, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responeString = response.body().string();
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
+
+                            if("200".equals(resultCode)){
+
+                                homeAdapter = new HomeAdapter(getActivity(),newsList);
+                                home_news_listview.setAdapter(homeAdapter);
+                                home_news_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    }
+                                });
+                            }else if("403".equals(resultCode)){
+                                Toast.makeText(getActivity(),R.string.param_error,Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(getActivity(),R.string.login_fail,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void postAsynHttpAdvertisement(){
+        advertisement = new Advertisement();
+
+        String url = Constant.HTTP_URL + "login";
+
+        Map<String,String> map = new HashMap<>();
+
+        OkHttp3Utils.doPost(url, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responeString = response.body().string();
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
+
+                            if("200".equals(resultCode)){
+
+                                imageUrlList.add("http://pic.sc.chinaz.com/files/pic/pic9/201806/zzpic12608.jpg");
+                                imageUrlList.add("http://pic.sc.chinaz.com/files/pic/pic9/201806/zzpic12514.jpg");
+                                imageUrlList.add("http://pic.sc.chinaz.com/files/pic/pic9/201810/zzpic14773.jpg");
+                                imageUrlList.add("http://pic1.sc.chinaz.com/files/pic/pic9/201810/zzpic14623.jpg");
+
+                                list_title.add("我爱NBA");
+                                list_title.add("我爱科比布莱恩特");
+                                list_title.add("我爱NBA");
+                                list_title.add("我爱科比布莱恩特");
+
+                            }else if("403".equals(resultCode)){
+                                Toast.makeText(getActivity(),R.string.param_error,Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(getActivity(),R.string.login_fail,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
 }
