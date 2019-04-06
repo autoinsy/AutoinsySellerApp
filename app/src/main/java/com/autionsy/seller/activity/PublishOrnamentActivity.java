@@ -90,6 +90,7 @@ public class PublishOrnamentActivity extends BaseActivity{
     private File tempFile;
 
     private Ornament ornament;
+    private Intent intent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -124,10 +125,12 @@ public class PublishOrnamentActivity extends BaseActivity{
                 postAsynHttpGoods();
                 break;
             case R.id.ornament_type_selector_layout:
-
+                intent = new Intent(PublishOrnamentActivity.this, CategoryActivity.class);
+                startActivity(intent);
                 break;
             case R.id.ornament_brand_selector_layout:
-
+                intent = new Intent(PublishOrnamentActivity.this, BrandActivity.class);
+                startActivity(intent);
                 break;
             case R.id.ornament_upload_image_iv:
                 UploadSingleImage();

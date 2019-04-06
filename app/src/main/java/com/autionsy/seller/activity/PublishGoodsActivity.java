@@ -131,7 +131,8 @@ public class PublishGoodsActivity extends BaseActivity{
                 postAsynHttpGoods();
                 break;
             case R.id.type_selector_layout:
-
+                intent = new Intent(PublishGoodsActivity.this, CategoryActivity.class);
+                startActivity(intent);
                 break;
             case R.id.brand_selector_layout:
                 intent = new Intent(PublishGoodsActivity.this, BrandActivity.class);

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <color name="colorPrimary">#008577</color>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingDefaultResource">
+    <color name="colorPrimary" >#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
@@ -52,7 +53,6 @@
     <color name="holo_blue_bright">#ff00ddff</color>
 
     <color name="darker_gray">#aaa</color>
-    <color name="green">#2faf53</color>
     <color name="calendar_bg">#E4E4E4</color>
     <color name="light_red">#d53a3a</color>
     <color name="bg">#f5f7fc</color>
@@ -74,4 +74,12 @@
     <color name="textcolor35">#353535</color>
     <color name="main_color">#177F5E</color>
     <color name="text_green">#29b457</color>
+
+    <color name="background">#f1f1f1</color>
+
+    <color name="sred">#ff4141</color>
+    <color name="gold">#d8ab5c</color>
+    <color name="orange">#ffa500</color>
+    <color name="pink">#ffc0cb</color>
+    <color name="green">#FF34A350</color>
 </resources>
