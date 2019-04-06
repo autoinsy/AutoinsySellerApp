@@ -70,8 +70,6 @@ public class PublishOrnamentActivity extends BaseActivity{
 
     @BindView(R.id.ornament_upload_image_iv)
     ImageView ornament_upload_image_iv;
-    @BindView(R.id.ornament_upload_video_iv)
-    ImageView ornament_upload_video_iv;
 
     private String ornamentName;
     private String ornamentPrice;
@@ -113,8 +111,7 @@ public class PublishOrnamentActivity extends BaseActivity{
             R.id.submit_tv,
             R.id.ornament_type_selector_layout,
             R.id.ornament_brand_selector_layout,
-            R.id.ornament_upload_image_iv,
-            R.id.ornament_upload_video_iv})
+            R.id.ornament_upload_image_iv})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.back_btn:
@@ -134,9 +131,6 @@ public class PublishOrnamentActivity extends BaseActivity{
                 break;
             case R.id.ornament_upload_image_iv:
                 UploadSingleImage();
-                break;
-            case R.id.ornament_upload_video_iv:
-
                 break;
         }
     }

@@ -75,8 +75,6 @@ public class PublishGoodsActivity extends BaseActivity{
 
     @BindView(R.id.goods_upload_image_iv)
     ImageView goods_upload_image_iv;
-    @BindView(R.id.goods_upload_video_iv)
-    ImageView goods_upload_video_iv;
 
     private String goodsName;
     private String goodsQuantity;
@@ -141,9 +139,6 @@ public class PublishGoodsActivity extends BaseActivity{
                 break;
             case R.id.goods_upload_image_iv:
                 UploadSingleImage();
-                break;
-            case R.id.goods_upload_video_iv:
-
                 break;
         }
     }
