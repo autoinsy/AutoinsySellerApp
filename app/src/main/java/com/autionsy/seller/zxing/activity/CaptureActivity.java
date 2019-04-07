@@ -85,7 +85,6 @@ public class CaptureActivity extends BaseActivity implements Callback {
         setContentView(R.layout.act_scanner);
         ButterKnife.bind(this);
 
-        //ViewUtil.addTopView(getApplicationContext(), this, R.string.scan_card);
         CameraManager.init(getApplication());
         viewfinderView = findViewById(R.id.viewfinder_content);
         back = findViewById(R.id.back_btn);
