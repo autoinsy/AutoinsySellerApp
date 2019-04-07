@@ -268,4 +268,5 @@
     <string name="user_already_register">用户已经注册</string>
 
     <string name="category_title_text">分类</string>
+    <string name="scan_qr_code">扫码</string>
 </resources>

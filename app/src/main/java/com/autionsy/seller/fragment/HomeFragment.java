@@ -34,6 +34,7 @@ import com.autionsy.seller.entity.News;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.views.ListViewInScrollView;
 import com.autionsy.seller.views.RecyclerViewDivider;
+import com.autionsy.seller.zxing.activity.CaptureActivity;
 import com.bumptech.glide.Glide;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -142,7 +143,8 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
     public void onClick(View view){
         switch (view.getId()){
             case R.id.scan_btn:
-
+                intent = new Intent(getActivity(), CaptureActivity.class);
+                startActivity(intent);
                 break;
             case R.id.search_layout:
 
