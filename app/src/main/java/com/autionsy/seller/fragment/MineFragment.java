@@ -36,21 +36,58 @@ public class MineFragment extends BaseFragment {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         ButterKnife.bind(this, view);
-        initView();
         return view;
     }
 
-    private void initView(){
-
+    private void postAsynHttpMine(){
         Seller seller = new Seller();
-        RequestOptions options = new RequestOptions()
-                .placeholder(R.mipmap.default_header)
-                .error(R.mipmap.default_header);
-        Glide.with(getActivity())
-                .load(seller.getHeadUrl())
-                .apply(RequestOptions.circleCropTransform())
-                .apply(options)
-                .into(mine_header_iv);
+
+        String url = Constant.HTTP_URL + "login";
+
+        Map<String,String> map = new HashMap<>();
+
+        OkHttp3Utils.doPost(url, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responeString = response.body().string();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
+
+                            if("200".equals(resultCode)){
+
+                                RequestOptions options = new RequestOptions()
+                                        .placeholder(R.mipmap.default_header)
+                                        .error(R.mipmap.default_header);
+                                Glide.with(getActivity())
+                                        .load(seller.getHeadUrl())
+                                        .apply(RequestOptions.circleCropTransform())
+                                        .apply(options)
+                                        .into(mine_header_iv);
+
+                            }else if("403".equals(resultCode)){
+                                Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(getApplicationContext(),R.string.login_fail,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
     }
 
     @OnClick({R.id.mine_setting_iv,
