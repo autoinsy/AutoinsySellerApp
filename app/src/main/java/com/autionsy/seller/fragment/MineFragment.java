@@ -36,6 +36,8 @@ public class MineFragment extends BaseFragment {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         ButterKnife.bind(this, view);
+
+        postAsynHttpMine();
         return view;
     }
 
