@@ -31,6 +31,7 @@ import com.autionsy.seller.adapter.NewsAdapter;
 import com.autionsy.seller.constant.Constant;
 import com.autionsy.seller.entity.Advertisement;
 import com.autionsy.seller.entity.News;
+import com.autionsy.seller.entity.NewsImages;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.views.ListViewInScrollView;
 import com.autionsy.seller.views.RecyclerViewDivider;
@@ -42,12 +43,14 @@ import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -76,7 +79,8 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
     @BindView(R.id.home_news_listview)
     ListViewInScrollView home_news_listview;
 
-    private ArrayList<News> newsList = new ArrayList<>();
+    private List<News> newsList = new ArrayList<>();
+
     private HomeAdapter homeAdapter;
 
     private News news;
@@ -106,7 +110,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
         list_title.add("我爱NBA");
         list_title.add("我爱科比布莱恩特");
 
-//        postAsynHttpAdvertisement();
+        postAsynHttpAdvertisement();
 
         //简单使用
         banner.setImages(imageUrlList)
@@ -218,8 +222,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
     private void postAsynHttpMainPageNews(){
         news = new News();
 
-        String url = Constant.HTTP_URL + "login";
-
+        String url = Constant.HTTP_URL + "getNewsByTime";
         Map<String,String> map = new HashMap<>();
 
         OkHttp3Utils.doPost(url, map, new Callback() {
@@ -242,15 +245,25 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
                             String message = jsonObject.optString("message");
 
                             if("200".equals(resultCode)){
-
+                                JSONArray jsonArray = jsonObject.getJSONArray(data);
+                                for (int i=0; i<jsonArray.length(); i++){
+                                    JSONObject jsonObjectNews = jsonArray.getJSONObject(i);
+                                    News news = new News();
+                                    news.setContent(jsonObjectNews.getString("content"));
+                                    news.setDate(jsonObjectNews.getString("publishTime"));
+                                    news.setTitle(jsonObjectNews.getString("newsTitle"));
+                                    newsList.add(news);
+                                }
                                 homeAdapter = new HomeAdapter(getActivity(),newsList);
                                 home_news_listview.setAdapter(homeAdapter);
                                 home_news_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                                        Intent intent = new Intent(getActivity(),NewsDetailActivity.class);
+                                        startActivity(intent);
                                     }
                                 });
+
                             }else if("403".equals(resultCode)){
                                 Toast.makeText(getActivity(),R.string.param_error,Toast.LENGTH_SHORT).show();
                             }else {
