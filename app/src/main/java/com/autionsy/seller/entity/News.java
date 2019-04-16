@@ -3,11 +3,20 @@ package com.autionsy.seller.entity;
 import java.io.Serializable;
 
 public class News implements Serializable {
+
+    private long newsId;
     private String imageUrl;
     private String title;
     private String content;
     private String date;
 
+    public long getNewsId() {
+        return newsId;
+    }
+
+    public void setNewsId(long newsId) {
+        this.newsId = newsId;
+    }
     public String getImageUrl() {
         return imageUrl;
     }

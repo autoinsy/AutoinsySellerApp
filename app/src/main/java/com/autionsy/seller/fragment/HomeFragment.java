@@ -80,10 +80,11 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
     ListViewInScrollView home_news_listview;
 
     private List<News> newsList = new ArrayList<>();
+    private News news = new News();
+    private String newsId;
 
     private HomeAdapter homeAdapter;
 
-    private News news;
     private Advertisement advertisement;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -99,16 +100,6 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
     private void initView() {
 
         banner = view.findViewById(R.id.banner);
-
-        imageUrlList.add("http://pic.sc.chinaz.com/files/pic/pic9/201806/zzpic12608.jpg");
-        imageUrlList.add("http://pic.sc.chinaz.com/files/pic/pic9/201806/zzpic12514.jpg");
-        imageUrlList.add("http://pic.sc.chinaz.com/files/pic/pic9/201810/zzpic14773.jpg");
-        imageUrlList.add("http://pic1.sc.chinaz.com/files/pic/pic9/201810/zzpic14623.jpg");
-
-        list_title.add("我爱NBA");
-        list_title.add("我爱科比布莱恩特");
-        list_title.add("我爱NBA");
-        list_title.add("我爱科比布莱恩特");
 
         postAsynHttpAdvertisement();
 
@@ -248,7 +239,8 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
                                 JSONArray jsonArray = jsonObject.getJSONArray(data);
                                 for (int i=0; i<jsonArray.length(); i++){
                                     JSONObject jsonObjectNews = jsonArray.getJSONObject(i);
-                                    News news = new News();
+
+                                    news.setNewsId(jsonObjectNews.getLong("newsID"));
                                     news.setContent(jsonObjectNews.getString("content"));
                                     news.setDate(jsonObjectNews.getString("publishTime"));
                                     news.setTitle(jsonObjectNews.getString("newsTitle"));
@@ -260,6 +252,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         Intent intent = new Intent(getActivity(),NewsDetailActivity.class);
+                                        intent.putExtra("news_id",news.getNewsId());
                                         startActivity(intent);
                                     }
                                 });
@@ -281,7 +274,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
     private void postAsynHttpAdvertisement(){
         advertisement = new Advertisement();
 
-        String url = Constant.HTTP_URL + "login";
+        String url = Constant.HTTP_URL + "appRotateAdvertisement";
 
         Map<String,String> map = new HashMap<>();
 
@@ -305,16 +298,15 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
                             String message = jsonObject.optString("message");
 
                             if("200".equals(resultCode)){
+                                JSONArray jsonArray = jsonObject.getJSONArray(data);
 
-                                imageUrlList.add("http://pic.sc.chinaz.com/files/pic/pic9/201806/zzpic12608.jpg");
-                                imageUrlList.add("http://pic.sc.chinaz.com/files/pic/pic9/201806/zzpic12514.jpg");
-                                imageUrlList.add("http://pic.sc.chinaz.com/files/pic/pic9/201810/zzpic14773.jpg");
-                                imageUrlList.add("http://pic1.sc.chinaz.com/files/pic/pic9/201810/zzpic14623.jpg");
-
-                                list_title.add("我爱NBA");
-                                list_title.add("我爱科比布莱恩特");
-                                list_title.add("我爱NBA");
-                                list_title.add("我爱科比布莱恩特");
+                                for (int i=0; i<jsonArray.length(); i++){
+                                    JSONObject jsonObjectAdertisement = jsonArray.getJSONObject(i);
+                                    String advertisementTitle = jsonObjectAdertisement.getString("appRotateAdvertisementName");
+                                    String advertisementUrl = jsonObjectAdertisement.getString("appRotateAdvertisementUrl");
+                                    imageUrlList.add(advertisementUrl);
+                                    list_title.add(advertisementTitle);
+                                }
 
                             }else if("403".equals(resultCode)){
                                 Toast.makeText(getActivity(),R.string.param_error,Toast.LENGTH_SHORT).show();

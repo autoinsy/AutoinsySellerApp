@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,9 +22,9 @@ import butterknife.ButterKnife;
 public class HomeAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<News> mList = new ArrayList<>();
+    private List<News> mList = new ArrayList<>();
 
-    public HomeAdapter(Context context,ArrayList<News> list){
+    public HomeAdapter(Context context,List<News> list){
         this.context = context;
         this.mList = list;
     }
