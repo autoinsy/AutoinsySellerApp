@@ -29,8 +29,6 @@ public class ForgetPasswordActivity extends BaseActivity{
     TextView title_tv;
     @BindView(R.id.forget_input_mobile_phone_num_et)
     EditText forget_input_mobile_phone_num_et;
-    @BindView(R.id.forget_input_verify_code_et)
-    EditText forget_input_verify_code_et;
     @BindView(R.id.forget_input_password_et)
     EditText forget_input_password_et;
 
@@ -50,71 +48,28 @@ public class ForgetPasswordActivity extends BaseActivity{
     private void initView(){
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.forget_password);
-
-        mobilePhoneNum = forget_input_mobile_phone_num_et.getText().toString().trim();
-        verifyCode = forget_input_verify_code_et.getText().toString().trim();
-        password = forget_input_password_et.getText().toString().trim();
     }
 
-    @OnClick({R.id.back_btn,R.id.forget_get_verify_code_tv,R.id.forget_ok_btn})
+    @OnClick({R.id.back_btn,R.id.forget_ok_btn})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.back_btn:
                 finish();
                 break;
-            case R.id.forget_get_verify_code_tv:
-                verifyCode();
-                break;
             case R.id.forget_ok_btn:
-
+                postAsynHttpForgetPassword();
                 break;
         }
     }
 
-    private void verifyCode(){
-        String url = Constant.HTTP_URL + "sendValidateCode";
-        Map<String,String> map = new HashMap<>();
-        map.put("phone_number", mobilePhoneNum);
-
-        OkHttp3Utils.doPost(url, map, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String responeString = response.body().string();
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject jsonObject  = new JSONObject(responeString);
-                            String resultCode = jsonObject.optString("code");
-                            String data = jsonObject.optString("data");
-                            String message = jsonObject.optString("message");
-
-                            if("200".equals(resultCode)){
-                                Toast.makeText(getApplicationContext(),R.string.send_sms_code_success,Toast.LENGTH_SHORT).show();
-                            }else if("401".equals(resultCode)){
-                                Toast.makeText(getApplicationContext(),R.string.send_sms_code_fail,Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        });
-    }
-
     private void postAsynHttpForgetPassword(){
+        mobilePhoneNum = forget_input_mobile_phone_num_et.getText().toString().trim();
+        password = forget_input_password_et.getText().toString().trim();
+
         String url = Constant.HTTP_URL + "sellerForgetPassword";
         Map<String,String> map = new HashMap<>();
         map.put("username", mobilePhoneNum);
-        map.put("validate_code", verifyCode);
-        map.put("new_password", password);
+        map.put("password", password);
 
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override
