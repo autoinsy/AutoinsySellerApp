@@ -40,19 +40,30 @@
                     android:layout_marginTop="@dimen/dp_15"
                     android:layout_gravity="center_horizontal"/>
 
-                <com.sendtion.xrichtext.RichTextView
-                    android:id="@+id/news_detail_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/dp_15"
-                    android:layout_marginLeft="@dimen/dp_15"
-                    android:layout_marginRight="@dimen/dp_15"
-                    android:layout_marginBottom="@dimen/dp_15"
-                    app:rt_view_text_line_space="6dp"
-                    app:rt_view_image_height="0"
-                    app:rt_view_image_bottom="10"
-                    app:rt_view_text_size="16sp"
-                    app:rt_view_text_color="@color/black"/>
+                <ImageView
+                    android:id="@+id/news_image_url_1"
+                    android:layout_width="300dp"
+                    android:layout_height="250dp"
+                    android:src="@mipmap/default_product"
+                    android:scaleType="centerCrop"/>
+
+                <TextView
+                    android:id="@+id/news_content_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dp_15"
+                    android:text="ggggggggggggg"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_gravity="center_horizontal"/>
+
+                <ImageView
+                    android:id="@+id/news_image_url_2"
+                    android:layout_width="300dp"
+                    android:layout_height="250dp"
+                    android:src="@mipmap/default_product"
+                    android:scaleType="centerCrop"/>
+
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

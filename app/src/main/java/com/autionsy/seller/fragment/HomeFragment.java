@@ -244,6 +244,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
                                     news.setContent(jsonObjectNews.getString("content"));
                                     news.setDate(jsonObjectNews.getString("publishTime"));
                                     news.setTitle(jsonObjectNews.getString("newsTitle"));
+                                    news.setImageUrl(jsonObjectNews.getString("newsImageUrl1"));
                                     newsList.add(news);
                                 }
                                 homeAdapter = new HomeAdapter(getActivity(),newsList);
@@ -252,7 +253,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         Intent intent = new Intent(getActivity(),NewsDetailActivity.class);
-                                        intent.putExtra("news_id",news.getNewsId());
+                                        intent.putExtra("newsId",news.getNewsId());
                                         startActivity(intent);
                                     }
                                 });
