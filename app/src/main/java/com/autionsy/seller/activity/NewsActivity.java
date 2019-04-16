@@ -17,6 +17,7 @@ import com.autionsy.seller.entity.News;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.views.RecyclerViewDivider;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -74,7 +75,7 @@ public class NewsActivity extends BaseActivity {
     private void postAsynHttpNews(){
         news = new News();
 
-        String url = Constant.HTTP_URL + "login";
+        String url = Constant.HTTP_URL + "allNews";
 
         Map<String,String> map = new HashMap<>();
 
@@ -98,6 +99,19 @@ public class NewsActivity extends BaseActivity {
                             String message = jsonObject.optString("message");
 
                             if("200".equals(resultCode)){
+
+                                JSONArray jsonArray = jsonObject.getJSONArray(data);
+
+                                for (int i=0; i<jsonArray.length(); i++){
+                                    JSONObject jsonObjectNews = jsonArray.getJSONObject(i);
+
+                                    news.setNewsId(jsonObjectNews.getLong("newsID"));
+                                    news.setContent(jsonObjectNews.getString("content"));
+                                    news.setDate(jsonObjectNews.getString("publishTime"));
+                                    news.setTitle(jsonObjectNews.getString("newsTitle"));
+                                    news.setImageUrl(jsonObjectNews.getString("newsImageUrl1"));
+                                    newsArrayList.add(news);
+                                }
 
                                 LinearLayoutManager manager=new LinearLayoutManager(NewsActivity.this);
                                 news_recycler_view.setLayoutManager(manager);

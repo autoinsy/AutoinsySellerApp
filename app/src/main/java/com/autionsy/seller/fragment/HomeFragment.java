@@ -79,7 +79,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
     @BindView(R.id.home_news_listview)
     ListViewInScrollView home_news_listview;
 
-    private List<News> newsList = new ArrayList<>();
+    private ArrayList<News> newsList = new ArrayList<>();
     private News news = new News();
     private String newsId;
 
