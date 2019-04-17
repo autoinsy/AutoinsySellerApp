@@ -8,17 +8,31 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.autionsy.seller.R;
 import com.autionsy.seller.activity.CommodityManagementActivity;
 import com.autionsy.seller.activity.OrderListActivity;
 import com.autionsy.seller.activity.SettingActivity;
+import com.autionsy.seller.constant.Constant;
 import com.autionsy.seller.entity.Seller;
+import com.autionsy.seller.utils.OkHttp3Utils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class MineFragment extends BaseFragment {
     private View view;
@@ -58,7 +72,7 @@ public class MineFragment extends BaseFragment {
             public void onResponse(Call call, Response response) throws IOException {
                 final String responeString = response.body().string();
 
-                runOnUiThread(new Runnable() {
+                getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         try {
@@ -69,19 +83,19 @@ public class MineFragment extends BaseFragment {
 
                             if("200".equals(resultCode)){
 
-                                RequestOptions options = new RequestOptions()
-                                        .placeholder(R.mipmap.default_header)
-                                        .error(R.mipmap.default_header);
-                                Glide.with(getActivity())
-                                        .load(seller.getHeadUrl())
-                                        .apply(RequestOptions.circleCropTransform())
-                                        .apply(options)
-                                        .into(mine_header_iv);
+//                                RequestOptions options = new RequestOptions()
+//                                        .placeholder(R.mipmap.default_header)
+//                                        .error(R.mipmap.default_header);
+//                                Glide.with(getActivity())
+//                                        .load(seller.getHeadUrl())
+//                                        .apply(RequestOptions.circleCropTransform())
+//                                        .apply(options)
+//                                        .into(mine_header_iv);
 
                             }else if("403".equals(resultCode)){
-                                Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(),R.string.param_error,Toast.LENGTH_SHORT).show();
                             }else {
-                                Toast.makeText(getApplicationContext(),R.string.login_fail,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(),R.string.login_fail,Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
