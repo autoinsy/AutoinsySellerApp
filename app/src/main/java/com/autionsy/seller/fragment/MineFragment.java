@@ -1,6 +1,7 @@
 package com.autionsy.seller.fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,8 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class MineFragment extends BaseFragment {
     private View view;
 
@@ -56,11 +59,14 @@ public class MineFragment extends BaseFragment {
     }
 
     private void postAsynHttpMine(){
-        Seller seller = new Seller();
+        final Seller seller = new Seller();
+        SharedPreferences prefs = getActivity().getSharedPreferences("seller_login_data", MODE_PRIVATE); //获取对象，读取data文件
+        String username = prefs.getString("USER_NAME", ""); //获取文件中的数据
 
-        String url = Constant.HTTP_URL + "login";
+        String url = Constant.HTTP_URL + "getSellerInfoByUsername";
 
         Map<String,String> map = new HashMap<>();
+        map.put("username",username);
 
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override
@@ -83,14 +89,19 @@ public class MineFragment extends BaseFragment {
 
                             if("200".equals(resultCode)){
 
-//                                RequestOptions options = new RequestOptions()
-//                                        .placeholder(R.mipmap.default_header)
-//                                        .error(R.mipmap.default_header);
-//                                Glide.with(getActivity())
-//                                        .load(seller.getHeadUrl())
-//                                        .apply(RequestOptions.circleCropTransform())
-//                                        .apply(options)
-//                                        .into(mine_header_iv);
+                                JSONObject jsonObjectSeller = jsonObject.getJSONObject(data);
+
+                                seller.setNickName(jsonObjectSeller.getString("nickName"));
+                                seller.setHeadUrl(jsonObjectSeller.getString("headUrl"));
+
+                                RequestOptions options = new RequestOptions()
+                                        .placeholder(R.mipmap.default_header)
+                                        .error(R.mipmap.default_header);
+                                Glide.with(getActivity())
+                                        .load(seller.getHeadUrl())
+                                        .apply(RequestOptions.circleCropTransform())
+                                        .apply(options)
+                                        .into(mine_header_iv);
 
                             }else if("403".equals(resultCode)){
                                 Toast.makeText(getActivity(),R.string.param_error,Toast.LENGTH_SHORT).show();

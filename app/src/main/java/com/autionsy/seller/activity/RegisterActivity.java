@@ -60,8 +60,6 @@ public class RegisterActivity extends BaseActivity {
         title_tv.setText(R.string.register);
 
         username = input_register_username_et.getText().toString().trim();
-        password = register_password_et.getText().toString().trim();
-        verifyCode = input_register_verify_code_et.getText().toString().trim();
     }
 
     @OnClick({R.id.back_btn,R.id.register_next_btn,R.id.autoinsy_city_protocol,R.id.get_verify_code_tv})
@@ -86,6 +84,10 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void getRegister(){
+//        username = input_register_username_et.getText().toString().trim();
+        password = register_password_et.getText().toString().trim();
+        verifyCode = input_register_verify_code_et.getText().toString().trim();
+
         String url = Constant.HTTP_URL + "sellerRegister";
         Map<String,String> map = new HashMap<>();
         map.put("username", username);
@@ -112,9 +114,18 @@ public class RegisterActivity extends BaseActivity {
                             String message = jsonObject.optString("message");
 
                             if("200".equals(resultCode)){
-                                intent = new Intent(RegisterActivity.this,AuthenticationActivity.class);
-                                startActivity(intent);
-                                finish();
+
+                                if("".equals(username)){
+                                    Toast.makeText(getApplicationContext(),R.string.user_err_name_is_null,Toast.LENGTH_SHORT).show();
+                                }else if("".equals(password)){
+                                    Toast.makeText(getApplicationContext(),R.string.password_is_empty,Toast.LENGTH_SHORT).show();
+                                }else if("".equals(verifyCode)){
+                                    Toast.makeText(getApplicationContext(),R.string.verify_code_is_empty,Toast.LENGTH_SHORT).show();
+                                }else {
+                                    intent = new Intent(RegisterActivity.this,AuthenticationActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
                             }else if("411".equals(resultCode)){
                                 Toast.makeText(getApplicationContext(),R.string.user_already_register,Toast.LENGTH_SHORT).show();
                             }
@@ -128,6 +139,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void getVerifyCode(){
+//        username = input_register_username_et.getText().toString().trim();
 
         String url = Constant.HTTP_URL + "sendValidateCode";
         Map<String,String> map = new HashMap<>();
@@ -164,8 +176,6 @@ public class RegisterActivity extends BaseActivity {
                 });
             }
         });
-
     }
-
 
 }

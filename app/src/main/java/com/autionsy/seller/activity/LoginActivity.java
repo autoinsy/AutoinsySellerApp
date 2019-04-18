@@ -1,5 +1,6 @@
 package com.autionsy.seller.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -107,6 +108,7 @@ public class LoginActivity extends BaseActivity {
                 final String responeString = response.body().string();
 
                 runOnUiThread(new Runnable() {
+                    @SuppressLint("ApplySharedPref")
                     @Override
                     public void run() {
                         if (isUserNameAndPwdValid()){
@@ -117,18 +119,32 @@ public class LoginActivity extends BaseActivity {
                                 String message = jsonObject.optString("message");
 
                                 if("200".equals(resultCode)){
+                                    if("".equals(username)){
+                                        Toast.makeText(getApplicationContext(),R.string.user_err_name_is_null,Toast.LENGTH_SHORT).show();
+                                    }else if("".equals(password)){
+                                        Toast.makeText(getApplicationContext(),R.string.password_is_empty,Toast.LENGTH_SHORT).show();
+                                    }else if("413".equals(resultCode)){
+                                        Toast.makeText(getApplicationContext(),R.string.unknow_account,Toast.LENGTH_SHORT).show();
+                                    }else if("414".equals(resultCode)){
+                                        Toast.makeText(getApplicationContext(),R.string.error_password,Toast.LENGTH_SHORT).show();
+                                    }else if("415".equals(resultCode)){
+                                        Toast.makeText(getApplicationContext(),R.string.account_is_lock,Toast.LENGTH_SHORT).show();
+                                    }else if("416".equals(resultCode)){
+                                        Toast.makeText(getApplicationContext(),R.string.excessive_attempts,Toast.LENGTH_SHORT).show();
+                                    }else if("418".equals(resultCode)){
+                                        Toast.makeText(getApplicationContext(),R.string.login_fail,Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        //创建，注意和读取的时候不同，这个是edit，两个参数分别为存储数据的文件data，访问模式私有
+                                        editor = getSharedPreferences("seller_login_data",MODE_PRIVATE).edit();
+                                        //保存用户名和密码
+                                        editor.putString("USER_NAME", username);
+                                        editor.putString("PASSWORD", password);
+                                        editor.commit();
 
-                                    //创建，注意和读取的时候不同，这个是edit，两个参数分别为存储数据的文件data，访问模式私有
-                                    editor = getSharedPreferences("seller_login_data",MODE_PRIVATE).edit();
-                                    //保存用户名和密码
-                                    editor.putString("USER_NAME", username);
-                                    editor.putString("PASSWORD", password);
-                                    editor.commit();
-
-                                    intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
-
+                                        intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
                                 }else if("403".equals(resultCode)){
                                     Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
                                 }else {
