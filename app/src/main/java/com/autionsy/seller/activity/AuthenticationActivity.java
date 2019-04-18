@@ -40,7 +40,7 @@ public class AuthenticationActivity extends BaseActivity {
         businessLicenceNum = input_business_licence_et.getText().toString().trim();
     }
 
-    @OnClick({R.id.back_btn,R.id.upload_id_front_layout,R.id.upload_id_back_layout,R.id.upload_business_licence_layout,R.id.register_btn})
+    @OnClick({R.id.back_btn,R.id.upload_id_front_layout,R.id.upload_id_back_layout,R.id.upload_business_licence_layout,R.id.authentication_ok_btn})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.back_btn:
@@ -55,9 +55,11 @@ public class AuthenticationActivity extends BaseActivity {
             case R.id.upload_business_licence_layout:
 
                 break;
-            case R.id.register_btn:
+            case R.id.authentication_ok_btn:
 
                 break;
         }
     }
+
+    
 }

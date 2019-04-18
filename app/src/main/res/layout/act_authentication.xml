@@ -174,7 +174,7 @@
         </android.support.percent.PercentRelativeLayout>
 
         <Button
-            android:id="@+id/register_btn"
+            android:id="@+id/authentication_ok_btn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
             android:background="@drawable/rect_corner_orange"
