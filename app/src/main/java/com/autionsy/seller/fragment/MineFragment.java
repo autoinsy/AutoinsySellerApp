@@ -61,7 +61,7 @@ public class MineFragment extends BaseFragment {
     private void postAsynHttpMine(){
         final Seller seller = new Seller();
         SharedPreferences prefs = getActivity().getSharedPreferences("seller_login_data", MODE_PRIVATE); //获取对象，读取data文件
-        String username = prefs.getString("USER_NAME", ""); //获取文件中的数据
+        String username = prefs.getString("USERNAME", ""); //获取文件中的数据
 
         String url = Constant.HTTP_URL + "getSellerInfoByUsername";
 

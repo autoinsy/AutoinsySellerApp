@@ -137,7 +137,7 @@ public class LoginActivity extends BaseActivity {
                                         //创建，注意和读取的时候不同，这个是edit，两个参数分别为存储数据的文件data，访问模式私有
                                         editor = getSharedPreferences("seller_login_data",MODE_PRIVATE).edit();
                                         //保存用户名和密码
-                                        editor.putString("USER_NAME", username);
+                                        editor.putString("USERNAME", username);
                                         editor.putString("PASSWORD", password);
                                         editor.commit();
 

@@ -26,6 +26,7 @@
     <string name="weichat">微信</string>
     <string name="qq">QQ</string>
     <string name="sina_blog">微博</string>
+    <string name="authentication">认证</string>
 
     <!--首页-->
     <string name="publish_goods_text">发布商品</string>
@@ -53,7 +54,8 @@
     <string name="upload_id_back">上传身份中背面</string>
     <string name="input_business_licence_number">输入营业执照号码</string>
     <string name="user_service_protocol">用户服务协议</string>
-
+    <string name="next_text">下一步</string>
+    <string name="finish_text">完成</string>
     <string name="message_text">消息</string>
 
     <!--我的-->
@@ -263,6 +265,8 @@
     <string name="password_is_empty">密码不能为空</string>
     <string name="verify_code_is_empty">验证码不能为空</string>
     <string name="param_error">参数错误</string>
+    <string name="request_error">请求错误</string>
+    <string name="upload_success">上传成功</string>
 
     <string name="send_sms_code_fail">发送失败</string>
     <string name="send_sms_code_success">发送成功</string>

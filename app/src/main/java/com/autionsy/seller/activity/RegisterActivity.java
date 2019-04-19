@@ -2,7 +2,6 @@ package com.autionsy.seller.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -84,7 +83,6 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void getRegister(){
-//        username = input_register_username_et.getText().toString().trim();
         password = register_password_et.getText().toString().trim();
         verifyCode = input_register_verify_code_et.getText().toString().trim();
 
@@ -122,7 +120,7 @@ public class RegisterActivity extends BaseActivity {
                                 }else if("".equals(verifyCode)){
                                     Toast.makeText(getApplicationContext(),R.string.verify_code_is_empty,Toast.LENGTH_SHORT).show();
                                 }else {
-                                    intent = new Intent(RegisterActivity.this,AuthenticationActivity.class);
+                                    intent = new Intent(RegisterActivity.this, AuthenticationIDCardFrontActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }
