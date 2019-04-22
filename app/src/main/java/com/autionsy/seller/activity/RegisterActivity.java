@@ -120,7 +120,7 @@ public class RegisterActivity extends BaseActivity {
                                 }else if("".equals(verifyCode)){
                                     Toast.makeText(getApplicationContext(),R.string.verify_code_is_empty,Toast.LENGTH_SHORT).show();
                                 }else {
-                                    intent = new Intent(RegisterActivity.this, AuthenticationIDCardFrontActivity.class);
+                                    intent = new Intent(RegisterActivity.this, AuthenticationIDCardActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }

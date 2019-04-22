@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,7 +37,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class AuthenticationIDCardFrontActivity extends BaseActivity {
+public class AuthenticationIDCardActivity extends BaseActivity {
 
     @BindView(R.id.title_tv)
     TextView title_tv;
@@ -49,6 +48,8 @@ public class AuthenticationIDCardFrontActivity extends BaseActivity {
     ImageView id_card_front_iv;
     @BindView(R.id.id_card_front_camera_iv)
     ImageView id_card_front_camera_iv;
+    @BindView(R.id.id_card_back_camera_iv)
+    ImageView id_card_back_camera_iv;
 
     private String idNumber;
 
@@ -57,7 +58,7 @@ public class AuthenticationIDCardFrontActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_authentication_id_card_front);
+        setContentView(R.layout.act_authentication_id_card);
         ButterKnife.bind(this);
         // 初始化页面
         initView();
@@ -70,7 +71,8 @@ public class AuthenticationIDCardFrontActivity extends BaseActivity {
 
     @OnClick({R.id.back_btn,
             R.id.upload_id_front_layout,
-            R.id.authentication_id_card_front_btn})
+            R.id.authentication_id_card_btn,
+            R.id.upload_id_back_layout})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.back_btn:
@@ -78,9 +80,14 @@ public class AuthenticationIDCardFrontActivity extends BaseActivity {
                 break;
             case R.id.upload_id_front_layout:
                 CameraActivity.toCameraActivity(this, CameraActivity.TYPE_IDCARD_FRONT);
+                id_card_front_camera_iv.setVisibility(View.GONE);
                 break;
-            case R.id.authentication_id_card_front_btn:
+            case R.id.authentication_id_card_btn:
                 postUploadFile();
+                break;
+            case R.id.upload_id_back_layout:
+                CameraActivity.toCameraActivity(this, CameraActivity.TYPE_IDCARD_BACK);
+                id_card_back_camera_iv.setVisibility(View.GONE);
                 break;
         }
     }
@@ -151,6 +158,8 @@ public class AuthenticationIDCardFrontActivity extends BaseActivity {
 
                                 if("200".equals(resultCode)){
                                     Toast.makeText(getApplicationContext(),R.string.upload_success,Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(AuthenticationIDCardActivity.this, AuthenticationBusinessLicenceActivity.class);
+                                    startActivity(intent);
                                 }else if("403".equals(resultCode)){
                                     Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
                                 }

@@ -63,10 +63,39 @@
                 android:layout_height="@dimen/dp_2"
                 android:background="@color/orange_text"/>
         </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/upload_id_back_layout"
+            android:layout_width="@dimen/dp_250"
+            android:layout_height="@dimen/dp_180"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_40"
+            android:background="@drawable/rect_corner_light_orange">
+            <ImageView
+                android:layout_width="@dimen/dp_220"
+                android:layout_height="@dimen/dp_150"
+                android:background="@mipmap/authentication_bg"
+                android:layout_centerInParent="true"
+                android:layout_margin="@dimen/dp_10"/>
+            <ImageView
+                android:id="@+id/id_card_back_iv"
+                android:layout_width="@dimen/dp_200"
+                android:layout_height="@dimen/dp_130"
+                android:background="@mipmap/id_back"
+                android:layout_centerInParent="true"
+                android:layout_margin="@dimen/dp_20"/>
+            <ImageView
+                android:id="@+id/id_card_back_camera_iv"
+                android:layout_width="@dimen/dp_55"
+                android:layout_height="@dimen/dp_40"
+                android:background="@mipmap/camera"
+                android:layout_centerInParent="true"
+                android:layout_margin="@dimen/dp_30"/>
+        </RelativeLayout>
     </LinearLayout>
 
     <Button
-        android:id="@+id/authentication_id_card_front_btn"
+        android:id="@+id/authentication_id_card_btn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
         android:background="@drawable/rect_corner_orange"
