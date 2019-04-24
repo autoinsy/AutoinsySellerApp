@@ -68,9 +68,6 @@ public class PublishOrnamentActivity extends BaseActivity{
     @BindView(R.id.ornament_motorcycle_frame_code_et)
     EditText ornament_motorcycle_frame_code_et;
 
-    @BindView(R.id.ornament_upload_image_iv)
-    ImageView ornament_upload_image_iv;
-
     private String ornamentName;
     private String ornamentPrice;
     private String ornamentWeight;
@@ -111,8 +108,7 @@ public class PublishOrnamentActivity extends BaseActivity{
             R.id.image_selector_layout,
             R.id.submit_tv,
             R.id.ornament_type_selector_layout,
-            R.id.ornament_brand_selector_layout,
-            R.id.ornament_upload_image_iv})
+            R.id.ornament_brand_selector_layout})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.back_btn:
@@ -131,9 +127,6 @@ public class PublishOrnamentActivity extends BaseActivity{
             case R.id.ornament_brand_selector_layout:
                 intent = new Intent(PublishOrnamentActivity.this, BrandActivity.class);
                 startActivity(intent);
-                break;
-            case R.id.ornament_upload_image_iv:
-                UploadSingleImage();
                 break;
         }
     }
@@ -192,69 +185,6 @@ public class PublishOrnamentActivity extends BaseActivity{
         });
     }
 
-    //====Okhttp3上传单张图片======================================================================================================
-    private void UploadSingleImage(){
-        new PhotoPickDialog(PublishOrnamentActivity.this).builder().setCancelable(true).setTakePhotoListener(new PhotoPickDialog.TakePhotoListener() {
-            @Override
-            public void takePhoto() {
-                // 激活相机
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                // 判断存储卡是否可以用，可用进行存储
-                if (hasSdcard()) {
-                    tempFile = new File(Environment.getExternalStorageDirectory(), PHOTO_FILE_NAME);
-                    // 从文件中创建uri
-                    Uri uri = Uri.fromFile(tempFile);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                }
-                // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CAREMA
-                startActivityForResult(intent, PHOTO_REQUEST_CAREMA);
-            }
-
-            @Override
-            public void pickPhoto() {
-                // 激活系统图库，选择一张图片
-                Intent intent1 = new Intent(Intent.ACTION_PICK);
-                intent1.setType("image/*");
-                // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_GALLERY
-                startActivityForResult(intent1, PHOTO_REQUEST_GALLERY);
-            }
-        }).show();
-    }
-
-    /*
-     * 判断sdcard是否被挂载
-     */
-    private boolean hasSdcard() {
-        //判断ＳＤ卡手否是安装好的　　　media_mounted
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /*
-     * 剪切图片
-     */
-    private void crop(Uri uri) {
-        // 裁剪图片意图
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", "true");
-        // 裁剪框的比例，1：1
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        // 裁剪后输出图片的尺寸大小
-        intent.putExtra("outputX", 250);
-        intent.putExtra("outputY", 250);
-
-        intent.putExtra("outputFormat", "JPEG");// 图片格式
-        intent.putExtra("noFaceDetection", true);// 取消人脸识别
-        intent.putExtra("return-data", true);
-        // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CUT
-        startActivityForResult(intent, PHOTO_REQUEST_CUT);
-    }
-    //====Okhttp3上传单张图片======================================================================================================
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -262,37 +192,6 @@ public class PublishOrnamentActivity extends BaseActivity{
             showImage(data); //设置图片 跟图片目录
             uploadImage(data);
             return;
-        }else if (requestCode == PHOTO_REQUEST_GALLERY) {
-            // 从相册返回的数据
-            if (data != null) {
-                // 得到图片的全路径
-                Uri uri = data.getData();
-                crop(uri);
-            }
-        } else if (requestCode == PHOTO_REQUEST_CAREMA) {
-            // 从相机返回的数据
-            if (hasSdcard()) {
-                crop(Uri.fromFile(tempFile));
-            } else {
-                Toast.makeText(PublishOrnamentActivity.this, "未找到存储卡，无法存储照片！", Toast.LENGTH_SHORT).show();
-            }
-        } else if (requestCode == PHOTO_REQUEST_CUT) {
-            // 从剪切图片返回的数据
-            if (data != null) {
-                Bitmap bitmap = data.getParcelableExtra("data");
-                /**
-                 * 获得图片
-                 */
-                ornament_upload_image_iv.setImageBitmap(bitmap);
-                //保存到SharedPreferences
-                saveBitmapToSharedPreferences(bitmap);
-            }
-            try {
-                // 将临时文件删除
-                tempFile.delete();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
