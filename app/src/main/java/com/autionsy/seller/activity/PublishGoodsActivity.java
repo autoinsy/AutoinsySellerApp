@@ -1,5 +1,6 @@
 package com.autionsy.seller.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,6 +37,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -98,6 +100,8 @@ public class PublishGoodsActivity extends BaseActivity{
 
     private Goods goods;
 
+    SharedPreferences sharedPreferences;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +114,7 @@ public class PublishGoodsActivity extends BaseActivity{
     private void initView(){
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.publish_goods);
-        submit_tv.setVisibility(View.VISIBLE);
+//        submit_tv.setVisibility(View.VISIBLE);
     }
 
     @OnClick({R.id.back_btn,
@@ -127,9 +131,9 @@ public class PublishGoodsActivity extends BaseActivity{
             case R.id.image_selector_layout:
                 ImageSelector.show(this, REQUEST_CODE_SELECT_IMG, MAX_SELECT_COUNT);
                 break;
-            case R.id.submit_tv:
-                postAsynHttpGoods();
-                break;
+//            case R.id.submit_tv:
+//                postAsynHttpGoods();
+//                break;
             case R.id.type_selector_layout:
                 intent = new Intent(PublishGoodsActivity.this, CategoryActivity.class);
                 startActivity(intent);
@@ -143,60 +147,6 @@ public class PublishGoodsActivity extends BaseActivity{
                 break;
         }
     }
-
-    private void postAsynHttpGoods(){
-        goods = new Goods();
-        goodsName = goods_name_et.getText().toString().trim();
-        goodsQuantity = goods_quantity_et.getText().toString().trim();
-        goodsProductPlace = goods_product_place_et.getText().toString().trim();
-        goodsPrice = goods_price_et.getText().toString().trim();
-        goodsFrameCode = motocycle_frame_code_et.getText().toString().trim();
-
-        String url = Constant.HTTP_URL + "login";
-
-        Map<String,String> map = new HashMap<>();
-        map.put("loginName", goodsName);
-        map.put("passWord", goodsQuantity);
-        map.put("passWord", goodsProductPlace);
-        map.put("passWord", goodsPrice);
-        map.put("passWord", goodsFrameCode);
-
-        OkHttp3Utils.doPost(url, map, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String responeString = response.body().string();
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject jsonObject = new JSONObject(responeString);
-                            String resultCode = jsonObject.optString("code");
-                            String data = jsonObject.optString("data");
-                            String message = jsonObject.optString("message");
-
-                            if("200".equals(resultCode)){
-
-
-                            }else if("403".equals(resultCode)){
-                                Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(getApplicationContext(),R.string.login_fail,Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        });
-    }
-
 
     //====Okhttp3上传单张图片======================================================================================================
     private void UploadSingleImage(){
@@ -310,42 +260,88 @@ public class PublishGoodsActivity extends BaseActivity{
     /**okhttp3上传多张图片*/
     private void uploadImage(Intent data) {
 
+        goods = new Goods();
+        goodsName = goods_name_et.getText().toString().trim();
+        goodsQuantity = goods_quantity_et.getText().toString().trim();
+        goodsProductPlace = goods_product_place_et.getText().toString().trim();
+        goodsPrice = goods_price_et.getText().toString().trim();
+        goodsFrameCode = motocycle_frame_code_et.getText().toString().trim();
+
+        //同样，在读取SharedPreferences数据前要实例化出一个SharedPreferences对象
+        sharedPreferences = getSharedPreferences("seller_login_data", Activity.MODE_PRIVATE);
+        // 使用getString方法获得value，注意第2个参数是value的默认值
+        String username = sharedPreferences.getString("USERNAME", "");
+
+        String url = Constant.HTTP_URL + "addGoods";
+
         if (data != null) {
             path = ImageSelector.getImagePaths(data);
-            for (int i = 0; i < path.size(); i++) {
-                /*
-                 * 从本地文件中读读取图片
-                 * */
-                String fileName = "";
-                file = new File(path.get(i));
-                if (file.getName() == null) {
-                } else {
-                    fileName = getFileName(path.get(i));
-                }
-                RequestBody requestBody = new MultipartBody.Builder()
-                        .setType(MultipartBody.FORM)
-                        .addFormDataPart("uploadFiles", fileName, RequestBody.create(MediaType.parse("image/jpg"), file))
-                        .build();
-                Request build = new Request.Builder()
-                        .url("http://192.168.0.102:8666/api/picture//multipleImageUpload") //TomCat服务器
-                        .post(requestBody)
-                        .build();
-                new OkHttpClient().newCall(build).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
+
+            //初始化OkHttpClient
+            OkHttpClient client = new OkHttpClient();
+            // form 表单形式上传
+            MultipartBody.Builder requestBody = new MultipartBody.Builder();
+            requestBody.setType(MultipartBody.FORM);
+            //pathList是文件路径对应的列表
+            if (null != path && path.size() > 0) {
+                for (String path : path) {
+                    File file = new File(path);
+                    if (file != null) {
+                        // MediaType.parse() 里面是上传的文件类型。
+                        RequestBody body = RequestBody.create(MediaType.parse("image/*"), file);
+                        // 参数分别为， 请求key ，文件名称 ， RequestBody
+                        requestBody.addFormDataPart("upload_goods_image", file.getName(), body);
                     }
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        setResult(response.body().string(), true);
+                }
+            }
+            //要上传的文字参数
+            Map<String, String> map = new HashMap<>();
+            map.put("userName", username);
+            map.put("goodName",goodsName);
+            map.put("goodPrice",goodsPrice);
+            map.put("quantity",goodsQuantity);
+            map.put("productPlace",goodsProductPlace);
+            map.put("motorcycleFrameNumber",goodsFrameCode);
+            map.put("subType","轮胎");
+            map.put("brand","米其林");
+            map.put("upload_type","3");
+            if (map != null) {
+                for (String key : map.keySet()) {
+                    requestBody.addFormDataPart(key, map.get(key));
+                }
+            }
+            //创建Request对象
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(requestBody.build())
+                    .build();
+            // readTimeout("请求超时时间" , 时间单位);
+            client.newBuilder().readTimeout(5000, TimeUnit.MILLISECONDS).build().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    //请求失败处理
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        final String str = response.body().string();
+
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(PublishGoodsActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
+                                if("200".equals(str)){
+                                    Toast.makeText(getApplicationContext(),"上传图片成功",Toast.LENGTH_SHORT).show();
+                                }else if("403".equals(str)){
+                                    Toast.makeText(getApplicationContext(),"参数错误",Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                     }
-                });
-            }
+                }
+            });
+
         }
         UploadImageAdapter adapter = new UploadImageAdapter(path, PublishGoodsActivity.this);
         upload_image_gv.setAdapter(adapter);
@@ -355,26 +351,26 @@ public class PublishGoodsActivity extends BaseActivity{
         path = ImageSelector.getImagePaths(data); //集合获取path(这里的path是集合)
     }
 
-    public String getFileName(String pathandname) {
-        int start = pathandname.lastIndexOf("/");
-        if (start != -1) {
-            return pathandname.substring(start + 1);
-        } else {
-            return null;
-        }
-    }
-    private void setResult(String string, final boolean success) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (success) {
-                    Toast.makeText(PublishGoodsActivity.this, "请求成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(PublishGoodsActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
+//    public String getFileName(String pathandname) {
+//        int start = pathandname.lastIndexOf("/");
+//        if (start != -1) {
+//            return pathandname.substring(start + 1);
+//        } else {
+//            return null;
+//        }
+//    }
+//    private void setResult(String string, final boolean success) {
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (success) {
+//                    Toast.makeText(PublishGoodsActivity.this, "请求成功", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(PublishGoodsActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//    }
     //====================okhttp3上传多张图片=====================================================================================
 
     //=====================okhttp3上传单张图片====================================================================================
