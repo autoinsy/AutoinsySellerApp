@@ -83,19 +83,9 @@ public class PublishGoodsActivity extends BaseActivity{
 
     private static final int REQUEST_CODE_SELECT_IMG = 1;
     private static final int MAX_SELECT_COUNT = 9;
-    private File file;
     private List<String> path;//路径集合
 
-    private static final int PHOTO_REQUEST_CAREMA = 2;// 拍照
-    private static final int PHOTO_REQUEST_GALLERY = 3;// 从相册中选择
-    private static final int PHOTO_REQUEST_CUT = 4;// 结果
-    /* 头像名称 */
-    private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
-    private File tempFile;
-
     private Intent intent;
-
-    private Goods goods;
 
     SharedPreferences sharedPreferences;
 
@@ -155,8 +145,6 @@ public class PublishGoodsActivity extends BaseActivity{
 
     /**okhttp3上传多张图片*/
     private void uploadImage(Intent data) {
-
-        goods = new Goods();
         goodsName = goods_name_et.getText().toString().trim();
         goodsQuantity = goods_quantity_et.getText().toString().trim();
         goodsProductPlace = goods_product_place_et.getText().toString().trim();

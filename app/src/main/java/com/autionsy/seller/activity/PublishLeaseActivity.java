@@ -1,6 +1,8 @@
 package com.autionsy.seller.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -24,6 +26,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +57,8 @@ public class PublishLeaseActivity extends BaseActivity{
     EditText lease_price_et;
     @BindView(R.id.lease_describe_et)
     EditText lease_describe_et;
+    @BindView(R.id.lease_contact_et)
+    EditText lease_contact_et;
     @BindView(R.id.lease_mobile_phone_num_et)
     EditText lease_mobile_phone_num_et;
     @BindView(R.id.lease_time_et)
@@ -71,13 +76,13 @@ public class PublishLeaseActivity extends BaseActivity{
     private String leaseTime;
     private String acreage;
     private String infoSource;
+    private String contactor;
 
     private static final int REQUEST_CODE_SELECT_IMG = 1;
     private static final int MAX_SELECT_COUNT = 9;
-    private File file;
     private List<String> path;//路径集合
 
-    private Lease lease;
+    SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,71 +110,10 @@ public class PublishLeaseActivity extends BaseActivity{
             case R.id.image_selector_layout:
                 ImageSelector.show(this, REQUEST_CODE_SELECT_IMG, MAX_SELECT_COUNT);
                 break;
-            case R.id.submit_tv:
-                postAsynHttpGoods();
-                break;
+//            case R.id.submit_tv:
+//                postAsynHttpGoods();
+//                break;
         }
-    }
-
-    private void postAsynHttpGoods(){
-        lease = new Lease();
-
-        leaseTitle = lease_title_et.getText().toString().trim();
-        stallPosition = lease_stall_position_et.getText().toString().trim();
-        leasePrice = lease_price_et.getText().toString().trim();
-        descrihe = lease_describe_et.getText().toString().trim();
-        mobilePhoneNum = lease_mobile_phone_num_et.getText().toString().trim();
-        leaseTime = lease_time_et.getText().toString().trim();
-        acreage = acreage_et.getText().toString().trim();
-        infoSource = lease_info_source_et.getText().toString().trim();
-
-
-        String url = Constant.HTTP_URL + "login";
-
-        Map<String,String> map = new HashMap<>();
-        map.put("loginName", leaseTitle);
-        map.put("passWord", stallPosition);
-        map.put("passWord", leasePrice);
-        map.put("passWord", descrihe);
-        map.put("passWord", mobilePhoneNum);
-        map.put("passWord", leaseTime);
-        map.put("passWord", acreage);
-        map.put("passWord", infoSource);
-
-        OkHttp3Utils.doPost(url, map, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String responeString = response.body().string();
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject jsonObject = new JSONObject(responeString);
-                            String resultCode = jsonObject.optString("code");
-                            String data = jsonObject.optString("data");
-                            String message = jsonObject.optString("message");
-
-                            if("200".equals(resultCode)){
-
-
-                            }else if("403".equals(resultCode)){
-                                Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(getApplicationContext(),R.string.login_fail,Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        });
     }
 
     @Override
@@ -184,42 +128,93 @@ public class PublishLeaseActivity extends BaseActivity{
 
     private void uploadImage(Intent data) {
 
+        leaseTitle = lease_title_et.getText().toString().trim();
+        stallPosition = lease_stall_position_et.getText().toString().trim();
+        leasePrice = lease_price_et.getText().toString().trim();
+        descrihe = lease_describe_et.getText().toString().trim();
+        mobilePhoneNum = lease_mobile_phone_num_et.getText().toString().trim();
+        leaseTime = lease_time_et.getText().toString().trim();
+        acreage = acreage_et.getText().toString().trim();
+        infoSource = lease_info_source_et.getText().toString().trim();
+        contactor = lease_contact_et.getText().toString().trim();
+
+        //同样，在读取SharedPreferences数据前要实例化出一个SharedPreferences对象
+        sharedPreferences = getSharedPreferences("seller_login_data", Activity.MODE_PRIVATE);
+        // 使用getString方法获得value，注意第2个参数是value的默认值
+        String username = sharedPreferences.getString("USERNAME", "");
+
+        String url = Constant.HTTP_URL + "addLease";
+
         if (data != null) {
             path = ImageSelector.getImagePaths(data);
-            for (int i = 0; i < path.size(); i++) {
-                /*
-                 * 从本地文件中读读取图片
-                 * */
-                String fileName = "";
-                file = new File(path.get(i));
-                if (file.getName() == null) {
-                } else {
-                    fileName = getFileName(path.get(i));
-                }
-                RequestBody requestBody = new MultipartBody.Builder()
-                        .setType(MultipartBody.FORM)
-                        .addFormDataPart("file", fileName, RequestBody.create(MediaType.parse("image/jpg"), file))
-                        .build();
-                Request build = new Request.Builder()
-                        .url("http://172.16.52.10:8080/UploadDemo4/UploadFile") //TomCat服务器
-                        .post(requestBody)
-                        .build();
-                new OkHttpClient().newCall(build).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
+
+            //初始化OkHttpClient
+            OkHttpClient client = new OkHttpClient();
+            // form 表单形式上传
+            MultipartBody.Builder requestBody = new MultipartBody.Builder();
+            requestBody.setType(MultipartBody.FORM);
+            //pathList是文件路径对应的列表
+            if (null != path && path.size() > 0) {
+                for (String path : path) {
+                    File file = new File(path);
+                    if (file != null) {
+                        // MediaType.parse() 里面是上传的文件类型。
+                        RequestBody body = RequestBody.create(MediaType.parse("image/*"), file);
+                        // 参数分别为， 请求key ，文件名称 ， RequestBody
+                        requestBody.addFormDataPart("upload_lease_image", file.getName(), body);
                     }
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        setResult(response.body().string(), true);
+                }
+            }
+            //要上传的文字参数
+            Map<String, String> map = new HashMap<>();
+            map.put("userName", username);
+            map.put("title",leaseTitle);
+            map.put("stallPosition",stallPosition);
+            map.put("price",leasePrice);
+            map.put("describe",descrihe);
+            map.put("contacts",contactor);
+            map.put("mobilePhoneNum",mobilePhoneNum);
+            map.put("leaseTerm",leaseTime);
+            map.put("acreage",acreage);
+            map.put("leaseInfoSource",infoSource);
+            map.put("upload_type","5");
+
+            if (map != null) {
+                for (String key : map.keySet()) {
+                    requestBody.addFormDataPart(key, map.get(key));
+                }
+            }
+            //创建Request对象
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(requestBody.build())
+                    .build();
+            // readTimeout("请求超时时间" , 时间单位);
+            client.newBuilder().readTimeout(5000, TimeUnit.MILLISECONDS).build().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    //请求失败处理
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        final String str = response.body().string();
+
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(PublishLeaseActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
+                                if("200".equals(str)){
+                                    Toast.makeText(getApplicationContext(),"上传图片成功",Toast.LENGTH_SHORT).show();
+                                }else if("403".equals(str)){
+                                    Toast.makeText(getApplicationContext(),"参数错误",Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                     }
-                });
-            }
+                }
+            });
         }
         UploadImageAdapter adapter = new UploadImageAdapter(path, PublishLeaseActivity.this);
         upload_image_gv.setAdapter(adapter);
