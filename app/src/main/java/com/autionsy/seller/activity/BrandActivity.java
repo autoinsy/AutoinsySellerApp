@@ -53,7 +53,7 @@ public class BrandActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_publish_goods);
+        setContentView(R.layout.act_brand);
 
         ButterKnife.bind(this);
         initView();
