@@ -21,6 +21,7 @@ import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.views.RecyclerViewDivider;
 import com.scrat.app.selectorlibrary.ImageSelector;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -101,6 +102,14 @@ public class BrandActivity extends BaseActivity {
                             String message = jsonObject.optString("message");
 
                             if("200".equals(resultCode)){
+
+                                JSONArray jsonArray = jsonObject.getJSONArray(data);
+                                for (int i=0; i<jsonArray.length();i++){
+                                    JSONObject jsonObjectBrand = jsonArray.getJSONObject(i);
+                                    brand.setName(jsonObjectBrand.getString("brandName"));
+                                    brand.setImage(jsonObjectBrand.getString("brandLogo"));
+                                    mList.add(brand);
+                                }
 
                                 brandAdapter = new BrandAdapter(BrandActivity.this,mList);
                                 brand_gv.setAdapter(brandAdapter);
