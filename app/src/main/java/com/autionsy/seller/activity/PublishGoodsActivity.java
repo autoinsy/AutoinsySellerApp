@@ -101,7 +101,7 @@ public class PublishGoodsActivity extends BaseActivity{
     private void initView(){
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.publish_goods);
-//        submit_tv.setVisibility(View.VISIBLE);
+        submit_tv.setVisibility(View.VISIBLE);
     }
 
     @OnClick({R.id.back_btn,

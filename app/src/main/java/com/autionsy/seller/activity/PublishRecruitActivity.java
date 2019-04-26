@@ -1,5 +1,7 @@
 package com.autionsy.seller.activity;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -66,7 +68,7 @@ public class PublishRecruitActivity extends BaseActivity{
     private String education;
     private String companyPersonNum;
 
-    private Recruit recruit;
+    private SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,14 +93,12 @@ public class PublishRecruitActivity extends BaseActivity{
                 finish();
                 break;
             case R.id.submit_tv:
-                postAsynHttpGoods();
+                postAsynHttpRecruit();
                 break;
         }
     }
 
-    private void postAsynHttpGoods(){
-        recruit = new Recruit();
-
+    private void postAsynHttpRecruit(){
         recruitTile = recruit_title_et.getText().toString().trim();
         companyName = company_name_et.getText().toString().trim();
         startSalary = start_salary_et.getText().toString().trim();
@@ -110,20 +110,25 @@ public class PublishRecruitActivity extends BaseActivity{
         education = education_et.getText().toString().trim();
         companyPersonNum = company_person_number_et.getText().toString().trim();
 
-        String url = Constant.HTTP_URL + "login";
+        //同样，在读取SharedPreferences数据前要实例化出一个SharedPreferences对象
+        sharedPreferences = getSharedPreferences("seller_login_data", Activity.MODE_PRIVATE);
+        // 使用getString方法获得value，注意第2个参数是value的默认值
+        String username = sharedPreferences.getString("USERNAME", "");
+
+        String url = Constant.HTTP_URL + "addRecruit";
 
         Map<String,String> map = new HashMap<>();
-        map.put("loginName", recruitTile);
-        map.put("passWord", companyName);
-        map.put("passWord", startSalary);
-        map.put("passWord", endSalary);
-        map.put("passWord", sellerAddress);
-        map.put("passWord", recruitPersonNum);
-        map.put("passWord", contactPhoneNum);
-        map.put("passWord", workExperience);
-        map.put("passWord", education);
-        map.put("passWord", companyPersonNum);
-
+        map.put("title", recruitTile);
+        map.put("companyName", companyName);
+        map.put("startSalary", startSalary);
+        map.put("endSalary", endSalary);
+        map.put("sellerAddress", sellerAddress);
+        map.put("recruitPersonNumber", recruitPersonNum);
+        map.put("mobilePhoneNum", contactPhoneNum);
+        map.put("experience", workExperience);
+        map.put("educationRequirement", education);
+        map.put("companyPeopleNum", companyPersonNum);
+        map.put("username", username);
 
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override
@@ -145,8 +150,7 @@ public class PublishRecruitActivity extends BaseActivity{
                             String message = jsonObject.optString("message");
 
                             if("200".equals(resultCode)){
-
-
+                                Toast.makeText(getApplicationContext(),R.string.upload_success,Toast.LENGTH_SHORT).show();
                             }else if("403".equals(resultCode)){
                                 Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
                             }else {

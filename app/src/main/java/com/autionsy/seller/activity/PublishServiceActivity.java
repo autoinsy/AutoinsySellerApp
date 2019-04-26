@@ -1,6 +1,8 @@
 package com.autionsy.seller.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -25,6 +27,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,6 +64,8 @@ public class PublishServiceActivity extends BaseActivity {
     EditText service_area_et;
     @BindView(R.id.service_type_et)
     EditText service_type_et;
+    @BindView(R.id.service_title_et)
+    EditText service_title_et;
 
     private String serviceStoreName;
     private String contact;
@@ -69,6 +74,7 @@ public class PublishServiceActivity extends BaseActivity {
     private String describe;
     private String serviceArea;
     private String serviceType;
+    private String title;
 
     @BindView(R.id.upload_image_textview)
     TextView upload_image_textview;
@@ -78,7 +84,7 @@ public class PublishServiceActivity extends BaseActivity {
     private File file;
     private List<String> path;//路径集合
 
-    private Service service;
+    private SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,67 +114,9 @@ public class PublishServiceActivity extends BaseActivity {
                 ImageSelector.show(this, REQUEST_CODE_SELECT_IMG, MAX_SELECT_COUNT);
                 break;
             case R.id.submit_tv:
-                postAsynHttpGoods();
+
                 break;
         }
-    }
-
-    private void postAsynHttpGoods(){
-        service = new Service();
-
-        serviceStoreName = service_store_et.getText().toString().trim();
-        contact = service_contact_et.getText().toString().trim();
-        phoneNum = contact_phone_num_et.getText().toString().trim();
-        address = service_address_et.getText().toString().trim();
-        describe = service_describe_et.getText().toString().trim();
-        serviceArea = service_area_et.getText().toString().trim();
-        serviceType = service_type_et.getText().toString().trim();
-
-        String url = Constant.HTTP_URL + "login";
-
-        Map<String,String> map = new HashMap<>();
-        map.put("loginName", serviceStoreName);
-        map.put("passWord", contact);
-        map.put("passWord", phoneNum);
-        map.put("passWord", address);
-        map.put("passWord", describe);
-        map.put("passWord", serviceArea);
-        map.put("passWord", serviceType);
-
-        OkHttp3Utils.doPost(url, map, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String responeString = response.body().string();
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject jsonObject = new JSONObject(responeString);
-                            String resultCode = jsonObject.optString("code");
-                            String data = jsonObject.optString("data");
-                            String message = jsonObject.optString("message");
-
-                            if("200".equals(resultCode)){
-
-
-                            }else if("403".equals(resultCode)){
-                                Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(getApplicationContext(),R.string.login_fail,Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        });
     }
 
     @Override
@@ -182,43 +130,91 @@ public class PublishServiceActivity extends BaseActivity {
     }
 
     private void uploadImage(Intent data) {
+        title = service_title_et.getText().toString().trim();
+        serviceStoreName = service_store_et.getText().toString().trim();
+        contact = service_contact_et.getText().toString().trim();
+        phoneNum = contact_phone_num_et.getText().toString().trim();
+        address = service_address_et.getText().toString().trim();
+        describe = service_describe_et.getText().toString().trim();
+        serviceArea = service_area_et.getText().toString().trim();
+        serviceType = service_type_et.getText().toString().trim();
+
+        //同样，在读取SharedPreferences数据前要实例化出一个SharedPreferences对象
+        sharedPreferences = getSharedPreferences("seller_login_data", Activity.MODE_PRIVATE);
+        // 使用getString方法获得value，注意第2个参数是value的默认值
+        String username = sharedPreferences.getString("USERNAME", "");
+
+        String url = Constant.HTTP_URL + "addService";
 
         if (data != null) {
             path = ImageSelector.getImagePaths(data);
-            for (int i = 0; i < path.size(); i++) {
-                /*
-                 * 从本地文件中读读取图片
-                 * */
-                String fileName = "";
-                file = new File(path.get(i));
-                if (file.getName() == null) {
-                } else {
-                    fileName = getFileName(path.get(i));
-                }
-                RequestBody requestBody = new MultipartBody.Builder()
-                        .setType(MultipartBody.FORM)
-                        .addFormDataPart("file", fileName, RequestBody.create(MediaType.parse("image/jpg"), file))
-                        .build();
-                Request build = new Request.Builder()
-                        .url("http://172.16.52.10:8080/UploadDemo4/UploadFile") //TomCat服务器
-                        .post(requestBody)
-                        .build();
-                new OkHttpClient().newCall(build).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
+            //初始化OkHttpClient
+            OkHttpClient client = new OkHttpClient();
+            // form 表单形式上传
+            MultipartBody.Builder requestBody = new MultipartBody.Builder();
+            requestBody.setType(MultipartBody.FORM);
+            //pathList是文件路径对应的列表
+            if (null != path && path.size() > 0) {
+                for (String path : path) {
+                    File file = new File(path);
+                    if (file != null) {
+                        // MediaType.parse() 里面是上传的文件类型。
+                        RequestBody body = RequestBody.create(MediaType.parse("image/*"), file);
+                        // 参数分别为， 请求key ，文件名称 ， RequestBody
+                        requestBody.addFormDataPart("upload_service_image", file.getName(), body);
                     }
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        setResult(response.body().string(), true);
+                }
+            }
+            //要上传的文字参数
+            Map<String,String> map = new HashMap<>();
+            map.put("title",title);
+            map.put("storeName", serviceStoreName);
+            map.put("contacts", contact);
+            map.put("mobilePhoneNum", phoneNum);
+            map.put("address", address);
+            map.put("descript", describe);
+            map.put("serviceArea", serviceArea);
+            map.put("serviceType", serviceType);
+            map.put("username", username);
+            map.put("upload_type", "4");
+
+            if (map != null) {
+                for (String key : map.keySet()) {
+                    requestBody.addFormDataPart(key, map.get(key));
+                }
+            }
+            //创建Request对象
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(requestBody.build())
+                    .build();
+            // readTimeout("请求超时时间" , 时间单位);
+            client.newBuilder().readTimeout(5000, TimeUnit.MILLISECONDS).build().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    //请求失败处理
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        final String str = response.body().string();
+
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(PublishServiceActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
+                                if("200".equals(str)){
+                                    Toast.makeText(getApplicationContext(),"上传图片成功",Toast.LENGTH_SHORT).show();
+                                }else if("403".equals(str)){
+                                    Toast.makeText(getApplicationContext(),"参数错误",Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                     }
-                });
-            }
+                }
+            });
+
         }
         UploadImageAdapter adapter = new UploadImageAdapter(path, PublishServiceActivity.this);
         upload_image_gv.setAdapter(adapter);

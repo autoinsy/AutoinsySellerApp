@@ -1,6 +1,8 @@
 package com.autionsy.seller.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -25,6 +27,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,7 +74,7 @@ public class PublishRescueActivity extends BaseActivity {
     private File file;
     private List<String> path;//路径集合
 
-    private Rescue rescue;
+    private SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,65 +103,9 @@ public class PublishRescueActivity extends BaseActivity {
                 ImageSelector.show(this, REQUEST_CODE_SELECT_IMG, MAX_SELECT_COUNT);
                 break;
             case R.id.submit_tv:
-                postAsynHttpGoods();
+
                 break;
         }
-    }
-
-    private void postAsynHttpGoods(){
-        rescue = new Rescue();
-
-        title = rescue_rescue_title_et.getText().toString().trim();
-        companyName = rescue_company_name_et.getText().toString().trim();
-        phoneNum = rescue_phone_number_et.getText().toString().trim();
-        addressDetail = rescue_address_detail_et.getText().toString().trim();
-        serviceScope = rescue_service_scope_et.getText().toString().trim();
-        companyIntroduce = rescue_company_introduce_et.getText().toString().trim();
-
-        String url = Constant.HTTP_URL + "login";
-
-        Map<String,String> map = new HashMap<>();
-        map.put("loginName", title);
-        map.put("passWord", companyName);
-        map.put("passWord", phoneNum);
-        map.put("passWord", addressDetail);
-        map.put("passWord", serviceScope);
-        map.put("passWord", companyIntroduce);
-
-        OkHttp3Utils.doPost(url, map, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String responeString = response.body().string();
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject jsonObject = new JSONObject(responeString);
-                            String resultCode = jsonObject.optString("code");
-                            String data = jsonObject.optString("data");
-                            String message = jsonObject.optString("message");
-
-                            if("200".equals(resultCode)){
-
-
-                            }else if("403".equals(resultCode)){
-                                Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(getApplicationContext(),R.string.login_fail,Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        });
     }
 
     @Override
@@ -172,43 +119,87 @@ public class PublishRescueActivity extends BaseActivity {
     }
 
     private void uploadImage(Intent data) {
+        title = rescue_rescue_title_et.getText().toString().trim();
+        companyName = rescue_company_name_et.getText().toString().trim();
+        phoneNum = rescue_phone_number_et.getText().toString().trim();
+        addressDetail = rescue_address_detail_et.getText().toString().trim();
+        serviceScope = rescue_service_scope_et.getText().toString().trim();
+        companyIntroduce = rescue_company_introduce_et.getText().toString().trim();
+
+        //同样，在读取SharedPreferences数据前要实例化出一个SharedPreferences对象
+        sharedPreferences = getSharedPreferences("seller_login_data", Activity.MODE_PRIVATE);
+        // 使用getString方法获得value，注意第2个参数是value的默认值
+        String username = sharedPreferences.getString("USERNAME", "");
+
+        String url = Constant.HTTP_URL + "addRescue";
 
         if (data != null) {
             path = ImageSelector.getImagePaths(data);
-            for (int i = 0; i < path.size(); i++) {
-                /*
-                 * 从本地文件中读读取图片
-                 * */
-                String fileName = "";
-                file = new File(path.get(i));
-                if (file.getName() == null) {
-                } else {
-                    fileName = getFileName(path.get(i));
-                }
-                RequestBody requestBody = new MultipartBody.Builder()
-                        .setType(MultipartBody.FORM)
-                        .addFormDataPart("file", fileName, RequestBody.create(MediaType.parse("image/jpg"), file))
-                        .build();
-                Request build = new Request.Builder()
-                        .url("http://172.16.52.10:8080/UploadDemo4/UploadFile") //TomCat服务器
-                        .post(requestBody)
-                        .build();
-                new OkHttpClient().newCall(build).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
+            //初始化OkHttpClient
+            OkHttpClient client = new OkHttpClient();
+            // form 表单形式上传
+            MultipartBody.Builder requestBody = new MultipartBody.Builder();
+            requestBody.setType(MultipartBody.FORM);
+            //pathList是文件路径对应的列表
+            if (null != path && path.size() > 0) {
+                for (String path : path) {
+                    File file = new File(path);
+                    if (file != null) {
+                        // MediaType.parse() 里面是上传的文件类型。
+                        RequestBody body = RequestBody.create(MediaType.parse("image/*"), file);
+                        // 参数分别为， 请求key ，文件名称 ， RequestBody
+                        requestBody.addFormDataPart("upload_rescue_image", file.getName(), body);
                     }
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        setResult(response.body().string(), true);
+                }
+            }
+            //要上传的文字参数
+            Map<String,String> map = new HashMap<>();
+            map.put("rescueTittle", title);
+            map.put("rescueCompanyName", companyName);
+            map.put("rescuePhoneNumber", phoneNum);
+            map.put("rescueAddressDetail", addressDetail);
+            map.put("rescueServiceScope", serviceScope);
+            map.put("rescueCompanyIntroduce", companyIntroduce);
+            map.put("username", username);
+            map.put("upload_type", "7");
+
+            if (map != null) {
+                for (String key : map.keySet()) {
+                    requestBody.addFormDataPart(key, map.get(key));
+                }
+            }
+            //创建Request对象
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(requestBody.build())
+                    .build();
+            // readTimeout("请求超时时间" , 时间单位);
+            client.newBuilder().readTimeout(5000, TimeUnit.MILLISECONDS).build().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    //请求失败处理
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        final String str = response.body().string();
+
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(PublishRescueActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
+                                if("200".equals(str)){
+                                    Toast.makeText(getApplicationContext(),"上传图片成功",Toast.LENGTH_SHORT).show();
+                                }else if("403".equals(str)){
+                                    Toast.makeText(getApplicationContext(),"参数错误",Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                     }
-                });
-            }
+                }
+            });
+
         }
         UploadImageAdapter adapter = new UploadImageAdapter(path, PublishRescueActivity.this);
         upload_image_gv.setAdapter(adapter);

@@ -122,7 +122,7 @@ public class PublishOrnamentActivity extends BaseActivity{
                 ImageSelector.show(this, REQUEST_CODE_SELECT_IMG, MAX_SELECT_COUNT);
                 break;
             case R.id.submit_tv:
-                postAsynHttpGoods();
+
                 break;
             case R.id.ornament_type_selector_layout:
                 intent = new Intent(PublishOrnamentActivity.this, CategoryActivity.class);
@@ -134,58 +134,6 @@ public class PublishOrnamentActivity extends BaseActivity{
                 break;
         }
     }
-
-    private void postAsynHttpGoods(){
-        ornament = new Ornament();
-        ornamentName = ornament_name_et.getText().toString().trim();
-        ornamentPrice = ornament_price_et.getText().toString().trim();
-        ornamentWeight = ornament_weight_et.getText().toString().trim();
-        motorcycleType = ornament_motorcycle_type_et.getText().toString().trim();
-        motorcycleFrameCode = ornament_motorcycle_frame_code_et.getText().toString().trim();
-        String url = Constant.HTTP_URL + "login";
-        Map<String,String> map = new HashMap<>();
-        map.put("loginName", ornamentName);
-        map.put("passWord", ornamentPrice);
-        map.put("passWord", ornamentWeight);
-        map.put("passWord", motorcycleType);
-        map.put("passWord", motorcycleFrameCode);
-
-        OkHttp3Utils.doPost(url, map, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String responeString = response.body().string();
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject jsonObject = new JSONObject(responeString);
-                            String resultCode = jsonObject.optString("code");
-                            String data = jsonObject.optString("data");
-                            String message = jsonObject.optString("message");
-
-                            if("200".equals(resultCode)){
-
-
-                            }else if("403".equals(resultCode)){
-                                Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(getApplicationContext(),R.string.login_fail,Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        });
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
