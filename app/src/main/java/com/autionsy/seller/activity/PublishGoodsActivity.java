@@ -117,9 +117,9 @@ public class PublishGoodsActivity extends BaseActivity{
             case R.id.image_selector_layout:
                 ImageSelector.show(this, REQUEST_CODE_SELECT_IMG, MAX_SELECT_COUNT);
                 break;
-//            case R.id.submit_tv:
-//                postAsynHttpGoods();
-//                break;
+            case R.id.submit_tv:
+
+                break;
             case R.id.type_selector_layout:
                 intent = new Intent(PublishGoodsActivity.this, CategoryActivity.class);
                 startActivity(intent);
