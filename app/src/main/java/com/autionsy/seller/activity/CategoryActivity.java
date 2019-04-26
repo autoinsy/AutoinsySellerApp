@@ -56,6 +56,7 @@ public class CategoryActivity extends BaseActivity {
 
     private void loadData() {
         String json = getJson(this, "category.json");
+
         CategoryBean categoryBean = JSONObject.parseObject(json, CategoryBean.class);
         showTitle = new ArrayList<>();
         for (int i = 0; i < categoryBean.getData().size(); i++) {

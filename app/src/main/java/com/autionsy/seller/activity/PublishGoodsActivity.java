@@ -88,6 +88,7 @@ public class PublishGoodsActivity extends BaseActivity{
     private Intent intent;
 
     private SharedPreferences sharedPreferences;
+    private String brandMessage;
 
     private static final int Brand = 0;
 
@@ -143,7 +144,7 @@ public class PublishGoodsActivity extends BaseActivity{
             return;
         }else if(requestCode == Brand){
             Bundle brandBundle = data.getExtras();
-            String brandMessage = brandBundle.getString("BrandName");
+            brandMessage = brandBundle.getString("BrandName");
             goods_brand_tv.setText(brandMessage);
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -193,7 +194,7 @@ public class PublishGoodsActivity extends BaseActivity{
             map.put("productPlace",goodsProductPlace);
             map.put("motorcycleFrameNumber",goodsFrameCode);
             map.put("subType","轮胎");
-            map.put("brand","米其林");
+            map.put("brand",brandMessage);
             map.put("upload_type","3");
             if (map != null) {
                 for (String key : map.keySet()) {

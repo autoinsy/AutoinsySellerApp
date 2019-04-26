@@ -39,7 +39,6 @@ public class CategoryBean implements Serializable {
 
     public static class DataBean {
 
-
         private String type;
         private String moreIcon;
         private String moreText;
