@@ -1,5 +1,6 @@
 package com.autionsy.seller.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,6 +37,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,6 +91,8 @@ public class PublishOrnamentActivity extends BaseActivity{
     private Ornament ornament;
     private Intent intent;
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,15 +137,12 @@ public class PublishOrnamentActivity extends BaseActivity{
 
     private void postAsynHttpGoods(){
         ornament = new Ornament();
-
         ornamentName = ornament_name_et.getText().toString().trim();
         ornamentPrice = ornament_price_et.getText().toString().trim();
         ornamentWeight = ornament_weight_et.getText().toString().trim();
         motorcycleType = ornament_motorcycle_type_et.getText().toString().trim();
         motorcycleFrameCode = ornament_motorcycle_frame_code_et.getText().toString().trim();
-
         String url = Constant.HTTP_URL + "login";
-
         Map<String,String> map = new HashMap<>();
         map.put("loginName", ornamentName);
         map.put("passWord", ornamentPrice);
@@ -198,42 +199,87 @@ public class PublishOrnamentActivity extends BaseActivity{
 
     private void uploadImage(Intent data) {
 
+        ornamentName = ornament_name_et.getText().toString().trim();
+        ornamentPrice = ornament_price_et.getText().toString().trim();
+        ornamentWeight = ornament_weight_et.getText().toString().trim();
+        motorcycleType = ornament_motorcycle_type_et.getText().toString().trim();
+        motorcycleFrameCode = ornament_motorcycle_frame_code_et.getText().toString().trim();
+
+        //同样，在读取SharedPreferences数据前要实例化出一个SharedPreferences对象
+        sharedPreferences = getSharedPreferences("seller_login_data", Activity.MODE_PRIVATE);
+        // 使用getString方法获得value，注意第2个参数是value的默认值
+        String username = sharedPreferences.getString("USERNAME", "");
+
+        String url = Constant.HTTP_URL + "addOrnament";
+
         if (data != null) {
             path = ImageSelector.getImagePaths(data);
-            for (int i = 0; i < path.size(); i++) {
-                /*
-                 * 从本地文件中读读取图片
-                 * */
-                String fileName = "";
-                file = new File(path.get(i));
-                if (file.getName() == null) {
-                } else {
-                    fileName = getFileName(path.get(i));
-                }
-                RequestBody requestBody = new MultipartBody.Builder()
-                        .setType(MultipartBody.FORM)
-                        .addFormDataPart("file", fileName, RequestBody.create(MediaType.parse("image/jpg"), file))
-                        .build();
-                Request build = new Request.Builder()
-                        .url("http://172.16.52.10:8080/UploadDemo4/UploadFile") //TomCat服务器
-                        .post(requestBody)
-                        .build();
-                new OkHttpClient().newCall(build).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
+
+            //初始化OkHttpClient
+            OkHttpClient client = new OkHttpClient();
+            // form 表单形式上传
+            MultipartBody.Builder requestBody = new MultipartBody.Builder();
+            requestBody.setType(MultipartBody.FORM);
+            //pathList是文件路径对应的列表
+            if (null != path && path.size() > 0) {
+                for (String path : path) {
+                    File file = new File(path);
+                    if (file != null) {
+                        // MediaType.parse() 里面是上传的文件类型。
+                        RequestBody body = RequestBody.create(MediaType.parse("image/*"), file);
+                        // 参数分别为， 请求key ，文件名称 ， RequestBody
+                        requestBody.addFormDataPart("upload_ornament_image", file.getName(), body);
                     }
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        setResult(response.body().string(), true);
+                }
+            }
+            //要上传的文字参数
+            Map<String, String> map = new HashMap<>();
+            map.put("username", username);
+            map.put("ornamentName",ornamentName);
+            map.put("weight",ornamentWeight);
+            map.put("price",ornamentPrice);
+            map.put("motorcycleType",motorcycleType);
+            map.put("motorcycleFrameNumber",motorcycleFrameCode);
+            map.put("ornamentType","空调");
+            map.put("brand","");
+            map.put("upload_type","6");
+
+            if (map != null) {
+                for (String key : map.keySet()) {
+                    requestBody.addFormDataPart(key, map.get(key));
+                }
+            }
+            //创建Request对象
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(requestBody.build())
+                    .build();
+            // readTimeout("请求超时时间" , 时间单位);
+            client.newBuilder().readTimeout(5000, TimeUnit.MILLISECONDS).build().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    //请求失败处理
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        final String str = response.body().string();
+
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(PublishOrnamentActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
+                                if("200".equals(str)){
+                                    Toast.makeText(getApplicationContext(),"上传图片成功",Toast.LENGTH_SHORT).show();
+                                }else if("403".equals(str)){
+                                    Toast.makeText(getApplicationContext(),"参数错误",Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                     }
-                });
-            }
+                }
+            });
         }
         UploadImageAdapter adapter = new UploadImageAdapter(path, PublishOrnamentActivity.this);
         upload_image_gv.setAdapter(adapter);

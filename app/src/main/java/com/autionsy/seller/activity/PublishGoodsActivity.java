@@ -87,7 +87,7 @@ public class PublishGoodsActivity extends BaseActivity{
 
     private Intent intent;
 
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -180,7 +180,7 @@ public class PublishGoodsActivity extends BaseActivity{
             }
             //要上传的文字参数
             Map<String, String> map = new HashMap<>();
-            map.put("userName", username);
+            map.put("username", username);
             map.put("goodName",goodsName);
             map.put("goodPrice",goodsPrice);
             map.put("quantity",goodsQuantity);

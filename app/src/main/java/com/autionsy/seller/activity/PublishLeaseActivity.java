@@ -82,7 +82,7 @@ public class PublishLeaseActivity extends BaseActivity{
     private static final int MAX_SELECT_COUNT = 9;
     private List<String> path;//路径集合
 
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -167,7 +167,7 @@ public class PublishLeaseActivity extends BaseActivity{
             }
             //要上传的文字参数
             Map<String, String> map = new HashMap<>();
-            map.put("userName", username);
+            map.put("username", username);
             map.put("title",leaseTitle);
             map.put("stallPosition",stallPosition);
             map.put("price",leasePrice);
