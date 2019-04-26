@@ -89,6 +89,8 @@ public class PublishGoodsActivity extends BaseActivity{
 
     private SharedPreferences sharedPreferences;
 
+    private static final int Brand = 0;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +141,10 @@ public class PublishGoodsActivity extends BaseActivity{
             showImage(data); //设置图片 跟图片目录
             uploadImage(data);
             return;
+        }else if(requestCode == Brand){
+            Bundle brandBundle = data.getExtras();
+            String brandMessage = brandBundle.getString("BrandName");
+            goods_brand_tv.setText(brandMessage);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

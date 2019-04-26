@@ -117,6 +117,11 @@ public class BrandActivity extends BaseActivity {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                                        Intent intent = new Intent(BrandActivity.this, PublishGoodsActivity.class);
+                                        String brandNameStr = brand.getName();
+                                        intent.putExtra("BrandName", brandNameStr);
+                                        setResult(RESULT_OK, intent);
+                                        finish();
                                     }
                                 });
 
