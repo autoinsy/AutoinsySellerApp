@@ -132,14 +132,6 @@
                 android:textSize="@dimen/dp_13"
                 android:background="@drawable/bg_red_hollow_rectangle"
                 android:layout_marginRight="@dimen/dp_10"/>
-            <Button
-                android:id="@+id/trade_flow_sign_receive_btn"
-                android:layout_width="@dimen/dp_75"
-                android:layout_height="@dimen/dp_30"
-                android:text="@string/sign_receive"
-                android:textColor="@color/red"
-                android:textSize="@dimen/dp_13"
-                android:background="@drawable/bg_red_hollow_rectangle"/>
         </LinearLayout>
 
         <LinearLayout

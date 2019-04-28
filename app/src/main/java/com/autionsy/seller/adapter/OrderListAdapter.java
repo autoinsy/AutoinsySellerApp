@@ -1,7 +1,9 @@
 package com.autionsy.seller.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,22 +12,39 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.autionsy.seller.R;
+import com.autionsy.seller.activity.OrderListActivity;
+import com.autionsy.seller.constant.Constant;
 import com.autionsy.seller.entity.Order;
+import com.autionsy.seller.utils.OkHttp3Utils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class OrderListAdapter extends BaseAdapter {
 
     private Context context;
     List<Order> tradeFlowList = new ArrayList<>();
+    private String orderNum;
+    private String orderStatus;
+    private Intent intent;
 
     public OrderListAdapter(Context context, List<Order> list){
         this.context = context;
@@ -79,13 +98,15 @@ public class OrderListAdapter extends BaseAdapter {
         holder.trade_flow_total.setText("¥"+tradeFlowList.get(position).getTotal());
 
         String orderState = tradeFlowList.get(position).getOrderState();
+        orderNum = tradeFlowList.get(position).getOrderNum();
+
         switch (orderState){
             case "0": /**订单状态为0,查看全部订单*/
                 holder.trade_flow_delete_order_layout.setVisibility(View.VISIBLE);
                 holder.trade_flow_delete_order_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        postAsynHttpDeleteOrder(orderNum);
                     }
                 });
                 break;
@@ -94,25 +115,19 @@ public class OrderListAdapter extends BaseAdapter {
                 holder.trade_flow_cancel_order_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        postAsynHttpDeleteOrder(orderNum);
                     }
                 });
                 holder.trade_flow_send_goods_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        postAsynHttpUpdateOrderStatus(orderNum,"1");
                     }
                 });
                 break;
             case "2":  /**订单状态为2，待收货*/
                 holder.trade_flow_receive_goods_layout.setVisibility(View.VISIBLE);
                 holder.trade_flow_check_delivery_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
-                holder.trade_flow_sign_receive_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
@@ -138,12 +153,10 @@ public class OrderListAdapter extends BaseAdapter {
                 });
                 break;
         }
-
         return convertView;
     }
 
     public class ViewHolder{
-
         @BindView(R.id.trade_flow_goods_iv)
         ImageView trade_flow_goods_iv;
         @BindView(R.id.trade_flow_goods_title_tv)
@@ -176,8 +189,6 @@ public class OrderListAdapter extends BaseAdapter {
         LinearLayout trade_flow_receive_goods_layout;
         @BindView(R.id.trade_flow_check_delivery_btn)
         Button trade_flow_check_delivery_btn;
-        @BindView(R.id.trade_flow_sign_receive_btn)
-        Button trade_flow_sign_receive_btn;
 
         /**订单状态为3，待评价*/
         @BindView(R.id.trade_flow_appraise_layout)
@@ -195,4 +206,88 @@ public class OrderListAdapter extends BaseAdapter {
             ButterKnife.bind(this, view);
         }
     }
+
+    private void postAsynHttpDeleteOrder(String orderNum){
+        String url = Constant.HTTP_URL + "deleteOrder";
+
+        Map<String,String> map = new HashMap<>();
+        map.put("order_number",orderNum);
+
+        OkHttp3Utils.doPost(url, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responeString = response.body().string();
+
+                ((Activity)context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
+
+                            if("200".equals(resultCode)){
+                                notifyDataSetChanged();
+                            }else if("403".equals(resultCode)){
+                                Toast.makeText(context,R.string.param_error,Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context,R.string.login_fail,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void postAsynHttpUpdateOrderStatus(String orderNum,String status){
+        String url = Constant.HTTP_URL + "updateOrderStatus";
+
+        Map<String,String> map = new HashMap<>();
+        map.put("order_number",orderNum);
+        map.put("order_status",status);
+
+        OkHttp3Utils.doPost(url, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responeString = response.body().string();
+
+                ((Activity)context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
+
+                            if("200".equals(resultCode)){
+                                notifyDataSetChanged();
+                            }else if("403".equals(resultCode)){
+                                Toast.makeText(context,R.string.param_error,Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context,R.string.login_fail,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
 }
