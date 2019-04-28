@@ -119,7 +119,7 @@ public class NoticeActivity extends BaseActivity {
                                         startActivity(intent);
                                     }
                                 });
-
+                                noticeAdapter.notifyDataSetChanged();
                             }else if("403".equals(resultCode)){
                                 Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
                             }else {

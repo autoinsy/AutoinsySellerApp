@@ -3,44 +3,39 @@ package com.autionsy.seller.entity;
 import java.io.Serializable;
 
 public class Order implements Serializable {
-
-    private String goodsImage;
-    private String goodsTitle;
+    private String address;
+    private String mobilePhoneNum;
+    private String orderNum;
     private String price;
     private String quantity;
     private String total;
-    private String actualQuantity;
+    private String realName;
     private String orderState; // 0代表展示全部订单，1代表发货订单，2代表待签收订单，3代表去评价订单，4代表退货退款订单
+    private String username;
+    private String goodsTitle;
 
-    public String getOrderState() {
-        return orderState;
+    public String getAddress() {
+        return address;
     }
 
-    public void setOrderState(String orderState) {
-        this.orderState = orderState;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getActualQuantity() {
-        return actualQuantity;
+    public String getMobilePhoneNum() {
+        return mobilePhoneNum;
     }
 
-    public void setActualQuantity(String actualQuantity) {
-        this.actualQuantity = actualQuantity;
-    }
-    public String getGoodsImage() {
-        return goodsImage;
+    public void setMobilePhoneNum(String mobilePhoneNum) {
+        this.mobilePhoneNum = mobilePhoneNum;
     }
 
-    public void setGoodsImage(String goodsImage) {
-        this.goodsImage = goodsImage;
+    public String getOrderNum() {
+        return orderNum;
     }
 
-    public String getGoodsTitle() {
-        return goodsTitle;
-    }
-
-    public void setGoodsTitle(String goodsTitle) {
-        this.goodsTitle = goodsTitle;
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
     }
 
     public String getPrice() {
@@ -65,5 +60,37 @@ public class Order implements Serializable {
 
     public void setTotal(String total) {
         this.total = total;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getOrderState() {
+        return orderState;
+    }
+
+    public void setOrderState(String orderState) {
+        this.orderState = orderState;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getGoodsTitle() {
+        return goodsTitle;
+    }
+
+    public void setGoodsTitle(String goodsTitle) {
+        this.goodsTitle = goodsTitle;
     }
 }

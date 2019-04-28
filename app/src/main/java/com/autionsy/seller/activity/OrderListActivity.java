@@ -1,6 +1,8 @@
 package com.autionsy.seller.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,6 +18,7 @@ import com.autionsy.seller.entity.Notice;
 import com.autionsy.seller.entity.Order;
 import com.autionsy.seller.utils.OkHttp3Utils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,9 +44,7 @@ public class OrderListActivity extends BaseActivity {
 
     private OrderListAdapter mAdapter;
     private List<Order> mList = new ArrayList<>();
-
-    private String orderState;
-
+    private SharedPreferences sharedPreferences;
     private Order order;
 
     @Override
@@ -60,8 +61,8 @@ public class OrderListActivity extends BaseActivity {
 
         // 首先获取到意图对象
         Intent intent = getIntent();
+        String orderState = intent.getStringExtra("order_state");
 
-        orderState = intent.getStringExtra("order_state");
         switch (orderState){
             case "0": /**订单状态为0,查看全部订单*/
                 title_tv.setText(R.string.all_order);
@@ -79,7 +80,7 @@ public class OrderListActivity extends BaseActivity {
                 title_tv.setText(R.string.refund_title);
                 break;
         }
-        postAsynHttpOrder();
+        postAsynHttpOrder(orderState);
     }
 
     @OnClick({R.id.back_btn})
@@ -91,14 +92,19 @@ public class OrderListActivity extends BaseActivity {
         }
     }
 
-    private void postAsynHttpOrder(){
+    private void postAsynHttpOrder(String status){
+        //同样，在读取SharedPreferences数据前要实例化出一个SharedPreferences对象
+        sharedPreferences = getSharedPreferences("seller_login_data", Activity.MODE_PRIVATE);
+        // 使用getString方法获得value，注意第2个参数是value的默认值
+        String username = sharedPreferences.getString("USERNAME", "");
 
         order = new Order();
 
-        String url = Constant.HTTP_URL + "login";
+        String url = Constant.HTTP_URL + "getOrderListByState";
 
         Map<String,String> map = new HashMap<>();
-        map.put("orderState",orderState);
+        map.put("orderState",status);
+        map.put("username",username);
 
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override
@@ -120,10 +126,26 @@ public class OrderListActivity extends BaseActivity {
                             String message = jsonObject.optString("message");
 
                             if("200".equals(resultCode)){
+                                JSONArray jsonArray = jsonObject.getJSONArray(data);
+                                for (int i=0; i<jsonArray.length(); i++){
+                                    JSONObject jsonObjectData = jsonArray.getJSONObject(i);
+                                    order.setGoodsTitle(jsonObjectData.getString("goodsTitle"));
+                                    order.setAddress(jsonObjectData.getString("address"));
+                                    order.setMobilePhoneNum(jsonObjectData.getString("mobilePhoneNum"));
+                                    order.setOrderNum(jsonObjectData.getString("orderNum"));
+                                    order.setOrderState(jsonObjectData.getString("orderState"));
+                                    order.setQuantity(jsonObjectData.getString("orderQuantity"));
+                                    order.setPrice(jsonObjectData.getString("goodsPrice"));
+                                    order.setRealName(jsonObjectData.getString("realName"));
+                                    order.setUsername(jsonObjectData.getString("username"));
+                                    order.setTotal(jsonObjectData.getString("total"));
+                                    mList.add(order);
+                                }
 
                                 /**需要根据状态来发送请求*/
                                 mAdapter = new OrderListAdapter(OrderListActivity.this,mList);
                                 trade_flow_lv.setAdapter(mAdapter);
+                                mAdapter.notifyDataSetChanged();
 
                             }else if("403".equals(resultCode)){
                                 Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();

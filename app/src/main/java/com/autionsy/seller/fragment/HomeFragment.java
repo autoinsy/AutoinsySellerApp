@@ -257,7 +257,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
                                         startActivity(intent);
                                     }
                                 });
-
+                                homeAdapter.notifyDataSetChanged();
                             }else if("403".equals(resultCode)){
                                 Toast.makeText(getActivity(),R.string.param_error,Toast.LENGTH_SHORT).show();
                             }else {

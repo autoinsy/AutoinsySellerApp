@@ -77,7 +77,7 @@ public class SettingActivity extends BaseActivity {
                 UploadImage();
                 break;
             case R.id.nick_name_layout:
-                intent = new Intent(SettingActivity.this, NickNameActivity.class);
+                intent = new Intent(SettingActivity.this, SellerInfoActivity.class);
                 startActivity(intent);
                 break;
             case R.id.receive_address_layout:

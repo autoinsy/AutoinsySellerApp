@@ -128,6 +128,7 @@ public class NewsActivity extends BaseActivity {
                                         startActivity(intent);
                                     }
                                 });
+                                newsAdapter.notifyDataSetChanged();
                             }else if("403".equals(resultCode)){
                                 Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
                             }else {

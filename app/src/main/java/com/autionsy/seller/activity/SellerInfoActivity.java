@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.constant.Constant;
-import com.autionsy.seller.entity.Lease;
 import com.autionsy.seller.entity.Seller;
 import com.autionsy.seller.utils.OkHttp3Utils;
 
@@ -26,7 +25,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class NickNameActivity extends BaseActivity{
+public class SellerInfoActivity extends BaseActivity{
     @BindView(R.id.title_tv)
     TextView title_tv;
 
@@ -40,7 +39,7 @@ public class NickNameActivity extends BaseActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_nick_name);
+        setContentView(R.layout.act_seller_info);
 
         ButterKnife.bind(this);
         initView();
@@ -93,7 +92,7 @@ public class NickNameActivity extends BaseActivity{
                             String message = jsonObject.optString("message");
 
                             if("200".equals(resultCode)){
-
+                                JSONObject jsonObjectData = jsonObject.getJSONObject(data);
 
                             }else if("403".equals(resultCode)){
                                 Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
