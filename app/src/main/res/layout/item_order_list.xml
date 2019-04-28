@@ -86,7 +86,7 @@
             android:text="$19.90"/>
     </LinearLayout>
 
-    <RelativeLayout
+    <!--<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10">
@@ -190,5 +190,5 @@
                 android:textSize="@dimen/dp_13"
                 android:background="@drawable/bg_red_hollow_rectangle"/>
         </LinearLayout>
-    </RelativeLayout>
+    </RelativeLayout>-->
 </LinearLayout>

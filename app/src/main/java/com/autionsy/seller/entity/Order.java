@@ -13,6 +13,15 @@ public class Order implements Serializable {
     private String orderState; // 0代表展示全部订单，1代表发货订单，2代表待签收订单，3代表去评价订单，4代表退货退款订单
     private String username;
     private String goodsTitle;
+    private String pictureUrl;
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
 
     public String getAddress() {
         return address;

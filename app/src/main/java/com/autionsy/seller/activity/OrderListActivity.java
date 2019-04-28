@@ -139,6 +139,7 @@ public class OrderListActivity extends BaseActivity {
                                     order.setRealName(jsonObjectData.getString("realName"));
                                     order.setUsername(jsonObjectData.getString("username"));
                                     order.setTotal(jsonObjectData.getString("total"));
+                                    order.setPictureUrl(jsonObjectData.getString("pictureUrl"));
                                     mList.add(order);
                                 }
 
