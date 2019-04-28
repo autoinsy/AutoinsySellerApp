@@ -78,66 +78,66 @@ public class OrderListAdapter extends BaseAdapter {
         holder.trade_flow_actual_quantity.setText("共"+tradeFlowList.get(position).getQuantity());
         holder.trade_flow_total.setText("¥"+tradeFlowList.get(position).getTotal());
 
-//        String orderState = tradeFlowList.get(position).getOrderState();
-//        switch (orderState){
-//            case "0": /**订单状态为0,查看全部订单*/
-//                holder.trade_flow_delete_order_layout.setVisibility(View.VISIBLE);
-//                holder.trade_flow_delete_order_btn.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                    }
-//                });
-//                break;
-//            case "1": /**订单状态为1,待发货*/
-//                holder.trade_flow_send_goods_layout.setVisibility(View.VISIBLE);
-//                holder.trade_flow_cancel_order_btn.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                    }
-//                });
-//                holder.trade_flow_send_goods_btn.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                    }
-//                });
-//                break;
-//            case "2":  /**订单状态为2，待收货*/
-//                holder.trade_flow_receive_goods_layout.setVisibility(View.VISIBLE);
-//                holder.trade_flow_check_delivery_btn.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                    }
-//                });
-//                holder.trade_flow_sign_receive_btn.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                    }
-//                });
-//                break;
-//            case "3": /**订单状态为3，待评价*/
-//                holder.trade_flow_appraise_layout.setVisibility(View.VISIBLE);
-//                holder.trade_flow_appraise_btn.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                    }
-//                });
-//                break;
-//            case "4": /**订单状态为4，退货/退款*/
-//                holder.trade_flow_refund_layout.setVisibility(View.VISIBLE);
-//                holder.trade_flow_refund_btn.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                    }
-//                });
-//                break;
-//        }
+        String orderState = tradeFlowList.get(position).getOrderState();
+        switch (orderState){
+            case "0": /**订单状态为0,查看全部订单*/
+                holder.trade_flow_delete_order_layout.setVisibility(View.VISIBLE);
+                holder.trade_flow_delete_order_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                break;
+            case "1": /**订单状态为1,待发货*/
+                holder.trade_flow_send_goods_layout.setVisibility(View.VISIBLE);
+                holder.trade_flow_cancel_order_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                holder.trade_flow_send_goods_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                break;
+            case "2":  /**订单状态为2，待收货*/
+                holder.trade_flow_receive_goods_layout.setVisibility(View.VISIBLE);
+                holder.trade_flow_check_delivery_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                holder.trade_flow_sign_receive_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                break;
+            case "3": /**订单状态为3，待评价*/
+                holder.trade_flow_appraise_layout.setVisibility(View.VISIBLE);
+                holder.trade_flow_appraise_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                break;
+            case "4": /**订单状态为4，退货/退款*/
+                holder.trade_flow_refund_layout.setVisibility(View.VISIBLE);
+                holder.trade_flow_refund_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                break;
+        }
 
         return convertView;
     }
@@ -157,39 +157,39 @@ public class OrderListAdapter extends BaseAdapter {
         @BindView(R.id.trade_flow_total)
         TextView trade_flow_total;
 
-//        /**订单状态为0,查看全部订单*/
-//        @BindView(R.id.trade_flow_delete_order_layout)
-//        LinearLayout trade_flow_delete_order_layout;
-//        @BindView(R.id.trade_flow_delete_order_btn)
-//        Button trade_flow_delete_order_btn;
-//
-//        /**订单状态为1,待发货*/
-//        @BindView(R.id.trade_flow_send_goods_layout)
-//        LinearLayout trade_flow_send_goods_layout;
-//        @BindView(R.id.trade_flow_cancel_order_btn)
-//        Button trade_flow_cancel_order_btn;
-//        @BindView(R.id.trade_flow_send_goods_btn)
-//        Button trade_flow_send_goods_btn;
-//
-//        /**订单状态为2，待收货*/
-//        @BindView(R.id.trade_flow_receive_goods_layout)
-//        LinearLayout trade_flow_receive_goods_layout;
-//        @BindView(R.id.trade_flow_check_delivery_btn)
-//        Button trade_flow_check_delivery_btn;
-//        @BindView(R.id.trade_flow_sign_receive_btn)
-//        Button trade_flow_sign_receive_btn;
-//
-//        /**订单状态为3，待评价*/
-//        @BindView(R.id.trade_flow_appraise_layout)
-//        LinearLayout trade_flow_appraise_layout;
-//        @BindView(R.id.trade_flow_appraise_btn)
-//        Button trade_flow_appraise_btn;
-//
-//        /**订单状态为4，退货/退款*/
-//        @BindView(R.id.trade_flow_refund_layout)
-//        LinearLayout trade_flow_refund_layout;
-//        @BindView(R.id.trade_flow_refund_btn)
-//        Button trade_flow_refund_btn;
+        /**订单状态为0,查看全部订单*/
+        @BindView(R.id.trade_flow_delete_order_layout)
+        LinearLayout trade_flow_delete_order_layout;
+        @BindView(R.id.trade_flow_delete_order_btn)
+        Button trade_flow_delete_order_btn;
+
+        /**订单状态为1,待发货*/
+        @BindView(R.id.trade_flow_send_goods_layout)
+        LinearLayout trade_flow_send_goods_layout;
+        @BindView(R.id.trade_flow_cancel_order_btn)
+        Button trade_flow_cancel_order_btn;
+        @BindView(R.id.trade_flow_send_goods_btn)
+        Button trade_flow_send_goods_btn;
+
+        /**订单状态为2，待收货*/
+        @BindView(R.id.trade_flow_receive_goods_layout)
+        LinearLayout trade_flow_receive_goods_layout;
+        @BindView(R.id.trade_flow_check_delivery_btn)
+        Button trade_flow_check_delivery_btn;
+        @BindView(R.id.trade_flow_sign_receive_btn)
+        Button trade_flow_sign_receive_btn;
+
+        /**订单状态为3，待评价*/
+        @BindView(R.id.trade_flow_appraise_layout)
+        LinearLayout trade_flow_appraise_layout;
+        @BindView(R.id.trade_flow_appraise_btn)
+        Button trade_flow_appraise_btn;
+
+        /**订单状态为4，退货/退款*/
+        @BindView(R.id.trade_flow_refund_layout)
+        LinearLayout trade_flow_refund_layout;
+        @BindView(R.id.trade_flow_refund_btn)
+        Button trade_flow_refund_btn;
 
         public ViewHolder(View view){
             ButterKnife.bind(this, view);
