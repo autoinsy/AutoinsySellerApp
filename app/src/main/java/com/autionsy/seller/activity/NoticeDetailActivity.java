@@ -11,6 +11,8 @@ import com.autionsy.seller.R;
 import com.autionsy.seller.adapter.NoticeAdapter;
 import com.autionsy.seller.constant.Constant;
 import com.autionsy.seller.utils.OkHttp3Utils;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,10 +71,10 @@ public class NoticeDetailActivity extends BaseActivity {
     }
 
     private void postAsynHttpNoticeDetail(){
-        String url = Constant.HTTP_URL + "login";
+        String url = Constant.HTTP_URL + "getNotice";
 
         Map<String,String> map = new HashMap<>();
-        map.put("loginName", noticeId);
+        map.put("notice_id", noticeId);
 
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override
@@ -94,8 +96,14 @@ public class NoticeDetailActivity extends BaseActivity {
                             String message = jsonObject.optString("message");
 
                             if("200".equals(resultCode)){
+                                JSONObject jsonObjectNotice = jsonObject.getJSONObject(data);
+                                String content = jsonObjectNotice.getString("noticeContent");
+                                String title = jsonObjectNotice.getString("noticeTitle");
+                                String publishTime = jsonObjectNotice.getString("noticeTime");
 
-
+                                notice_detail_title_tv.setText(title);
+                                notice_detail_time_tv.setText(publishTime);
+                                notice_detail_content_tv.setText(content);
                             }else if("403".equals(resultCode)){
                                 Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
                             }else {

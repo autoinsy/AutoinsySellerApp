@@ -16,14 +16,6 @@ public class Notice implements Serializable {
         this.header = header;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getTime() {
         return time;
     }
@@ -38,5 +30,13 @@ public class Notice implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

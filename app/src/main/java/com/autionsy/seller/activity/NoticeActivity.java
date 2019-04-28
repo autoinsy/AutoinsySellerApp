@@ -15,6 +15,7 @@ import com.autionsy.seller.entity.Lease;
 import com.autionsy.seller.entity.Notice;
 import com.autionsy.seller.utils.OkHttp3Utils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,9 +41,7 @@ public class NoticeActivity extends BaseActivity {
 
     private NoticeAdapter noticeAdapter;
     private List<Notice> mList = new ArrayList<>();
-
     private String noticeId;
-
     private Notice notice;
 
     @Override
@@ -71,11 +70,9 @@ public class NoticeActivity extends BaseActivity {
     }
 
     private void postAsynHttpNotice(){
-
         notice = new Notice();
 
-        String url = Constant.HTTP_URL + "login";
-
+        String url = Constant.HTTP_URL + "noticeAll";
         Map<String,String> map = new HashMap<>();
 
         OkHttp3Utils.doPost(url, map, new Callback() {
@@ -98,6 +95,16 @@ public class NoticeActivity extends BaseActivity {
                             String message = jsonObject.optString("message");
 
                             if("200".equals(resultCode)){
+
+                                JSONArray jsonArray = jsonObject.getJSONArray(data);
+                                for (int i=0; i<jsonArray.length(); i++){
+                                    JSONObject jsonObjectNotice = jsonArray.getJSONObject(i);
+                                    notice.setContent(jsonObjectNotice.getString("noticeContent"));
+                                    notice.setHeader(jsonObjectNotice.getString("noticePhoto"));
+                                    notice.setTime(jsonObjectNotice.getString("noticeTime"));
+                                    notice.setTitle(jsonObjectNotice.getString("noticeTitle"));
+                                    mList.add(notice);
+                                }
 
                                 noticeAdapter = new NoticeAdapter(NoticeActivity.this,mList);
                                 notice_lv.setAdapter(noticeAdapter);
