@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.autionsy.seller.R;
 import com.autionsy.seller.activity.GoodsManagementActivity;
 import com.autionsy.seller.activity.OrderListActivity;
+import com.autionsy.seller.activity.OrnamenManagementActivity;
 import com.autionsy.seller.activity.SettingActivity;
 import com.autionsy.seller.constant.Constant;
 import com.autionsy.seller.entity.Seller;
@@ -167,7 +168,7 @@ public class MineFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.mine_ornament_management_text_layout: //2代表内饰商品管理
-                intent = new Intent(getActivity(), GoodsManagementActivity.class);
+                intent = new Intent(getActivity(), OrnamenManagementActivity.class);
                 startActivity(intent);
                 break;
             case R.id.mine_service_management_text_layout: //3代表服务管理
