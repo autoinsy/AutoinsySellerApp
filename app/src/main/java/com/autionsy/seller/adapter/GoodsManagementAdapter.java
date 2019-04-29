@@ -1,5 +1,6 @@
 package com.autionsy.seller.adapter;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,23 +11,38 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.autionsy.seller.R;
+import com.autionsy.seller.activity.GoodsManagementActivity;
+import com.autionsy.seller.constant.Constant;
 import com.autionsy.seller.entity.Goods;
+import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.utils.ScreenUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class GoodsManagementAdapter extends BaseAdapter {
 
     private Context context;
     List<Goods> commodityList = new ArrayList<>();
+    private String goodsId;
 
     public GoodsManagementAdapter(Context context, List<Goods> list){
         this.context = context;
@@ -54,7 +70,7 @@ public class GoodsManagementAdapter extends BaseAdapter {
        ViewHolder holder = null;
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_commodity_management, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_goods_management, null);
 
             holder = new ViewHolder(convertView);
 
@@ -63,26 +79,28 @@ public class GoodsManagementAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-//        RequestOptions options = new RequestOptions()
-//                .placeholder(R.mipmap.default_header)
-//                .override(300, 300)
-//                .error(R.mipmap.default_header);
-//        Glide.with(context)
-//                .load(commodityList.get(position).getCommodityImage())
-//                .apply(options)
-//                .into(holder.commodity_management_iv);
-//
-//        holder.commodity_management_title_tv.setText(commodityList.get(position).getTitle());
-//        holder.commodity_unit_price.setText(commodityList.get(position).getUnitPrice());
-//        holder.commodity_unit_quantity.setText(commodityList.get(position).getUnitQuantity());
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.mipmap.default_header)
+                .override(300, 300)
+                .error(R.mipmap.default_header);
+        Glide.with(context)
+                .load(commodityList.get(position).getGoodsPic())
+                .apply(options)
+                .into(holder.goods_management_iv);
 
-        holder.commodity_management_edit_btn.setOnClickListener(new View.OnClickListener() {
+        holder.goods_management_title_tv.setText(commodityList.get(position).getGoodsName());
+        holder.goods_unit_price.setText(commodityList.get(position).getPrice());
+        holder.goods_unit_quantity.setText(commodityList.get(position).getQuantity());
+
+        goodsId = commodityList.get(position).getGoodsId();
+
+        holder.goods_management_edit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
-        holder.commodity_management_delete_btn.setOnClickListener(new View.OnClickListener() {
+        holder.goods_management_delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog();
@@ -110,7 +128,7 @@ public class GoodsManagementAdapter extends BaseAdapter {
         btn_agree_high_opion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**发送请求删除item*/
+                postAsynHttpDeleteGoods();
                 dialog.dismiss();
             }
         });
@@ -121,22 +139,62 @@ public class GoodsManagementAdapter extends BaseAdapter {
     }
 
     public class ViewHolder{
-
-        @BindView(R.id.commodity_management_iv)
-        ImageView commodity_management_iv;
-        @BindView(R.id.commodity_management_title_tv)
-        TextView commodity_management_title_tv;
-        @BindView(R.id.commodity_unit_price)
-        TextView commodity_unit_price;
-        @BindView(R.id.commodity_unit_quantity)
-        TextView commodity_unit_quantity;
-        @BindView(R.id.commodity_management_edit_btn)
-        Button commodity_management_edit_btn;
-        @BindView(R.id.commodity_management_delete_btn)
-        Button commodity_management_delete_btn;
+        @BindView(R.id.goods_management_iv)
+        ImageView goods_management_iv;
+        @BindView(R.id.goods_management_title_tv)
+        TextView goods_management_title_tv;
+        @BindView(R.id.goods_unit_price)
+        TextView goods_unit_price;
+        @BindView(R.id.goods_unit_quantity)
+        TextView goods_unit_quantity;
+        @BindView(R.id.goods_management_edit_btn)
+        Button goods_management_edit_btn;
+        @BindView(R.id.goods_management_delete_btn)
+        Button goods_management_delete_btn;
 
         public ViewHolder(View view){
             ButterKnife.bind(this, view);
         }
+    }
+
+    private void postAsynHttpDeleteGoods(){
+        String url = Constant.HTTP_URL + "getAllGoods";
+
+        Map<String,String> map = new HashMap<>();
+        map.put("goods_id",goodsId);
+
+        OkHttp3Utils.doPost(url, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responeString = response.body().string();
+
+                ((Activity)context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
+
+                            if("200".equals(resultCode)){
+                                notifyDataSetChanged();
+                            }else if("403".equals(resultCode)){
+                                Toast.makeText(context,R.string.param_error,Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context,R.string.login_fail,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
     }
 }

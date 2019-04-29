@@ -5,6 +5,8 @@ import java.io.Serializable;
 
 public class Recruit implements Serializable {
 
+    private String recruitId;
+
     /**
      * 招聘标题
      * */
@@ -76,6 +78,14 @@ public class Recruit implements Serializable {
     private String recruitCode;
 
     private String username;
+
+    public String getRecruitId() {
+        return recruitId;
+    }
+
+    public void setRecruitId(String recruitId) {
+        this.recruitId = recruitId;
+    }
 
     public String getUsername() {
         return username;

@@ -5,6 +5,8 @@ import java.util.Set;
 
 public class Service implements Serializable {
 
+    private String serviceId;
+
     /**
      * 发布时间
      * */
@@ -57,6 +59,13 @@ public class Service implements Serializable {
 
     private String username;
 
+    public String getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
+    }
 
     public String getUsername() {
         return username;

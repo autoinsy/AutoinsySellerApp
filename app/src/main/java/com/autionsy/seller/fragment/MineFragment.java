@@ -168,27 +168,22 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.mine_ornament_management_text_layout: //2代表内饰商品管理
                 intent = new Intent(getActivity(), GoodsManagementActivity.class);
-                intent.putExtra("commodity_management_state","2");
                 startActivity(intent);
                 break;
             case R.id.mine_service_management_text_layout: //3代表服务管理
                 intent = new Intent(getActivity(), GoodsManagementActivity.class);
-                intent.putExtra("commodity_management_state","3");
                 startActivity(intent);
                 break;
             case R.id.mine_lease_management_text_layout: //4代表租赁管理
                 intent = new Intent(getActivity(), GoodsManagementActivity.class);
-                intent.putExtra("commodity_management_state","4");
                 startActivity(intent);
                 break;
             case  R.id.mine_recuit_management_text_layout: //5代表招聘管理
                 intent = new Intent(getActivity(), GoodsManagementActivity.class);
-                intent.putExtra("commodity_management_state","5");
                 startActivity(intent);
                 break;
             case R.id.mine_rescue_management_text_layout: //6代表道路救援管理
                 intent = new Intent(getActivity(), GoodsManagementActivity.class);
-                intent.putExtra("commodity_management_state","6");
                 startActivity(intent);
                 break;
         }

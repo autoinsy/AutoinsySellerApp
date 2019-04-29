@@ -3,6 +3,7 @@ package com.autionsy.seller.entity;
 import java.io.Serializable;
 
 public class Goods implements Serializable {
+    private String goodsId;
     private String goodsName;
     private String price;
     private String describe;
@@ -21,6 +22,15 @@ public class Goods implements Serializable {
     private String goodsPic;
     private String motorcycleFrameNumber;
     private String username;
+
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
+    }
+
 
     public String getGoodsName() {
         return goodsName;

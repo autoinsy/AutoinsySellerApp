@@ -10,13 +10,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
-            android:id="@+id/commodity_management_iv"
+            android:id="@+id/goods_management_iv"
             android:layout_width="@dimen/dp_80"
             android:layout_height="@dimen/dp_80"
             android:scaleType="centerCrop"
             android:src="@mipmap/default_product"/>
         <TextView
-            android:id="@+id/commodity_management_title_tv"
+            android:id="@+id/goods_management_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
@@ -33,14 +33,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/commodity_unit_price"
+                android:id="@+id/goods_unit_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/red"
                 android:textSize="@dimen/dp_13"
                 android:text="$19.9"/>
             <TextView
-                android:id="@+id/commodity_unit_quantity"
+                android:id="@+id/goods_unit_quantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_text"
@@ -57,7 +57,7 @@
         android:gravity="center_vertical|right"
         android:layout_marginTop="@dimen/dp_10">
         <Button
-            android:id="@+id/commodity_management_edit_btn"
+            android:id="@+id/goods_management_edit_btn"
             android:layout_width="@dimen/dp_75"
             android:layout_height="@dimen/dp_30"
             android:text="@string/edit"
@@ -66,7 +66,7 @@
             android:background="@drawable/rect_corner_hollow_green"
             android:layout_marginRight="@dimen/dp_10"/>
         <Button
-            android:id="@+id/commodity_management_delete_btn"
+            android:id="@+id/goods_management_delete_btn"
             android:layout_width="@dimen/dp_75"
             android:layout_height="@dimen/dp_30"
             android:text="@string/delete"
@@ -74,5 +74,4 @@
             android:textSize="@dimen/dp_13"
             android:background="@drawable/bg_red_hollow_rectangle"/>
     </LinearLayout>
-
 </LinearLayout>

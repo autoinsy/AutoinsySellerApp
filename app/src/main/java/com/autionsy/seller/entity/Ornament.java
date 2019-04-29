@@ -3,6 +3,7 @@ package com.autionsy.seller.entity;
 import java.io.Serializable;
 
 public class Ornament implements Serializable {
+    private String ornamentId;
 
     private String ornamentName;
 
@@ -25,6 +26,14 @@ public class Ornament implements Serializable {
     private String username;
 
     private String ornamentType;
+
+    public String getOrnamentId() {
+        return ornamentId;
+    }
+
+    public void setOrnamentId(String ornamentId) {
+        this.ornamentId = ornamentId;
+    }
 
     public String getUsername() {
         return username;

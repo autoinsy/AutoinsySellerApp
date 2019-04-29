@@ -3,7 +3,7 @@ package com.autionsy.seller.entity;
 import java.io.Serializable;
 
 public class Rescue implements Serializable {
-
+    private String rescueId;
     private String rescueTittle;
     private String rescuePhoneNumber;
     private String rescueAddressDetail;
@@ -12,6 +12,14 @@ public class Rescue implements Serializable {
     private String rescueCode;
     private String rescueCompanyName;
     private String username;
+
+    public String getRescueId() {
+        return rescueId;
+    }
+
+    public void setRescueId(String rescueId) {
+        this.rescueId = rescueId;
+    }
 
     public String getUsername() {
         return username;

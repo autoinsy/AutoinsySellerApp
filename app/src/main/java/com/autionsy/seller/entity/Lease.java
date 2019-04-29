@@ -3,7 +3,7 @@ package com.autionsy.seller.entity;
 import java.io.Serializable;
 
 public class Lease implements Serializable {
-
+    private String leaseId;
     private String leaseType;
     private String acreage;
     private String stallPosition;
@@ -17,6 +17,14 @@ public class Lease implements Serializable {
     private String publishDate;
     private String leaseInfoSourceCode;
     private String username;
+
+    public String getLeaseId() {
+        return leaseId;
+    }
+
+    public void setLeaseId(String leaseId) {
+        this.leaseId = leaseId;
+    }
 
     public String getLeaseType() {
         return leaseType;
