@@ -9,13 +9,10 @@ import android.widget.Toast;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.adapter.GoodsManagementAdapter;
+import com.autionsy.seller.adapter.OrnamentManagementAdapter;
 import com.autionsy.seller.constant.Constant;
 import com.autionsy.seller.entity.Goods;
-import com.autionsy.seller.entity.Lease;
 import com.autionsy.seller.entity.Ornament;
-import com.autionsy.seller.entity.Recruit;
-import com.autionsy.seller.entity.Rescue;
-import com.autionsy.seller.entity.Service;
 import com.autionsy.seller.utils.OkHttp3Utils;
 
 import org.json.JSONArray;
@@ -35,54 +32,29 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class GoodsManagementActivity extends BaseActivity {
+public class OrnamenManagementActivity extends BaseActivity {
     @BindView(R.id.title_tv)
     TextView title_tv;
-    @BindView(R.id.goods_management_lv)
-    ListView goods_management_lv;
+    @BindView(R.id.ornament_management_lv)
+    ListView ornament_management_lv;
 
-    private GoodsManagementAdapter mAdapter;
-    private List<Goods> mList = new ArrayList<>();
+    private OrnamentManagementAdapter mAdapter;
+    private List<Ornament> mList = new ArrayList<>();
 
-    private Goods goods;
+    private Ornament ornament;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_goods_management);
+        setContentView(R.layout.act_ornament_management);
 
         ButterKnife.bind(this);
         initView();
         postAsynHttpGoods();
     }
-
     private void initView(){
         title_tv.setVisibility(View.VISIBLE);
-        title_tv.setText(R.string.goods_management);
-
-//        switch (commodityManagementState){
-//            case "1": //1代表汽配商品管理
-//                break;
-//            case "2": //2代表内饰商品管理
-//                title_tv.setText(R.string.ornament_management);
-//                break;
-//            case "3": //3代表服务管理
-//                title_tv.setText(R.string.service_management);
-//                postAsynHttpService();
-//                break;
-//            case "4": //4代表租赁管理
-//                title_tv.setText(R.string.lease_management);
-//                postAsynHttpLease();
-//                break;
-//            case "5": //5代表招聘管理
-//                title_tv.setText(R.string.recuit_management);
-//                postAsynHttpRecruit();
-//                break;
-//            case "6": //6代表道路救援管理
-//                title_tv.setText(R.string.rescue_management);
-//                postAsynHttpRescue();
-//                break;
-//        }
+        title_tv.setText(R.string.ornament_management);
     }
 
     @OnClick({R.id.back_btn})
@@ -99,8 +71,7 @@ public class GoodsManagementActivity extends BaseActivity {
         SharedPreferences prefs = getSharedPreferences("seller_login_data", MODE_PRIVATE); //获取对象，读取data文件
         String username = prefs.getString("USERNAME", ""); //获取文件中的数据
 
-        goods = new Goods();
-        String url = Constant.HTTP_URL + "getAllGoods";
+        String url = Constant.HTTP_URL + "getAllOrnament";
 
         Map<String,String> map = new HashMap<>();
         map.put("username",username);
@@ -125,20 +96,20 @@ public class GoodsManagementActivity extends BaseActivity {
                             String message = jsonObject.optString("message");
 
                             if("200".equals(resultCode)){
-                                goods = new Goods();
+                                ornament = new Ornament();
                                 JSONArray jsonArray = jsonObject.getJSONArray(data);
                                 for (int i=0; i<jsonArray.length(); i++){
                                     JSONObject jsonObjectGoods = jsonArray.getJSONObject(i);
-                                    goods.setGoodsName(jsonObjectGoods.getString("goodsName"));
-                                    goods.setGoodsPic(jsonObjectGoods.getString("goodsPic"));
-                                    goods.setPrice(jsonObjectGoods.getString("price"));
-                                    goods.setQuantity(jsonObjectGoods.getString("quantity"));
-                                    mList.add(goods);
+                                    ornament.setOrnamentName(jsonObjectGoods.getString("ornamentName"));
+                                    ornament.setImageUrl(jsonObjectGoods.getString("ornamentImageUrl"));
+                                    ornament.setPrice(jsonObjectGoods.getString("price"));
+                                    ornament.setQuantity(jsonObjectGoods.getString("quantity"));
+                                    mList.add(ornament);
                                 }
 
                                 /**需要根据状态来发送请求*/
-                                mAdapter = new GoodsManagementAdapter(GoodsManagementActivity.this,mList);
-                                goods_management_lv.setAdapter(mAdapter);
+                                mAdapter = new OrnamentManagementAdapter(OrnamenManagementActivity.this,mList);
+                                ornament_management_lv.setAdapter(mAdapter);
                                 mAdapter.notifyDataSetChanged();
 
                             }else if("403".equals(resultCode)){
