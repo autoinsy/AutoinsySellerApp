@@ -14,15 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.activity.GoodsManagementActivity;
 import com.autionsy.seller.constant.Constant;
 import com.autionsy.seller.entity.Goods;
+import com.autionsy.seller.entity.Ornament;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.utils.ScreenUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,13 +37,13 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class GoodsManagementAdapter extends BaseAdapter {
+public class OrnamentManagementAdapter extends BaseAdapter {
 
     private Context context;
-    List<Goods> commodityList = new ArrayList<>();
-    private String goodsId;
+    List<Ornament> commodityList = new ArrayList<>();
+    private String ornamentId;
 
-    public GoodsManagementAdapter(Context context, List<Goods> list){
+    public OrnamentManagementAdapter(Context context, List<Ornament> list){
         this.context = context;
         this.commodityList = list;
     }
@@ -66,11 +65,10 @@ public class GoodsManagementAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-       ViewHolder holder = null;
+        ViewHolder holder = null;
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_goods_management, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_ornament_management, null);
 
             holder = new ViewHolder(convertView);
 
@@ -84,23 +82,23 @@ public class GoodsManagementAdapter extends BaseAdapter {
                 .override(300, 300)
                 .error(R.mipmap.default_header);
         Glide.with(context)
-                .load(commodityList.get(position).getGoodsPic())
+                .load(commodityList.get(position).getImageUrl())
                 .apply(options)
-                .into(holder.goods_management_iv);
+                .into(holder.ornament_management_iv);
 
-        holder.goods_management_title_tv.setText(commodityList.get(position).getGoodsName());
-        holder.goods_unit_price.setText(commodityList.get(position).getPrice());
-        holder.goods_unit_quantity.setText(commodityList.get(position).getQuantity());
+        holder.ornament_management_title_tv.setText(commodityList.get(position).getOrnamentName());
+        holder.ornament_unit_price.setText(commodityList.get(position).getPrice());
+        holder.ornament_unit_quantity.setText(commodityList.get(position).getQuantity());
 
-        goodsId = commodityList.get(position).getGoodsId();
+        ornamentId = commodityList.get(position).getOrnamentId();
 
-        holder.goods_management_edit_btn.setOnClickListener(new View.OnClickListener() {
+        holder.ornament_management_edit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
-        holder.goods_management_delete_btn.setOnClickListener(new View.OnClickListener() {
+        holder.ornament_management_delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog();
@@ -128,7 +126,7 @@ public class GoodsManagementAdapter extends BaseAdapter {
         btn_agree_high_opion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postAsynHttpDeleteGoods();
+                postAsynHttpDeleteOrnament();
                 dialog.dismiss();
             }
         });
@@ -139,29 +137,29 @@ public class GoodsManagementAdapter extends BaseAdapter {
     }
 
     public class ViewHolder{
-        @BindView(R.id.goods_management_iv)
-        ImageView goods_management_iv;
-        @BindView(R.id.goods_management_title_tv)
-        TextView goods_management_title_tv;
-        @BindView(R.id.goods_unit_price)
-        TextView goods_unit_price;
-        @BindView(R.id.goods_unit_quantity)
-        TextView goods_unit_quantity;
-        @BindView(R.id.goods_management_edit_btn)
-        Button goods_management_edit_btn;
-        @BindView(R.id.goods_management_delete_btn)
-        Button goods_management_delete_btn;
+        @BindView(R.id.ornament_management_iv)
+        ImageView ornament_management_iv;
+        @BindView(R.id.ornament_management_title_tv)
+        TextView ornament_management_title_tv;
+        @BindView(R.id.ornament_unit_price)
+        TextView ornament_unit_price;
+        @BindView(R.id.ornament_unit_quantity)
+        TextView ornament_unit_quantity;
+        @BindView(R.id.ornament_management_edit_btn)
+        Button ornament_management_edit_btn;
+        @BindView(R.id.ornament_management_delete_btn)
+        Button ornament_management_delete_btn;
 
         public ViewHolder(View view){
             ButterKnife.bind(this, view);
         }
     }
 
-    private void postAsynHttpDeleteGoods(){
-        String url = Constant.HTTP_URL + "deleteGoodsInfo";
+    private void postAsynHttpDeleteOrnament(){
+        String url = Constant.HTTP_URL + "deleteOrnamentInfo";
 
         Map<String,String> map = new HashMap<>();
-        map.put("goods_id",goodsId);
+        map.put("ornament_id",ornamentId);
 
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override

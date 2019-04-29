@@ -19,13 +19,23 @@ public class Ornament implements Serializable {
 
     private String brand;
 
-    private String videoUrl;
+    private String imageUrl;
 
     private String ornamentLoopCode;
 
     private String username;
 
     private String ornamentType;
+
+    private String quantity;
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
 
     public String getOrnamentId() {
         return ornamentId;
@@ -99,12 +109,12 @@ public class Ornament implements Serializable {
         this.brand = brand;
     }
 
-    public String getVideoUrl() {
-        return videoUrl;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getOrnamentLoopCode() {
