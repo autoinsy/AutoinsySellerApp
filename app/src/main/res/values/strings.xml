@@ -276,6 +276,7 @@
     <string name="account_is_lock">账户已锁</string>
     <string name="excessive_attempts">您登录太频繁，请稍后重试</string>
     <string name="login_fail">登陆失败</string>
+    <string name="save_address">地址已保存</string>
 
     <string name="category_title_text">分类</string>
     <string name="scan_qr_code">扫码</string>

@@ -12,8 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.entity.Commodity;
-import com.autionsy.seller.entity.Order;
+import com.autionsy.seller.entity.Goods;
 import com.autionsy.seller.utils.ScreenUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -24,12 +23,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CommodityManagementAdapter extends BaseAdapter {
+public class GoodsManagementAdapter extends BaseAdapter {
 
     private Context context;
-    List<Commodity> commodityList = new ArrayList<>();
+    List<Goods> commodityList = new ArrayList<>();
 
-    public CommodityManagementAdapter(Context context, List<Commodity> list){
+    public GoodsManagementAdapter(Context context, List<Goods> list){
         this.context = context;
         this.commodityList = list;
     }
@@ -64,18 +63,18 @@ public class CommodityManagementAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        RequestOptions options = new RequestOptions()
-                .placeholder(R.mipmap.default_header)
-                .override(300, 300)
-                .error(R.mipmap.default_header);
-        Glide.with(context)
-                .load(commodityList.get(position).getCommodityImage())
-                .apply(options)
-                .into(holder.commodity_management_iv);
-
-        holder.commodity_management_title_tv.setText(commodityList.get(position).getTitle());
-        holder.commodity_unit_price.setText(commodityList.get(position).getUnitPrice());
-        holder.commodity_unit_quantity.setText(commodityList.get(position).getUnitQuantity());
+//        RequestOptions options = new RequestOptions()
+//                .placeholder(R.mipmap.default_header)
+//                .override(300, 300)
+//                .error(R.mipmap.default_header);
+//        Glide.with(context)
+//                .load(commodityList.get(position).getCommodityImage())
+//                .apply(options)
+//                .into(holder.commodity_management_iv);
+//
+//        holder.commodity_management_title_tv.setText(commodityList.get(position).getTitle());
+//        holder.commodity_unit_price.setText(commodityList.get(position).getUnitPrice());
+//        holder.commodity_unit_quantity.setText(commodityList.get(position).getUnitQuantity());
 
         holder.commodity_management_edit_btn.setOnClickListener(new View.OnClickListener() {
             @Override

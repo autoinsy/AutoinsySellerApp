@@ -1,32 +1,42 @@
 package com.autionsy.seller.activity;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
+import com.autionsy.seller.constant.Constant;
 import com.autionsy.seller.pickview.GetJsonDataUtil;
 import com.autionsy.seller.pickview.ShengBean;
+import com.autionsy.seller.utils.OkHttp3Utils;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
-public class AddressActivity extends BaseActivity {
+public class AddAddressActivity extends BaseActivity {
 
     @BindView(R.id.address_receiver_et)
     EditText address_receiver_et;
@@ -46,6 +56,8 @@ public class AddressActivity extends BaseActivity {
     private String mobileNum;
     private String addressDetail;
 
+    private String addressStr;
+
     //  省
     private List<ShengBean> options1Items = new ArrayList<ShengBean>();
     //  市
@@ -63,17 +75,11 @@ public class AddressActivity extends BaseActivity {
     }
 
     private void initView(){
-
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.new_address);
-
-        receiver = address_receiver_et.getText().toString().trim();
-        mobileNum = address_receiver_mobile_num_et.getText().toString().trim();
-        addressDetail = address_detail_et.getText().toString().trim();
-
     }
 
-    @OnClick({R.id.address_area_layout,R.id.back_btn})
+    @OnClick({R.id.address_area_layout,R.id.back_btn,R.id.add_address_btn})
     public void onClick(View view){
         switch(view.getId()){
             case R.id.address_area_layout:
@@ -84,6 +90,9 @@ public class AddressActivity extends BaseActivity {
                 break;
             case R.id.back_btn:
                 finish();
+                break;
+            case R.id.add_address_btn:
+                postHttpAddress();
                 break;
         }
     }
@@ -128,7 +137,6 @@ public class AddressActivity extends BaseActivity {
              */
             options3Items.add(province_AreaList);
         }
-
     }
 
     /**
@@ -140,12 +148,12 @@ public class AddressActivity extends BaseActivity {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
-                String tx = options1Items.get(options1).name +
-                        options2Items.get(options1).get(options2) +
-                        options3Items.get(options1).get(options2).get(options3);
+                addressStr = options1Items.get(options1).name +
+                            options2Items.get(options1).get(options2) +
+                            options3Items.get(options1).get(options2).get(options3);
 
-                Toast.makeText(AddressActivity.this, tx, Toast.LENGTH_SHORT).show();
-                address_area_tv.setText(tx);
+                Toast.makeText(AddAddressActivity.this, addressStr, Toast.LENGTH_SHORT).show();
+                address_area_tv.setText(addressStr);
             }
         }).setTitleText("城市选择")
           .setDividerColor(Color.BLACK)
@@ -157,6 +165,54 @@ public class AddressActivity extends BaseActivity {
         pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
         pvOptions.setPicker(options1Items, options2Items, options3Items);//三级选择器
         pvOptions.show();
+    }
+
+    private void postHttpAddress(){
+
+        receiver = address_receiver_et.getText().toString().trim();
+        mobileNum = address_receiver_mobile_num_et.getText().toString().trim();
+        addressDetail = address_detail_et.getText().toString().trim();
+        SharedPreferences prefs = getSharedPreferences("seller_login_data", MODE_PRIVATE); //获取对象，读取data文件
+        String username = prefs.getString("USERNAME", ""); //获取文件中的数据
+
+        String url = Constant.HTTP_URL + "addAddress";
+        Map<String,String> map = new HashMap<>();
+        map.put("username", username);
+        map.put("mobile_phone_num", mobileNum);
+        map.put("address", addressStr);
+        map.put("address_detail", addressDetail);
+
+        OkHttp3Utils.doPost(url, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responeString = response.body().string();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject  = new JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
+
+                            if("200".equals(resultCode)){
+                                Toast.makeText(getApplicationContext(),R.string.save_address,Toast.LENGTH_SHORT).show();
+                            }else if("411".equals(resultCode)){
+                                Toast.makeText(getApplicationContext(),R.string.user_already_register,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
     }
 }
 

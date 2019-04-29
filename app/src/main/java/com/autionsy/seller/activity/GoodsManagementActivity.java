@@ -8,13 +8,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.adapter.CommodityManagementAdapter;
-import com.autionsy.seller.adapter.OrderListAdapter;
+import com.autionsy.seller.adapter.GoodsManagementAdapter;
 import com.autionsy.seller.constant.Constant;
-import com.autionsy.seller.entity.Commodity;
 import com.autionsy.seller.entity.Goods;
 import com.autionsy.seller.entity.Lease;
-import com.autionsy.seller.entity.Order;
 import com.autionsy.seller.entity.Ornament;
 import com.autionsy.seller.entity.Recruit;
 import com.autionsy.seller.entity.Rescue;
@@ -37,14 +34,14 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class CommodityManagementActivity extends BaseActivity {
+public class GoodsManagementActivity extends BaseActivity {
     @BindView(R.id.title_tv)
     TextView title_tv;
     @BindView(R.id.commodity_management_lv)
     ListView commodity_management_lv;
 
-    private CommodityManagementAdapter mAdapter;
-    private List<Commodity> mList = new ArrayList<>();
+    private GoodsManagementAdapter mAdapter;
+    private List<Goods> mList = new ArrayList<>();
     private String commodityManagementState;
 
     private Goods goods;
@@ -64,7 +61,6 @@ public class CommodityManagementActivity extends BaseActivity {
     }
 
     private void initView(){
-
         title_tv.setVisibility(View.VISIBLE);
 
         Intent intent = getIntent();
@@ -137,7 +133,7 @@ public class CommodityManagementActivity extends BaseActivity {
                             if("200".equals(resultCode)){
 
                                 /**需要根据状态来发送请求*/
-                                mAdapter = new CommodityManagementAdapter(CommodityManagementActivity.this,mList);
+                                mAdapter = new GoodsManagementAdapter(GoodsManagementActivity.this,mList);
                                 commodity_management_lv.setAdapter(mAdapter);
 
                             }else if("403".equals(resultCode)){
@@ -184,7 +180,7 @@ public class CommodityManagementActivity extends BaseActivity {
                             if("200".equals(resultCode)){
 
                                 /**需要根据状态来发送请求*/
-                                mAdapter = new CommodityManagementAdapter(CommodityManagementActivity.this,mList);
+                                mAdapter = new GoodsManagementAdapter(GoodsManagementActivity.this,mList);
                                 commodity_management_lv.setAdapter(mAdapter);
 
                             }else if("403".equals(resultCode)){
@@ -231,7 +227,7 @@ public class CommodityManagementActivity extends BaseActivity {
                             if("200".equals(resultCode)){
 
                                 /**需要根据状态来发送请求*/
-                                mAdapter = new CommodityManagementAdapter(CommodityManagementActivity.this,mList);
+                                mAdapter = new GoodsManagementAdapter(GoodsManagementActivity.this,mList);
                                 commodity_management_lv.setAdapter(mAdapter);
 
                             }else if("403".equals(resultCode)){
@@ -278,7 +274,7 @@ public class CommodityManagementActivity extends BaseActivity {
                             if("200".equals(resultCode)){
 
                                 /**需要根据状态来发送请求*/
-                                mAdapter = new CommodityManagementAdapter(CommodityManagementActivity.this,mList);
+                                mAdapter = new GoodsManagementAdapter(GoodsManagementActivity.this,mList);
                                 commodity_management_lv.setAdapter(mAdapter);
 
                             }else if("403".equals(resultCode)){
@@ -325,7 +321,7 @@ public class CommodityManagementActivity extends BaseActivity {
                             if("200".equals(resultCode)){
 
                                 /**需要根据状态来发送请求*/
-                                mAdapter = new CommodityManagementAdapter(CommodityManagementActivity.this,mList);
+                                mAdapter = new GoodsManagementAdapter(GoodsManagementActivity.this,mList);
                                 commodity_management_lv.setAdapter(mAdapter);
 
                             }else if("403".equals(resultCode)){
@@ -372,7 +368,7 @@ public class CommodityManagementActivity extends BaseActivity {
                             if("200".equals(resultCode)){
 
                                 /**需要根据状态来发送请求*/
-                                mAdapter = new CommodityManagementAdapter(CommodityManagementActivity.this,mList);
+                                mAdapter = new GoodsManagementAdapter(GoodsManagementActivity.this,mList);
                                 commodity_management_lv.setAdapter(mAdapter);
 
                             }else if("403".equals(resultCode)){

@@ -3,17 +3,18 @@ package com.autionsy.seller.entity;
 import java.io.Serializable;
 
 public class Address implements Serializable {
-    private String receiverName;
+
+    private String name;
     private String mobilePhoneNum;
     private String address;
     private String isDefault;
 
-    public String getReceiverName() {
-        return receiverName;
+    public String getName() {
+        return name;
     }
 
-    public void setReceiverName(String receiverName) {
-        this.receiverName = receiverName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getMobilePhoneNum() {
