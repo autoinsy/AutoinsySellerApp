@@ -7,6 +7,8 @@ public class Service implements Serializable {
 
     private String serviceId;
 
+    private String title;
+
     /**
      * 发布时间
      * */
@@ -58,6 +60,16 @@ public class Service implements Serializable {
     private String serviceCode;
 
     private String username;
+
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public String getServiceId() {
         return serviceId;
@@ -155,4 +167,11 @@ public class Service implements Serializable {
         this.serviceCode = serviceCode;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

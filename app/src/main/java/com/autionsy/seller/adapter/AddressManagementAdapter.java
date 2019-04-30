@@ -61,7 +61,7 @@ public class AddressManagementAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.address_receiver_name.setText(addressList.get(position).getReceiverName());
+        viewHolder.address_receiver_name.setText(addressList.get(position).getAddress());
         viewHolder.address_mobile_num.setText(addressList.get(position).getMobilePhoneNum());
         viewHolder.address_detail.setText(addressList.get(position).getAddress());
 
