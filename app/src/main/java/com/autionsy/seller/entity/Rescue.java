@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Rescue implements Serializable {
     private String rescueId;
-    private String rescueTittle;
+    private String rescueTitle;
     private String rescuePhoneNumber;
     private String rescueAddressDetail;
     private String rescueServiceScope;
@@ -12,6 +12,15 @@ public class Rescue implements Serializable {
     private String rescueCode;
     private String rescueCompanyName;
     private String username;
+    private String rescueImageUrl;
+
+    public String getRescueImageUrl() {
+        return rescueImageUrl;
+    }
+
+    public void setRescueImageUrl(String rescueImageUrl) {
+        this.rescueImageUrl = rescueImageUrl;
+    }
 
     public String getRescueId() {
         return rescueId;
@@ -29,12 +38,12 @@ public class Rescue implements Serializable {
         this.username = username;
     }
 
-    public String getRescueTittle() {
-        return rescueTittle;
+    public String getRescueTitle() {
+        return rescueTitle;
     }
 
-    public void setRescueTittle(String rescueTittle) {
-        this.rescueTittle = rescueTittle;
+    public void setRescueTitle(String rescueTitle) {
+        this.rescueTitle = rescueTitle;
     }
 
     public String getRescuePhoneNumber() {

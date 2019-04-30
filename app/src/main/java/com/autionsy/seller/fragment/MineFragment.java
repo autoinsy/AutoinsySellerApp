@@ -14,10 +14,13 @@ import android.widget.Toast;
 import com.autionsy.seller.R;
 import com.autionsy.seller.activity.ManagementGoodsActivity;
 import com.autionsy.seller.activity.ManagementLeaseActivity;
+import com.autionsy.seller.activity.ManagementRecruitActivity;
+import com.autionsy.seller.activity.ManagementRescueActivity;
 import com.autionsy.seller.activity.ManagementServiceActivity;
 import com.autionsy.seller.activity.OrderListActivity;
 import com.autionsy.seller.activity.ManagementOrnamenActivity;
 import com.autionsy.seller.activity.SettingActivity;
+import com.autionsy.seller.adapter.ManagementRecruitAdapter;
 import com.autionsy.seller.constant.Constant;
 import com.autionsy.seller.entity.Seller;
 import com.autionsy.seller.utils.OkHttp3Utils;
@@ -181,11 +184,11 @@ public class MineFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case  R.id.mine_recuit_management_text_layout: //5代表招聘管理
-                intent = new Intent(getActivity(), ManagementGoodsActivity.class);
+                intent = new Intent(getActivity(), ManagementRecruitActivity.class);
                 startActivity(intent);
                 break;
             case R.id.mine_rescue_management_text_layout: //6代表道路救援管理
-                intent = new Intent(getActivity(), ManagementGoodsActivity.class);
+                intent = new Intent(getActivity(), ManagementRescueActivity.class);
                 startActivity(intent);
                 break;
         }

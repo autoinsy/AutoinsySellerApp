@@ -8,9 +8,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.adapter.ManagementGoodsAdapter;
+import com.autionsy.seller.adapter.ManagementRecuseAdapter;
 import com.autionsy.seller.constant.Constant;
-import com.autionsy.seller.entity.Goods;
+import com.autionsy.seller.entity.Rescue;
 import com.autionsy.seller.utils.OkHttp3Utils;
 
 import org.json.JSONArray;
@@ -30,30 +30,30 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class ManagementGoodsActivity extends BaseActivity {
+public class ManagementRescueActivity extends BaseActivity {
     @BindView(R.id.title_tv)
     TextView title_tv;
-    @BindView(R.id.goods_management_lv)
-    ListView goods_management_lv;
+    @BindView(R.id.rescue_management_lv)
+    ListView rescue_management_lv;
 
-    private ManagementGoodsAdapter mAdapter;
-    private List<Goods> mList = new ArrayList<>();
+    private ManagementRecuseAdapter mAdapter;
+    private List<Rescue> mList = new ArrayList<>();
 
-    private Goods goods;
+    private Rescue rescue;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_management_goods);
+        setContentView(R.layout.act_management_rescue);
 
         ButterKnife.bind(this);
         initView();
-        postAsynHttpGoods();
+        postAsynHttpRecuse();
     }
 
     private void initView(){
         title_tv.setVisibility(View.VISIBLE);
-        title_tv.setText(R.string.goods_management);
+        title_tv.setText(R.string.rescue_management);
     }
 
     @OnClick({R.id.back_btn})
@@ -65,8 +65,7 @@ public class ManagementGoodsActivity extends BaseActivity {
         }
     }
 
-    /**商品*/
-    private void postAsynHttpGoods(){
+    private void postAsynHttpRecuse(){
         SharedPreferences prefs = getSharedPreferences("seller_login_data", MODE_PRIVATE); //获取对象，读取data文件
         String username = prefs.getString("USERNAME", ""); //获取文件中的数据
 
@@ -95,26 +94,24 @@ public class ManagementGoodsActivity extends BaseActivity {
                             String message = jsonObject.optString("message");
 
                             if("200".equals(resultCode)){
-                                goods = new Goods();
+                                rescue = new Rescue();
                                 JSONArray jsonArray = jsonObject.getJSONArray(data);
                                 for (int i=0; i<jsonArray.length(); i++){
-                                    JSONObject jsonObjectGoods = jsonArray.getJSONObject(i);
-                                    goods.setGoodsId(jsonObjectGoods.getString("goodsId"));
-                                    goods.setBrand(jsonObjectGoods.getString("brand"));
-                                    goods.setGoodsName(jsonObjectGoods.getString("goodsName"));
-                                    goods.setGoodsPic(jsonObjectGoods.getString("goodsPic"));
-                                    goods.setPrice(jsonObjectGoods.getString("price"));
-                                    goods.setQuantity(jsonObjectGoods.getString("quantity"));
-                                    goods.setDescribe(jsonObjectGoods.getString("describe"));
-                                    goods.setMotorcycleFrameNumber(jsonObjectGoods.getString("motorcycleFrameNumber"));
-                                    goods.setProductPlace(jsonObjectGoods.getString("productPlace"));
-                                    goods.setPublishTime(jsonObjectGoods.getString("publishTime"));
-                                    mList.add(goods);
+                                    JSONObject jsonObjectRescue = jsonArray.getJSONObject(i);
+                                    rescue.setRescueAddressDetail(jsonObjectRescue.getString("rescueAddressDetail"));
+                                    rescue.setRescueCompanyIntroduce(jsonObjectRescue.getString("rescueCompanyIntroduce"));
+                                    rescue.setRescueCompanyName(jsonObjectRescue.getString("rescueCompanyName"));
+                                    rescue.setRescueId(jsonObjectRescue.getString("rescueId"));
+                                    rescue.setRescueImageUrl(jsonObjectRescue.getString("rescueImageUrl"));
+                                    rescue.setRescuePhoneNumber(jsonObjectRescue.getString("rescuePhoneNumber"));
+                                    rescue.setRescueServiceScope(jsonObjectRescue.getString("rescueServiceScope"));
+                                    rescue.setRescueTitle(jsonObjectRescue.getString("rescueTitle"));
+                                    mList.add(rescue);
                                 }
 
                                 /**需要根据状态来发送请求*/
-                                mAdapter = new ManagementGoodsAdapter(ManagementGoodsActivity.this,mList);
-                                goods_management_lv.setAdapter(mAdapter);
+                                mAdapter = new ManagementRecuseAdapter(ManagementRescueActivity.this,mList);
+                                rescue_management_lv.setAdapter(mAdapter);
                                 mAdapter.notifyDataSetChanged();
 
                             }else if("403".equals(resultCode)){
