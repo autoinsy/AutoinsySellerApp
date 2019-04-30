@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.activity.ManagementGoodsActivity;
+import com.autionsy.seller.activity.ManagementLeaseActivity;
 import com.autionsy.seller.activity.ManagementServiceActivity;
 import com.autionsy.seller.activity.OrderListActivity;
 import com.autionsy.seller.activity.ManagementOrnamenActivity;
@@ -176,7 +177,7 @@ public class MineFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.mine_lease_management_text_layout: //4代表租赁管理
-                intent = new Intent(getActivity(), ManagementGoodsActivity.class);
+                intent = new Intent(getActivity(), ManagementLeaseActivity.class);
                 startActivity(intent);
                 break;
             case  R.id.mine_recuit_management_text_layout: //5代表招聘管理

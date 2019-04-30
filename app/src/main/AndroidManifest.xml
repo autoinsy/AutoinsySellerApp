@@ -274,5 +274,11 @@
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden"
             tools:ignore="DuplicateActivity" />
+        <activity android:name=".activity.ManagementRecruitActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            tools:ignore="DuplicateActivity" />
     </application>
 </manifest>

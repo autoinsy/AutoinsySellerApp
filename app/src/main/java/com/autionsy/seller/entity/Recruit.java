@@ -43,9 +43,11 @@ public class Recruit implements Serializable {
     private String experience;
 
     /**
-     * 职位要求
+     * 职位
      * */
-    private String positionRequirement;
+    private String position;
+
+    private String positionDescribe;
 
     /**
      * 发布时间
@@ -70,7 +72,7 @@ public class Recruit implements Serializable {
     /**
      * 企业人数范围
      * */
-    private String companyPropleNum;
+    private String companyPeopleNum;
 
     /**
      * 招聘编号
@@ -159,12 +161,12 @@ public class Recruit implements Serializable {
         this.experience = experience;
     }
 
-    public String getPositionRequirement() {
-        return positionRequirement;
+    public String getPosition() {
+        return position;
     }
 
-    public void setPositionRequirement(String positionRequirement) {
-        this.positionRequirement = positionRequirement;
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public String getPublishTime() {
@@ -199,11 +201,19 @@ public class Recruit implements Serializable {
         this.isAuthentication = isAuthentication;
     }
 
-    public String getCompanyPropleNum() {
-        return companyPropleNum;
+    public String getCompanyPeopleNum() {
+        return companyPeopleNum;
     }
 
-    public void setCompanyPropleNum(String companyPropleNum) {
-        this.companyPropleNum = companyPropleNum;
+    public void setCompanyPeopleNum(String companyPeopleNum) {
+        this.companyPeopleNum = companyPeopleNum;
+    }
+
+    public String getPositionDescribe() {
+        return positionDescribe;
+    }
+
+    public void setPositionDescribe(String positionDescribe) {
+        this.positionDescribe = positionDescribe;
     }
 }
