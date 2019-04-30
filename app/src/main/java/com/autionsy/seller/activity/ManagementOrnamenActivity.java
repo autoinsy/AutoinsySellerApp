@@ -98,10 +98,14 @@ public class ManagementOrnamenActivity extends BaseActivity {
                                 JSONArray jsonArray = jsonObject.getJSONArray(data);
                                 for (int i=0; i<jsonArray.length(); i++){
                                     JSONObject jsonObjectGoods = jsonArray.getJSONObject(i);
+                                    ornament.setOrnamentId(jsonObjectGoods.getString("ornamentId"));
                                     ornament.setOrnamentName(jsonObjectGoods.getString("ornamentName"));
                                     ornament.setImageUrl(jsonObjectGoods.getString("ornamentImageUrl"));
                                     ornament.setPrice(jsonObjectGoods.getString("price"));
                                     ornament.setQuantity(jsonObjectGoods.getString("quantity"));
+                                    ornament.setMotorcycleFrameNumber(jsonObjectGoods.getString("motorcycleFrameNumber"));
+                                    ornament.setBrand(jsonObjectGoods.getString("brand"));
+                                    ornament.setWeight(jsonObjectGoods.getString("weight"));
                                     mList.add(ornament);
                                 }
 
