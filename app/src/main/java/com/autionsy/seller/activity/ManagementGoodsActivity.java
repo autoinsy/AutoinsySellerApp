@@ -124,10 +124,16 @@ public class ManagementGoodsActivity extends BaseActivity {
                                 JSONArray jsonArray = jsonObject.getJSONArray(data);
                                 for (int i=0; i<jsonArray.length(); i++){
                                     JSONObject jsonObjectGoods = jsonArray.getJSONObject(i);
+                                    goods.setGoodsId(jsonObjectGoods.getString("goodsId"));
+                                    goods.setBrand(jsonObjectGoods.getString("brand"));
                                     goods.setGoodsName(jsonObjectGoods.getString("goodsName"));
                                     goods.setGoodsPic(jsonObjectGoods.getString("goodsPic"));
                                     goods.setPrice(jsonObjectGoods.getString("price"));
                                     goods.setQuantity(jsonObjectGoods.getString("quantity"));
+                                    goods.setDescribe(jsonObjectGoods.getString("describe"));
+                                    goods.setMotorcycleFrameNumber(jsonObjectGoods.getString("motorcycleFrameNumber"));
+                                    goods.setProductPlace(jsonObjectGoods.getString("productPlace"));
+                                    goods.setPublishTime(jsonObjectGoods.getString("publishTime"));
                                     mList.add(goods);
                                 }
 
