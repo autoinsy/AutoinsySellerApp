@@ -153,7 +153,7 @@ public class ManagementServiceAdapter extends BaseAdapter {
     }
 
     private void postAsynHttpDeleteService(){
-        String url = Constant.HTTP_URL + "deleteGoodsInfo";
+        String url = Constant.HTTP_URL + "deleteServiceInfo";
 
         Map<String,String> map = new HashMap<>();
         map.put("serviceID",serviceId);
