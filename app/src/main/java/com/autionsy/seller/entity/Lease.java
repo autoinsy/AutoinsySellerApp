@@ -12,11 +12,20 @@ public class Lease implements Serializable {
     private String title;
     private String describe;
     private String contacts;
-    private String mobile_phone_num;
+    private String mobilePhoneNum;
     private String watchNumber;
     private String publishDate;
     private String leaseInfoSourceCode;
     private String username;
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public String getLeaseId() {
         return leaseId;
@@ -90,12 +99,12 @@ public class Lease implements Serializable {
         this.contacts = contacts;
     }
 
-    public String getMobile_phone_num() {
-        return mobile_phone_num;
+    public String getMobilePhoneNum() {
+        return mobilePhoneNum;
     }
 
-    public void setMobile_phone_num(String mobile_phone_num) {
-        this.mobile_phone_num = mobile_phone_num;
+    public void setMobilePhoneNum(String mobilePhoneNum) {
+        this.mobilePhoneNum = mobilePhoneNum;
     }
 
     public String getWatchNumber() {

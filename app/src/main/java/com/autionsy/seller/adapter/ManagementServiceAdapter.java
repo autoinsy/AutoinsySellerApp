@@ -156,7 +156,7 @@ public class ManagementServiceAdapter extends BaseAdapter {
         String url = Constant.HTTP_URL + "deleteServiceInfo";
 
         Map<String,String> map = new HashMap<>();
-        map.put("serviceID",serviceId);
+        map.put("service_id",serviceId);
 
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override

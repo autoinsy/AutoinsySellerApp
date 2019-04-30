@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.autionsy.seller.R;
 import com.autionsy.seller.constant.Constant;
 import com.autionsy.seller.entity.Goods;
+import com.autionsy.seller.entity.Lease;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.utils.ScreenUtils;
 import com.bumptech.glide.Glide;
@@ -36,12 +37,13 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class ManagementGoodsAdapter extends BaseAdapter {
-    private Context context;
-    List<Goods> commodityList = new ArrayList<>();
-    private String goodsId;
+public class ManagementLeaseAdapter extends BaseAdapter {
 
-    public ManagementGoodsAdapter(Context context, List<Goods> list){
+    private Context context;
+    List<Lease> commodityList = new ArrayList<>();
+    private String leaseId;
+
+    public ManagementLeaseAdapter(Context context, List<Lease> list){
         this.context = context;
         this.commodityList = list;
     }
@@ -63,11 +65,10 @@ public class ManagementGoodsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
        ViewHolder holder = null;
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_management_goods, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_management_lease, null);
 
             holder = new ViewHolder(convertView);
 
@@ -81,23 +82,22 @@ public class ManagementGoodsAdapter extends BaseAdapter {
                 .override(300, 300)
                 .error(R.mipmap.default_header);
         Glide.with(context)
-                .load(commodityList.get(position).getGoodsPic())
+                .load(commodityList.get(position).getImageUrl())
                 .apply(options)
-                .into(holder.goods_management_iv);
+                .into(holder.lease_management_iv);
 
-        holder.goods_management_title_tv.setText(commodityList.get(position).getGoodsName());
-        holder.goods_unit_price.setText(commodityList.get(position).getPrice());
-        holder.goods_unit_quantity.setText(commodityList.get(position).getQuantity());
+        holder.lease_management_title_tv.setText(commodityList.get(position).getTitle());
+        holder.lease_management_content_tv.setText(commodityList.get(position).getDescribe());
 
-        goodsId = commodityList.get(position).getGoodsId();
+        leaseId = commodityList.get(position).getLeaseId();
 
-        holder.goods_management_edit_btn.setOnClickListener(new View.OnClickListener() {
+        holder.lease_management_edit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
-        holder.goods_management_delete_btn.setOnClickListener(new View.OnClickListener() {
+        holder.lease_management_delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog();
@@ -107,18 +107,16 @@ public class ManagementGoodsAdapter extends BaseAdapter {
     }
 
     public class ViewHolder{
-        @BindView(R.id.goods_management_iv)
-        ImageView goods_management_iv;
-        @BindView(R.id.goods_management_title_tv)
-        TextView goods_management_title_tv;
-        @BindView(R.id.goods_unit_price)
-        TextView goods_unit_price;
-        @BindView(R.id.goods_unit_quantity)
-        TextView goods_unit_quantity;
-        @BindView(R.id.goods_management_edit_btn)
-        Button goods_management_edit_btn;
-        @BindView(R.id.goods_management_delete_btn)
-        Button goods_management_delete_btn;
+        @BindView(R.id.lease_management_iv)
+        ImageView lease_management_iv;
+        @BindView(R.id.lease_management_title_tv)
+        TextView lease_management_title_tv;
+        @BindView(R.id.lease_management_content_tv)
+        TextView lease_management_content_tv;
+        @BindView(R.id.lease_management_edit_btn)
+        Button lease_management_edit_btn;
+        @BindView(R.id.lease_management_delete_btn)
+        Button lease_management_delete_btn;
 
         public ViewHolder(View view){
             ButterKnife.bind(this, view);
@@ -143,7 +141,7 @@ public class ManagementGoodsAdapter extends BaseAdapter {
         btn_agree_high_opion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postAsynHttpDeleteGoods();
+                postAsynHttpDeleteLease();
                 dialog.dismiss();
             }
         });
@@ -153,11 +151,11 @@ public class ManagementGoodsAdapter extends BaseAdapter {
         dialog.getWindow().setLayout((ScreenUtils.getScreenWidth(context)/4*3), LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 
-    private void postAsynHttpDeleteGoods(){
-        String url = Constant.HTTP_URL + "deleteGoodsInfo";
+    private void postAsynHttpDeleteLease(){
+        String url = Constant.HTTP_URL + "deleteLeaseInfo";
 
         Map<String,String> map = new HashMap<>();
-        map.put("goods_id",goodsId);
+        map.put("lease_id",leaseId);
 
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override

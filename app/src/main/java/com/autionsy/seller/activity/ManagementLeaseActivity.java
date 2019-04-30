@@ -3,14 +3,17 @@ package com.autionsy.seller.activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.adapter.ManagementGoodsAdapter;
+import com.autionsy.seller.adapter.ManagementLeaseAdapter;
 import com.autionsy.seller.constant.Constant;
 import com.autionsy.seller.entity.Goods;
+import com.autionsy.seller.entity.Lease;
 import com.autionsy.seller.utils.OkHttp3Utils;
 
 import org.json.JSONArray;
@@ -30,54 +33,30 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class ManagementGoodsActivity extends BaseActivity {
+public class ManagementLeaseActivity extends BaseActivity {
     @BindView(R.id.title_tv)
     TextView title_tv;
-    @BindView(R.id.goods_management_lv)
-    ListView goods_management_lv;
+    @BindView(R.id.lease_management_lv)
+    ListView lease_management_lv;
 
-    private ManagementGoodsAdapter mAdapter;
-    private List<Goods> mList = new ArrayList<>();
+    private ManagementLeaseAdapter mAdapter;
+    private List<Lease> mList = new ArrayList<>();
 
-    private Goods goods;
+    private Lease lease;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_management_goods);
+        setContentView(R.layout.act_management_lease);
 
         ButterKnife.bind(this);
         initView();
-        postAsynHttpGoods();
+        postAsynHttpLease();
     }
 
     private void initView(){
         title_tv.setVisibility(View.VISIBLE);
-        title_tv.setText(R.string.goods_management);
-
-//        switch (commodityManagementState){
-//            case "1": //1代表汽配商品管理
-//                break;
-//            case "2": //2代表内饰商品管理
-//                title_tv.setText(R.string.ornament_management);
-//                break;
-//            case "3": //3代表服务管理
-//                title_tv.setText(R.string.service_management);
-//                postAsynHttpService();
-//                break;
-//            case "4": //4代表租赁管理
-//                title_tv.setText(R.string.lease_management);
-//                postAsynHttpLease();
-//                break;
-//            case "5": //5代表招聘管理
-//                title_tv.setText(R.string.recuit_management);
-//                postAsynHttpRecruit();
-//                break;
-//            case "6": //6代表道路救援管理
-//                title_tv.setText(R.string.rescue_management);
-//                postAsynHttpRescue();
-//                break;
-//        }
+        title_tv.setText(R.string.lease_management);
     }
 
     @OnClick({R.id.back_btn})
@@ -89,12 +68,11 @@ public class ManagementGoodsActivity extends BaseActivity {
         }
     }
 
-    /**商品*/
-    private void postAsynHttpGoods(){
+    private void postAsynHttpLease(){
         SharedPreferences prefs = getSharedPreferences("seller_login_data", MODE_PRIVATE); //获取对象，读取data文件
         String username = prefs.getString("USERNAME", ""); //获取文件中的数据
 
-        String url = Constant.HTTP_URL + "getAllGoods";
+        String url = Constant.HTTP_URL + "getAllLease";
 
         Map<String,String> map = new HashMap<>();
         map.put("username",username);
@@ -119,26 +97,31 @@ public class ManagementGoodsActivity extends BaseActivity {
                             String message = jsonObject.optString("message");
 
                             if("200".equals(resultCode)){
-                                goods = new Goods();
+                                lease = new Lease();
                                 JSONArray jsonArray = jsonObject.getJSONArray(data);
                                 for (int i=0; i<jsonArray.length(); i++){
-                                    JSONObject jsonObjectGoods = jsonArray.getJSONObject(i);
-                                    goods.setGoodsId(jsonObjectGoods.getString("goodsId"));
-                                    goods.setBrand(jsonObjectGoods.getString("brand"));
-                                    goods.setGoodsName(jsonObjectGoods.getString("goodsName"));
-                                    goods.setGoodsPic(jsonObjectGoods.getString("goodsPic"));
-                                    goods.setPrice(jsonObjectGoods.getString("price"));
-                                    goods.setQuantity(jsonObjectGoods.getString("quantity"));
-                                    goods.setDescribe(jsonObjectGoods.getString("describe"));
-                                    goods.setMotorcycleFrameNumber(jsonObjectGoods.getString("motorcycleFrameNumber"));
-                                    goods.setProductPlace(jsonObjectGoods.getString("productPlace"));
-                                    goods.setPublishTime(jsonObjectGoods.getString("publishTime"));
-                                    mList.add(goods);
+                                    JSONObject jsonObjectLease = jsonArray.getJSONObject(i);
+
+                                    lease.setAcreage(jsonObjectLease.getString("acreage"));
+                                    lease.setContacts(jsonObjectLease.getString("contacts"));
+                                    lease.setDescribe(jsonObjectLease.getString("describe"));
+                                    lease.setImageUrl(jsonObjectLease.getString("imageUrl"));
+                                    lease.setLeaseId(jsonObjectLease.getString("leaseId"));
+                                    lease.setLeaseTerm(jsonObjectLease.getString("leaseTerm"));
+                                    lease.setMobilePhoneNum(jsonObjectLease.getString("mobilePhoneNum"));
+                                    lease.setLeaseType(jsonObjectLease.getString("leaseType"));
+                                    lease.setPrice(jsonObjectLease.getString("price"));
+                                    lease.setPublishDate(jsonObjectLease.getString("publishDate"));
+                                    lease.setStallPosition(jsonObjectLease.getString("stallPosition"));
+                                    lease.setTitle(jsonObjectLease.getString("title"));
+                                    lease.setWatchNumber(jsonObjectLease.getString("watchNumber"));
+
+                                    mList.add(lease);
                                 }
 
                                 /**需要根据状态来发送请求*/
-                                mAdapter = new ManagementGoodsAdapter(ManagementGoodsActivity.this,mList);
-                                goods_management_lv.setAdapter(mAdapter);
+                                mAdapter = new ManagementLeaseAdapter(ManagementLeaseActivity.this,mList);
+                                lease_management_lv.setAdapter(mAdapter);
                                 mAdapter.notifyDataSetChanged();
 
                             }else if("403".equals(resultCode)){
