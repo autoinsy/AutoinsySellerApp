@@ -228,7 +228,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".activity.GoodsManagementActivity"
+        <activity android:name=".activity.ManagementGoodsActivity"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Light.NoTitleBar"
@@ -256,7 +256,7 @@
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".activity.OrnamenManagementActivity"
+        <activity android:name=".activity.ManagementOrnamenActivity"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Light.NoTitleBar"

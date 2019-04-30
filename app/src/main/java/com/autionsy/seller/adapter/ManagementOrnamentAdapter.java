@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.constant.Constant;
-import com.autionsy.seller.entity.Goods;
 import com.autionsy.seller.entity.Ornament;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.utils.ScreenUtils;
@@ -37,13 +36,13 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class OrnamentManagementAdapter extends BaseAdapter {
+public class ManagementOrnamentAdapter extends BaseAdapter {
 
     private Context context;
     List<Ornament> commodityList = new ArrayList<>();
     private String ornamentId;
 
-    public OrnamentManagementAdapter(Context context, List<Ornament> list){
+    public ManagementOrnamentAdapter(Context context, List<Ornament> list){
         this.context = context;
         this.commodityList = list;
     }
@@ -68,7 +67,7 @@ public class OrnamentManagementAdapter extends BaseAdapter {
         ViewHolder holder = null;
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_ornament_management, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_management_ornament, null);
 
             holder = new ViewHolder(convertView);
 

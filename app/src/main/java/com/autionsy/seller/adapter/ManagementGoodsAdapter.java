@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.activity.GoodsManagementActivity;
 import com.autionsy.seller.constant.Constant;
 import com.autionsy.seller.entity.Goods;
 import com.autionsy.seller.utils.OkHttp3Utils;
@@ -22,7 +21,6 @@ import com.autionsy.seller.utils.ScreenUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,13 +36,13 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class GoodsManagementAdapter extends BaseAdapter {
+public class ManagementGoodsAdapter extends BaseAdapter {
 
     private Context context;
     List<Goods> commodityList = new ArrayList<>();
     private String goodsId;
 
-    public GoodsManagementAdapter(Context context, List<Goods> list){
+    public ManagementGoodsAdapter(Context context, List<Goods> list){
         this.context = context;
         this.commodityList = list;
     }
@@ -70,7 +68,7 @@ public class GoodsManagementAdapter extends BaseAdapter {
        ViewHolder holder = null;
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_goods_management, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_management_goods, null);
 
             holder = new ViewHolder(convertView);
 
