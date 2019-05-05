@@ -1,7 +1,6 @@
 package com.autionsy.seller.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
+import com.autionsy.seller.adapter.AllOrderListAdapter;
 import com.autionsy.seller.adapter.OrderListAdapter;
 import com.autionsy.seller.constant.Constant;
 import com.autionsy.seller.entity.Order;
@@ -32,14 +32,14 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class OrderListActivity extends BaseActivity {
+public class AllOrderListActivity extends BaseActivity {
     @BindView(R.id.title_tv)
     TextView title_tv;
 
-    @BindView(R.id.trade_flow_lv)
-    ListView trade_flow_lv;
+    @BindView(R.id.all_order_lv)
+    ListView all_order_lv;
 
-    private OrderListAdapter mAdapter;
+    private AllOrderListAdapter mAdapter;
     private List<Order> mList = new ArrayList<>();
     private SharedPreferences sharedPreferences;
     private Order order;
@@ -47,34 +47,16 @@ public class OrderListActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_order_status_list);
+        setContentView(R.layout.act_all_order_list);
 
         ButterKnife.bind(this);
         initView();
+        postAsynHttpAllOrder();
     }
 
     private void initView(){
         title_tv.setVisibility(View.VISIBLE);
-
-        // 首先获取到意图对象
-        Intent intent = getIntent();
-        String orderState = intent.getStringExtra("order_state");
-
-        switch (orderState){
-            case "1": /**订单状态为1,待发货*/
-                title_tv.setText(R.string.send_goods_title);
-                break;
-            case "2": /**订单状态为2，待签收*/
-                title_tv.setText(R.string.receive_goods_title);
-                break;
-            case "3":  /**订单状态为3，待评价*/
-                title_tv.setText(R.string.appraise_title);
-                break;
-            case "4": /**订单状态为4，退货/退款*/
-                title_tv.setText(R.string.refund_title);
-                break;
-        }
-        postAsynHttpOrderStatus(orderState);
+        title_tv.setText(R.string.all_order);
     }
 
     @OnClick({R.id.back_btn})
@@ -86,7 +68,7 @@ public class OrderListActivity extends BaseActivity {
         }
     }
 
-    private void postAsynHttpOrderStatus(final String status){
+    private void postAsynHttpAllOrder(){
         //同样，在读取SharedPreferences数据前要实例化出一个SharedPreferences对象
         sharedPreferences = getSharedPreferences("seller_login_data", Activity.MODE_PRIVATE);
         // 使用getString方法获得value，注意第2个参数是value的默认值
@@ -94,10 +76,9 @@ public class OrderListActivity extends BaseActivity {
 
         order = new Order();
 
-        String url = Constant.HTTP_URL + "getOrderListByState";
+        String url = Constant.HTTP_URL + "getAllOrderList";
 
         Map<String,String> map = new HashMap<>();
-        map.put("orderState",status);
         map.put("username",username);
 
         OkHttp3Utils.doPost(url, map, new Callback() {
@@ -138,8 +119,8 @@ public class OrderListActivity extends BaseActivity {
                                 }
 
                                 /**需要根据状态来发送请求*/
-                                mAdapter = new OrderListAdapter(OrderListActivity.this,mList,status);
-                                trade_flow_lv.setAdapter(mAdapter);
+                                mAdapter = new AllOrderListAdapter(AllOrderListActivity.this,mList);
+                                all_order_lv.setAdapter(mAdapter);
                                 mAdapter.notifyDataSetChanged();
 
                             }else if("403".equals(resultCode)){
@@ -155,6 +136,4 @@ public class OrderListActivity extends BaseActivity {
             }
         });
     }
-
-
 }

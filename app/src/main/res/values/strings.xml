@@ -222,9 +222,10 @@
     <string name="cancel_order">取消订单</string>
     <string name="check_delivery">查看物流</string>
     <string name="sign_receive">签收</string>
-    <string name="go_appraise">去评价</string>
+    <string name="appraise_replay">评价回复</string>
     <string name="refund">退款</string>
     <string name="goods_unit_text">件商品</string>
+    <string name="delete_order_btn_text">删除订单</string>
 
     <!--地址管理-->
     <string name="new_address">新建地址</string>

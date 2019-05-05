@@ -15,14 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.activity.OrderListActivity;
 import com.autionsy.seller.constant.Constant;
 import com.autionsy.seller.entity.Order;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,9 +44,10 @@ public class OrderListAdapter extends BaseAdapter {
     private String orderStatus;
     private Intent intent;
 
-    public OrderListAdapter(Context context, List<Order> list){
+    public OrderListAdapter(Context context, List<Order> list,String orderStatus){
         this.context = context;
         this.tradeFlowList = list;
+        this.orderStatus = orderStatus;
     }
 
     @Override
@@ -73,7 +72,7 @@ public class OrderListAdapter extends BaseAdapter {
         ViewHolder holder = null;
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_order_list, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_order_status, null);
 
             holder = new ViewHolder(convertView);
 
@@ -97,19 +96,7 @@ public class OrderListAdapter extends BaseAdapter {
         holder.trade_flow_actual_quantity.setText("共"+tradeFlowList.get(position).getQuantity());
         holder.trade_flow_total.setText("¥"+tradeFlowList.get(position).getTotal());
 
-        String orderState = tradeFlowList.get(position).getOrderState();
-        orderNum = tradeFlowList.get(position).getOrderNum();
-
-        switch (orderState){
-            case "0": /**订单状态为0,查看全部订单*/
-                holder.trade_flow_delete_order_layout.setVisibility(View.VISIBLE);
-                holder.trade_flow_delete_order_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        postAsynHttpDeleteOrder(orderNum);
-                    }
-                });
-                break;
+        switch (orderStatus){
             case "1": /**订单状态为1,待发货*/
                 holder.trade_flow_send_goods_layout.setVisibility(View.VISIBLE);
                 holder.trade_flow_cancel_order_btn.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +108,7 @@ public class OrderListAdapter extends BaseAdapter {
                 holder.trade_flow_send_goods_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        postAsynHttpUpdateOrderStatus(orderNum,"1");
+                        postAsynHttpUpdateOrderStatus(orderNum,"2");
                     }
                 });
                 break;
@@ -169,12 +156,6 @@ public class OrderListAdapter extends BaseAdapter {
         TextView trade_flow_actual_quantity;
         @BindView(R.id.trade_flow_total)
         TextView trade_flow_total;
-
-        /**订单状态为0,查看全部订单*/
-        @BindView(R.id.trade_flow_delete_order_layout)
-        LinearLayout trade_flow_delete_order_layout;
-        @BindView(R.id.trade_flow_delete_order_btn)
-        Button trade_flow_delete_order_btn;
 
         /**订单状态为1,待发货*/
         @BindView(R.id.trade_flow_send_goods_layout)

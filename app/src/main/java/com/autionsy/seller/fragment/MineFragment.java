@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
+import com.autionsy.seller.activity.AllOrderListActivity;
 import com.autionsy.seller.activity.ManagementGoodsActivity;
 import com.autionsy.seller.activity.ManagementLeaseActivity;
 import com.autionsy.seller.activity.ManagementRecruitActivity;
@@ -138,8 +139,7 @@ public class MineFragment extends BaseFragment {
     public void onClick(View view){
         switch (view.getId()){
             case R.id.check_all_order:
-                intent = new Intent(getActivity(), OrderListActivity.class);
-                intent.putExtra("order_state","0");
+                intent = new Intent(getActivity(), AllOrderListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.mine_setting_iv:
@@ -166,7 +166,6 @@ public class MineFragment extends BaseFragment {
                 intent.putExtra("order_state","4");
                 startActivity(intent);
                 break;
-                //==================================================================================
             case R.id.mine_product_management_layout: //1代表汽配商品管理
                 intent = new Intent(getActivity(), ManagementGoodsActivity.class);
                 startActivity(intent);
