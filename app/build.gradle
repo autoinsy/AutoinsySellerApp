@@ -46,5 +46,5 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.56'
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.google.zxing:core:3.3.3'
-    implementation 'com.github.wildma:IDCardCamera:1.0.2'
+    compile project(path: ':certificateCamera')
 }

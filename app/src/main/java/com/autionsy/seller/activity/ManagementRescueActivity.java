@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.adapter.ManagementRecuseAdapter;
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.Rescue;
 import com.autionsy.seller.utils.OkHttp3Utils;
 
@@ -69,7 +69,7 @@ public class ManagementRescueActivity extends BaseActivity {
         SharedPreferences prefs = getSharedPreferences("seller_login_data", MODE_PRIVATE); //获取对象，读取data文件
         String username = prefs.getString("USERNAME", ""); //获取文件中的数据
 
-        String url = Constant.HTTP_URL + "getAllGoods";
+        String url = Constants.HTTP_URL + "getAllGoods";
 
         Map<String,String> map = new HashMap<>();
         map.put("username",username);

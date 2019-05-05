@@ -10,8 +10,7 @@ import android.widget.Toast;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.adapter.AllOrderListAdapter;
-import com.autionsy.seller.adapter.OrderListAdapter;
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.Order;
 import com.autionsy.seller.utils.OkHttp3Utils;
 
@@ -76,7 +75,7 @@ public class AllOrderListActivity extends BaseActivity {
 
         order = new Order();
 
-        String url = Constant.HTTP_URL + "getAllOrderList";
+        String url = Constants.HTTP_URL + "getAllOrderList";
 
         Map<String,String> map = new HashMap<>();
         map.put("username",username);

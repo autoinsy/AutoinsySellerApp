@@ -3,16 +3,13 @@ package com.autionsy.seller.activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.adapter.ManagementGoodsAdapter;
 import com.autionsy.seller.adapter.ManagementLeaseAdapter;
-import com.autionsy.seller.constant.Constant;
-import com.autionsy.seller.entity.Goods;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.Lease;
 import com.autionsy.seller.utils.OkHttp3Utils;
 
@@ -72,7 +69,7 @@ public class ManagementLeaseActivity extends BaseActivity {
         SharedPreferences prefs = getSharedPreferences("seller_login_data", MODE_PRIVATE); //获取对象，读取data文件
         String username = prefs.getString("USERNAME", ""); //获取文件中的数据
 
-        String url = Constant.HTTP_URL + "getAllLease";
+        String url = Constants.HTTP_URL + "getAllLease";
 
         Map<String,String> map = new HashMap<>();
         map.put("username",username);

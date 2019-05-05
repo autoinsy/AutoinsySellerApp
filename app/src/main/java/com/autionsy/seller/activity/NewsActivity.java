@@ -11,8 +11,7 @@ import android.widget.Toast;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.adapter.NewsAdapter;
-import com.autionsy.seller.constant.Constant;
-import com.autionsy.seller.entity.Lease;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.News;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.views.RecyclerViewDivider;
@@ -75,7 +74,7 @@ public class NewsActivity extends BaseActivity {
     private void postAsynHttpNews(){
         news = new News();
 
-        String url = Constant.HTTP_URL + "allNews";
+        String url = Constants.HTTP_URL + "allNews";
 
         Map<String,String> map = new HashMap<>();
 

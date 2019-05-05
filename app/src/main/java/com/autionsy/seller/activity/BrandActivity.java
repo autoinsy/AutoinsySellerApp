@@ -2,24 +2,17 @@ package com.autionsy.seller.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.adapter.BrandAdapter;
-import com.autionsy.seller.adapter.NewsAdapter;
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.Brand;
-import com.autionsy.seller.entity.News;
 import com.autionsy.seller.utils.OkHttp3Utils;
-import com.autionsy.seller.views.RecyclerViewDivider;
-import com.scrat.app.selectorlibrary.ImageSelector;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,7 +71,7 @@ public class BrandActivity extends BaseActivity {
     private void postAsynHttpBrand(){
         brand = new Brand();
 
-        String url = Constant.HTTP_URL + "login";
+        String url = Constants.HTTP_URL + "login";
 
         Map<String,String> map = new HashMap<>();
 

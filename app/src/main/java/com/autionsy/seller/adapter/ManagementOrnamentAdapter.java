@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.Ornament;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.utils.ScreenUtils;
@@ -155,7 +155,7 @@ public class ManagementOrnamentAdapter extends BaseAdapter {
     }
 
     private void postAsynHttpDeleteOrnament(){
-        String url = Constant.HTTP_URL + "deleteOrnamentInfo";
+        String url = Constants.HTTP_URL + "deleteOrnamentInfo";
 
         Map<String,String> map = new HashMap<>();
         map.put("ornament_id",ornamentId);

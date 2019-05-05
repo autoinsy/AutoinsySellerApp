@@ -9,11 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.constant.Constant;
-import com.autionsy.seller.entity.Lease;
-import com.autionsy.seller.entity.Recruit;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.utils.OkHttp3Utils;
-import com.scrat.app.selectorlibrary.ImageSelector;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -115,7 +112,7 @@ public class PublishRecruitActivity extends BaseActivity{
         // 使用getString方法获得value，注意第2个参数是value的默认值
         String username = sharedPreferences.getString("USERNAME", "");
 
-        String url = Constant.HTTP_URL + "addRecruit";
+        String url = Constants.HTTP_URL + "addRecruit";
 
         Map<String,String> map = new HashMap<>();
         map.put("title", recruitTile);

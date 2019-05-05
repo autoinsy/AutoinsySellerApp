@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.Rescue;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.utils.ScreenUtils;
@@ -148,7 +148,7 @@ public class ManagementRecuseAdapter extends BaseAdapter {
     }
 
     private void postAsynHttpDeleteGoods() {
-        String url = Constant.HTTP_URL + "deleteRescueInfo";
+        String url = Constants.HTTP_URL + "deleteRescueInfo";
 
         Map<String, String> map = new HashMap<>();
         map.put("rescue_id", recuseId);

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.Order;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.bumptech.glide.Glide;
@@ -122,7 +122,7 @@ public class AllOrderListAdapter extends BaseAdapter {
     }
 
     private void postAsynHttpDeleteOrder(String orderNum){
-        String url = Constant.HTTP_URL + "deleteOrder";
+        String url = Constants.HTTP_URL + "deleteOrder";
 
         Map<String,String> map = new HashMap<>();
         map.put("order_number",orderNum);

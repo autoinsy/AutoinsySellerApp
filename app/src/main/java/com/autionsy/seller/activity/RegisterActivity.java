@@ -8,7 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.utils.CountDownTimerUtils;
 import com.autionsy.seller.utils.OkHttp3Utils;
 
@@ -86,7 +86,7 @@ public class RegisterActivity extends BaseActivity {
         password = register_password_et.getText().toString().trim();
         verifyCode = input_register_verify_code_et.getText().toString().trim();
 
-        String url = Constant.HTTP_URL + "sellerRegister";
+        String url = Constants.HTTP_URL + "sellerRegister";
         Map<String,String> map = new HashMap<>();
         map.put("username", username);
         map.put("password", password);
@@ -139,7 +139,7 @@ public class RegisterActivity extends BaseActivity {
     private void getVerifyCode(){
 //        username = input_register_username_et.getText().toString().trim();
 
-        String url = Constant.HTTP_URL + "sendValidateCode";
+        String url = Constants.HTTP_URL + "sendValidateCode";
         Map<String,String> map = new HashMap<>();
         map.put("phone_number", username);
 

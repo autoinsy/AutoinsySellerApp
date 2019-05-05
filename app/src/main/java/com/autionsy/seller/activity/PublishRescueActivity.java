@@ -11,16 +11,9 @@ import android.widget.Toast;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.adapter.UploadImageAdapter;
-import com.autionsy.seller.constant.Constant;
-import com.autionsy.seller.entity.Lease;
-import com.autionsy.seller.entity.Rescue;
-import com.autionsy.seller.entity.Service;
-import com.autionsy.seller.utils.OkHttp3Utils;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.views.GridViewInScrollView;
 import com.scrat.app.selectorlibrary.ImageSelector;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -131,7 +124,7 @@ public class PublishRescueActivity extends BaseActivity {
         // 使用getString方法获得value，注意第2个参数是value的默认值
         String username = sharedPreferences.getString("USERNAME", "");
 
-        String url = Constant.HTTP_URL + "addRescue";
+        String url = Constants.HTTP_URL + "addRescue";
 
         if (data != null) {
             path = ImageSelector.getImagePaths(data);

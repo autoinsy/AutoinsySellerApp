@@ -1,6 +1,9 @@
 package com.autionsy.seller.constant;
 
-public class Constant {
+public class Constants {
+    public static String ID_FRONT = "idCardFrontCrop.jpg";
+    public static String ID_BACK = "idCardBackCrop.jpg";
+
     public static String HTTP_URL = "http://192.168.0.102:6888/seller/api/";
 
     // request参数
@@ -13,6 +16,5 @@ public class Constant {
     public static final String UPLOAD_ID_CARD_FRONT = "uploadIDCardFront";
     public static final String UPLOAD_ID_CARD_BACK = "uploadIDCardBack";
     public static final String UPLOAD_BUSINESS_LICENCE = "uploadBusinessLicence";
-
 
 }

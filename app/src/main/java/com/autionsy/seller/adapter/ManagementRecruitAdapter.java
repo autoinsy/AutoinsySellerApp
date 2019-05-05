@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.autionsy.seller.R;
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.Recruit;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.utils.ScreenUtils;
@@ -138,7 +138,7 @@ public class ManagementRecruitAdapter extends BaseAdapter {
     }
 
     private void postAsynHttpDeleteGoods() {
-        String url = Constant.HTTP_URL + "deleteRecruitInfo";
+        String url = Constants.HTTP_URL + "deleteRecruitInfo";
 
         Map<String, String> map = new HashMap<>();
         map.put("recruit_id", recruitId);

@@ -8,7 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.News;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.bumptech.glide.Glide;
@@ -79,7 +79,7 @@ public class NewsDetailActivity extends BaseActivity {
     private void postAsynHttpGoods() {
         news = new News();
 
-        String url = Constant.HTTP_URL + "getNews";
+        String url = Constants.HTTP_URL + "getNews";
 
         Map<String, String> map = new HashMap<>();
         map.put("news_id",newsId);

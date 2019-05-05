@@ -14,8 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.constant.Constant;
-import com.autionsy.seller.entity.Goods;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.Lease;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.utils.ScreenUtils;
@@ -152,7 +151,7 @@ public class ManagementLeaseAdapter extends BaseAdapter {
     }
 
     private void postAsynHttpDeleteLease(){
-        String url = Constant.HTTP_URL + "deleteLeaseInfo";
+        String url = Constants.HTTP_URL + "deleteLeaseInfo";
 
         Map<String,String> map = new HashMap<>();
         map.put("lease_id",leaseId);

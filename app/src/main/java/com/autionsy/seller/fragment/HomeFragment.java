@@ -3,8 +3,6 @@ package com.autionsy.seller.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,14 +25,11 @@ import com.autionsy.seller.activity.PublishRecruitActivity;
 import com.autionsy.seller.activity.PublishRescueActivity;
 import com.autionsy.seller.activity.PublishServiceActivity;
 import com.autionsy.seller.adapter.HomeAdapter;
-import com.autionsy.seller.adapter.NewsAdapter;
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.Advertisement;
 import com.autionsy.seller.entity.News;
-import com.autionsy.seller.entity.NewsImages;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.views.ListViewInScrollView;
-import com.autionsy.seller.views.RecyclerViewDivider;
 import com.autionsy.seller.zxing.activity.CaptureActivity;
 import com.bumptech.glide.Glide;
 import com.youth.banner.Banner;
@@ -50,7 +45,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -213,7 +207,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
     private void postAsynHttpMainPageNews(){
         news = new News();
 
-        String url = Constant.HTTP_URL + "getNewsByTime";
+        String url = Constants.HTTP_URL + "getNewsByTime";
         Map<String,String> map = new HashMap<>();
 
         OkHttp3Utils.doPost(url, map, new Callback() {
@@ -275,7 +269,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
     private void postAsynHttpAdvertisement(){
         advertisement = new Advertisement();
 
-        String url = Constant.HTTP_URL + "appRotateAdvertisement";
+        String url = Constants.HTTP_URL + "appRotateAdvertisement";
 
         Map<String,String> map = new HashMap<>();
 

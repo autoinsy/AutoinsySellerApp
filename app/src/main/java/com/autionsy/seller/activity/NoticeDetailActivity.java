@@ -1,18 +1,13 @@
 package com.autionsy.seller.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.adapter.NoticeAdapter;
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.utils.OkHttp3Utils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,7 +66,7 @@ public class NoticeDetailActivity extends BaseActivity {
     }
 
     private void postAsynHttpNoticeDetail(){
-        String url = Constant.HTTP_URL + "getNotice";
+        String url = Constants.HTTP_URL + "getNotice";
 
         Map<String,String> map = new HashMap<>();
         map.put("notice_id", noticeId);

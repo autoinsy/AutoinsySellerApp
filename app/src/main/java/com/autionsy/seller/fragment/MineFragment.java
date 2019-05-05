@@ -21,8 +21,7 @@ import com.autionsy.seller.activity.ManagementServiceActivity;
 import com.autionsy.seller.activity.OrderListActivity;
 import com.autionsy.seller.activity.ManagementOrnamenActivity;
 import com.autionsy.seller.activity.SettingActivity;
-import com.autionsy.seller.adapter.ManagementRecruitAdapter;
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.Seller;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.bumptech.glide.Glide;
@@ -70,7 +69,7 @@ public class MineFragment extends BaseFragment {
         SharedPreferences prefs = getActivity().getSharedPreferences("seller_login_data", MODE_PRIVATE); //获取对象，读取data文件
         String username = prefs.getString("USERNAME", ""); //获取文件中的数据
 
-        String url = Constant.HTTP_URL + "getSellerInfoByUsername";
+        String url = Constants.HTTP_URL + "getSellerInfoByUsername";
 
         Map<String,String> map = new HashMap<>();
         map.put("username",username);

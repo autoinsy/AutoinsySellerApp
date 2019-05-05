@@ -7,7 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.utils.OkHttp3Utils;
 
 import org.json.JSONException;
@@ -66,7 +66,7 @@ public class ForgetPasswordActivity extends BaseActivity{
         mobilePhoneNum = forget_input_mobile_phone_num_et.getText().toString().trim();
         password = forget_input_password_et.getText().toString().trim();
 
-        String url = Constant.HTTP_URL + "sellerForgetPassword";
+        String url = Constants.HTTP_URL + "sellerForgetPassword";
         Map<String,String> map = new HashMap<>();
         map.put("username", mobilePhoneNum);
         map.put("password", password);

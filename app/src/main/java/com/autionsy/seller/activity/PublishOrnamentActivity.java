@@ -5,31 +5,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.adapter.UploadImageAdapter;
-import com.autionsy.seller.constant.Constant;
-import com.autionsy.seller.dialog.PhotoPickDialog;
-import com.autionsy.seller.entity.Lease;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.Ornament;
 import com.autionsy.seller.utils.OkHttp3UploadFileUtil;
-import com.autionsy.seller.utils.OkHttp3Utils;
 import com.autionsy.seller.views.GridViewInScrollView;
 import com.scrat.app.selectorlibrary.ImageSelector;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -158,7 +148,7 @@ public class PublishOrnamentActivity extends BaseActivity{
         // 使用getString方法获得value，注意第2个参数是value的默认值
         String username = sharedPreferences.getString("USERNAME", "");
 
-        String url = Constant.HTTP_URL + "addOrnament";
+        String url = Constants.HTTP_URL + "addOrnament";
 
         if (data != null) {
             path = ImageSelector.getImagePaths(data);

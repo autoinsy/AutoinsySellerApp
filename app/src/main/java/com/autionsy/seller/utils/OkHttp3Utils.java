@@ -1,6 +1,6 @@
 package com.autionsy.seller.utils;
 
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -203,7 +203,7 @@ public class OkHttp3Utils {
 //            }
 //        }
 //        //创建Request对象
-//        Request request = new Request.Builder().url(Constant.HTTP_URL)
+//        Request request = new Request.Builder().url(Constants.HTTP_URL)
 //                .addHeader("Content-Type", "application/json;charset=UTF-8")//添加header
 //                .addHeader("token", "xxxxx").build();
 //        // readTimeout("请求超时时间" , 时间单位);
@@ -251,7 +251,7 @@ public class OkHttp3Utils {
             }
         }
         //创建Request对象
-        Request request = new Request.Builder().url(Constant.HTTP_URL)
+        Request request = new Request.Builder().url(Constants.HTTP_URL)
                 .addHeader("Content-Type", "application/json;charset=UTF-8")//添加header
                 .addHeader("token", "xxxxx").build();
         // readTimeout("请求超时时间" , 时间单位);

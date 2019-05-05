@@ -11,7 +11,6 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
@@ -24,7 +23,7 @@ import android.widget.Toast;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.activity.BaseActivity;
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.utils.UriUtil;
 import com.autionsy.seller.zxing.camera.CameraManager;
 import com.autionsy.seller.zxing.decoding.CaptureActivityHandler;
@@ -149,7 +148,7 @@ public class CaptureActivity extends BaseActivity implements Callback {
                 if (result != null) {
                     Intent resultIntent = new Intent();
                     Bundle bundle = new Bundle();
-                    bundle.putString(Constant.INTENT_EXTRA_KEY_QR_SCAN ,result.getText());
+                    bundle.putString(Constants.INTENT_EXTRA_KEY_QR_SCAN ,result.getText());
 
                     resultIntent.putExtras(bundle);
                     CaptureActivity.this.setResult(RESULT_OK, resultIntent);
@@ -261,7 +260,7 @@ public class CaptureActivity extends BaseActivity implements Callback {
         } else {
             Intent resultIntent = new Intent();
             Bundle bundle = new Bundle();
-            bundle.putString(Constant.INTENT_EXTRA_KEY_QR_SCAN, resultString);
+            bundle.putString(Constants.INTENT_EXTRA_KEY_QR_SCAN, resultString);
             System.out.println("sssssssssssssssss scan 0 = " + resultString);
             // 不能使用Intent传递大于40kb的bitmap，可以使用一个单例对象存储这个bitmap
 //            bundle.putParcelable("bitmap", barcode);

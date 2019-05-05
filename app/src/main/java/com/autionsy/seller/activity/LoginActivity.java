@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.RawRes;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.Login;
 import com.autionsy.seller.utils.OkHttp3Utils;
 
@@ -91,7 +90,7 @@ public class LoginActivity extends BaseActivity {
         username = input_username.getText().toString().trim();
         password = input_password.getText().toString().trim();
 
-        String url = Constant.HTTP_URL + "login";
+        String url = Constants.HTTP_URL + "login";
 
         Map<String,String> map = new HashMap<>();
         map.put("loginName", username);

@@ -10,8 +10,7 @@ import android.widget.Toast;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.adapter.NoticeAdapter;
-import com.autionsy.seller.constant.Constant;
-import com.autionsy.seller.entity.Lease;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.Notice;
 import com.autionsy.seller.utils.OkHttp3Utils;
 
@@ -72,7 +71,7 @@ public class NoticeActivity extends BaseActivity {
     private void postAsynHttpNotice(){
         notice = new Notice();
 
-        String url = Constant.HTTP_URL + "noticeAll";
+        String url = Constants.HTTP_URL + "noticeAll";
         Map<String,String> map = new HashMap<>();
 
         OkHttp3Utils.doPost(url, map, new Callback() {

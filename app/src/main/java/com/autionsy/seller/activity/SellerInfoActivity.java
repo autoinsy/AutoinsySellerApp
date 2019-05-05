@@ -7,7 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.Seller;
 import com.autionsy.seller.utils.OkHttp3Utils;
 
@@ -67,7 +67,7 @@ public class SellerInfoActivity extends BaseActivity{
         seller = new Seller();
         nickName = nick_name_et.getText().toString().trim();
 
-        String url = Constant.HTTP_URL + "login";
+        String url = Constants.HTTP_URL + "login";
 
         Map<String,String> map = new HashMap<>();
         map.put("loginName", nickName);

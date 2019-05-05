@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.autionsy.seller.R;
 import com.autionsy.seller.adapter.OrderListAdapter;
-import com.autionsy.seller.constant.Constant;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.Order;
 import com.autionsy.seller.utils.OkHttp3Utils;
 
@@ -94,7 +94,7 @@ public class OrderListActivity extends BaseActivity {
 
         order = new Order();
 
-        String url = Constant.HTTP_URL + "getOrderListByState";
+        String url = Constants.HTTP_URL + "getOrderListByState";
 
         Map<String,String> map = new HashMap<>();
         map.put("orderState",status);

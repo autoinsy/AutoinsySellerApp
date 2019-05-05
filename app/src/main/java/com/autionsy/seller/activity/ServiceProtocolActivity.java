@@ -1,14 +1,12 @@
 package com.autionsy.seller.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
-import com.autionsy.seller.constant.Constant;
-import com.autionsy.seller.entity.Seller;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.utils.OkHttp3Utils;
 
 import org.json.JSONException;
@@ -57,7 +55,7 @@ public class ServiceProtocolActivity extends BaseActivity {
     }
 
     private void postAsynHttpGoods(){
-        String url = Constant.HTTP_URL + "showLawStatement";
+        String url = Constants.HTTP_URL + "showLawStatement";
 
         Map<String,String> map = new HashMap<>();
 
