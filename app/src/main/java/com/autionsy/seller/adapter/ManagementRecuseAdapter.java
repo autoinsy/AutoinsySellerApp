@@ -83,7 +83,7 @@ public class ManagementRecuseAdapter extends BaseAdapter {
                 .apply(options)
                 .into(holder.rescue_management_iv);
 
-        holder.rescue_management_title_tv.setText(commodityList.get(position).getRescueTittle());
+        holder.rescue_management_title_tv.setText(commodityList.get(position).getRescueTitle());
         holder.rescue_management_service_content_tv.setText(commodityList.get(position).getRescueServiceScope());
 
         recuseId = commodityList.get(position).getRescueId();
