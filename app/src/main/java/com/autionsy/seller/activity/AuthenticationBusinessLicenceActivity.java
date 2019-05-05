@@ -1,13 +1,20 @@
 package com.autionsy.seller.activity;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -17,8 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
+import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.dialog.PhotoPickDialog;
 import com.autionsy.seller.utils.OkHttp3UploadFileUtil;
+import com.autionsy.seller.utils.OkHttp3Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -27,11 +39,20 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import win.smartown.android.library.certificateCamera.CameraActivity;
 
 public class AuthenticationBusinessLicenceActivity extends BaseActivity {
 
@@ -47,12 +68,6 @@ public class AuthenticationBusinessLicenceActivity extends BaseActivity {
 
     private String businessLicenceNum;
 
-    private static final int PHOTO_REQUEST_CAREMA = 2;// 拍照
-    private static final int PHOTO_REQUEST_GALLERY = 3;// 从相册中选择
-    private static final int PHOTO_REQUEST_CUT = 4;// 结果
-    private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
-    private File tempFile;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +80,6 @@ public class AuthenticationBusinessLicenceActivity extends BaseActivity {
     private void initView(){
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.authentication);
-
-        businessLicenceNum = input_business_licence_et.getText().toString().trim();
     }
 
     @OnClick({R.id.back_btn,
@@ -78,155 +91,162 @@ public class AuthenticationBusinessLicenceActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.upload_business_licence_layout:
-
+                businessLicensePortrait(view);
                 break;
             case R.id.business_licence_btn:
-
+                postHttpBusinessLicenceNum();
                 break;
         }
     }
 
-    private void UploadSingleImage(){
-        new PhotoPickDialog(AuthenticationBusinessLicenceActivity.this).builder().setCancelable(true).setTakePhotoListener(new PhotoPickDialog.TakePhotoListener() {
-            @Override
-            public void takePhoto() {
-                // 激活相机
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                // 判断存储卡是否可以用，可用进行存储
-                if (hasSdcard()) {
-                    tempFile = new File(Environment.getExternalStorageDirectory(), PHOTO_FILE_NAME);
-                    // 从文件中创建uri
-                    Uri uri = Uri.fromFile(tempFile);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                }
-                // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CAREMA
-                startActivityForResult(intent, PHOTO_REQUEST_CAREMA);
-            }
-
-            @Override
-            public void pickPhoto() {
-                // 激活系统图库，选择一张图片
-                Intent intent1 = new Intent(Intent.ACTION_PICK);
-                intent1.setType("image/*");
-                // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_GALLERY
-                startActivityForResult(intent1, PHOTO_REQUEST_GALLERY);
-            }
-        }).show();
-    }
-
-    /*
-     * 判断sdcard是否被挂载
-     */
-    private boolean hasSdcard() {
-        //判断ＳＤ卡手否是安装好的　　　media_mounted
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /*
-     * 剪切图片
-     */
-    private void crop(Uri uri) {
-        // 裁剪图片意图
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", "true");
-        // 裁剪框的比例，1：1
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        // 裁剪后输出图片的尺寸大小
-        intent.putExtra("outputX", 250);
-        intent.putExtra("outputY", 250);
-
-        intent.putExtra("outputFormat", "JPEG");// 图片格式
-        intent.putExtra("noFaceDetection", true);// 取消人脸识别
-        intent.putExtra("return-data", true);
-        // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CUT
-        startActivityForResult(intent, PHOTO_REQUEST_CUT);
-    }
-
-    /**回调并上传多张或者单张图片*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PHOTO_REQUEST_GALLERY) {
-            // 从相册返回的数据
-            if (data != null) {
-                // 得到图片的全路径
-                Uri uri = data.getData();
-                crop(uri);
-            }
-        } else if (requestCode == PHOTO_REQUEST_CAREMA) {
-            // 从相机返回的数据
-            if (hasSdcard()) {
-                crop(Uri.fromFile(tempFile));
-            } else {
-                Toast.makeText(AuthenticationBusinessLicenceActivity.this, "未找到存储卡，无法存储照片！", Toast.LENGTH_SHORT).show();
-            }
-        } else if (requestCode == PHOTO_REQUEST_CUT) {
-            // 从剪切图片返回的数据
-            if (data != null) {
-                Bitmap bitmap = data.getParcelableExtra("data");
-                /**
-                 * 获得图片
-                 */
-                business_licence_iv.setImageBitmap(bitmap);
-                //保存到SharedPreferences
-                saveBitmapToSharedPreferences(bitmap);
-            }
-            try {
-                // 将临时文件删除
-                tempFile.delete();
-            } catch (Exception e) {
-                e.printStackTrace();
+        if (requestCode == CameraActivity.REQUEST_CODE && resultCode == CameraActivity.RESULT_CODE) {
+            //获取文件路径，显示图片
+            final String path = CameraActivity.getResult(data);
+            if (!TextUtils.isEmpty(path)) {
+                business_licence_camera_iv.setVisibility(View.GONE);
+                business_licence_iv.setImageBitmap(BitmapFactory.decodeFile(path));
+                postUploadBusinessLicenceImage(path);
             }
         }
-        super.onActivityResult(requestCode, resultCode, data);
     }
-
-    //保存图片到SharedPreferences
-    private void saveBitmapToSharedPreferences(Bitmap bitmap) {
-        // Bitmap bitmap=BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
-        //第一步:将Bitmap压缩至字节数组输出流ByteArrayOutputStream
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
-        //第二步:利用Base64将字节数组输出流中的数据转换成字符串String
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-        String imageString = new String(Base64.encodeToString(byteArray, Base64.DEFAULT));
-        //第三步:将String保持至SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences("upload_goods_image", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("goods_image", imageString);
-        editor.commit();
-
-        //上传头像
-        setImgByStr(imageString,"");
-
-    }
-
 
     /**
-     * 上传头像
-     * @param imgStr
-     * @param imgName
+     * 拍摄证件照片
+     *
+     * @param type 拍摄证件类型
      */
-    public  void setImgByStr(String imgStr, String imgName) {
-        String url = "http://appserver.1035.mobi/MobiSoft/User_upLogo";
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("id", "11460047");// 11459832
-        params.put("data", imgStr);
-        OkHttp3UploadFileUtil.postAsync(url, params, new OkHttp3UploadFileUtil.DataCallBack() {
+    private void takePhoto(int type) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 0x12);
+            return;
+        }
+        CameraActivity.openCertificateCamera(this, type);
+    }
+
+    /**
+     * 营业执照竖版
+     */
+    public void businessLicensePortrait(View view) {
+        takePhoto(CameraActivity.TYPE_COMPANY_PORTRAIT);
+    }
+
+    /**
+     * 营业执照横版
+     */
+    public void businessLicenseLandscape(View view) {
+        takePhoto(CameraActivity.TYPE_COMPANY_LANDSCAPE);
+    }
+
+    public void postUploadBusinessLicenceImage(String path) {
+        SharedPreferences sharepreferences = getSharedPreferences("seller_login_data", Activity.MODE_PRIVATE);
+        String username = sharepreferences.getString("USERNAME", "");
+
+        String url = Constants.HTTP_URL + Constants.UPLOAD_BUSINESS_LICENCE;
+
+        OkHttpClient client = new OkHttpClient();
+        // form 表单形式上传
+        MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+
+        File file = new File(path);
+
+        if (file != null) {
+            // MediaType.parse() 里面是上传的文件类型。
+            RequestBody body = RequestBody.create(MediaType.parse("image/*"), file);
+            String filename = file.getName();
+            // 参数分别为， 请求key ，文件名称 ， RequestBody
+            requestBody.addFormDataPart("upload_business_licence_image", filename, body);
+        }
+
+        Map<String,String> map = new HashMap<>();
+        map.put("upload_type","2");
+        map.put("username",username);
+
+        //要上传的文字参数
+        if (map != null) {
+            for (String key : map.keySet()) {
+                requestBody.addFormDataPart(key, map.get(key));
+            }
+        }
+        Request request = new Request.Builder().url(url).post(requestBody.build()).build();
+        // readTimeout("请求超时时间" , 时间单位);
+        client.newBuilder().readTimeout(5000, TimeUnit.MILLISECONDS).build().newCall(request).enqueue(new Callback() {
             @Override
-            public void requestFailure(Request request, IOException e) {
-                Log.i("上传失败", "失败" + request.toString() + e.toString());
+            public void onFailure(Call call, IOException e) {
+
             }
             @Override
-            public void requestSuccess(String result) throws Exception {
-                Log.i("上传成功", result);
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    final String str = response.body().string();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject jsonObject = new JSONObject(str);
+                                String resultCode = jsonObject.optString("code");
+                                String data = jsonObject.optString("data");
+                                String message = jsonObject.optString("message");
+
+                                if("200".equals(resultCode)){
+                                    Toast.makeText(getApplicationContext(),R.string.upload_success,Toast.LENGTH_SHORT).show();
+                                }else if("403".equals(resultCode)){
+                                    Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                } else {
+                    Toast.makeText(getApplicationContext(),R.string.request_error,Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
+    private void postHttpBusinessLicenceNum(){
+        businessLicenceNum = input_business_licence_et.getText().toString().trim();
+        SharedPreferences prefs = getSharedPreferences("seller_login_data", MODE_PRIVATE); //获取对象，读取data文件
+        String username = prefs.getString("USERNAME", ""); //获取文件中的数据
+
+        String url = Constants.HTTP_URL + "saveBusinessLicenceNum";
+        Map<String,String> map = new HashMap<>();
+        map.put("username", username);
+        map.put("business_licence_num", businessLicenceNum);
+
+        OkHttp3Utils.doPost(url, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responeString = response.body().string();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject  = new JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
+
+                            if("200".equals(resultCode)){
+                                Intent intent = new Intent(AuthenticationBusinessLicenceActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }else if("411".equals(resultCode)){
+                                Toast.makeText(getApplicationContext(),R.string.user_already_register,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
+    }
 }
