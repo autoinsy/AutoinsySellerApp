@@ -56,6 +56,7 @@ public class AuthenticationIDCardActivity extends BaseActivity {
     ImageView id_card_back_camera_iv;
 
     private String idNumber;
+    private String imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +86,8 @@ public class AuthenticationIDCardActivity extends BaseActivity {
                 id_card_front_camera_iv.setVisibility(View.GONE);
                 break;
             case R.id.authentication_id_card_btn:
-                postHttpIDCardNum();
+                postUploadIDCardFrontImage(imagePath);
+                postUploadIDCardBackImage(imagePath);
                 break;
             case R.id.upload_id_back_layout:
                 backIdCard(view);
@@ -104,10 +106,8 @@ public class AuthenticationIDCardActivity extends BaseActivity {
 
             if(Constants.ID_FRONT.equals(image)){
                 id_card_front_camera_iv.setImageBitmap(BitmapFactory.decodeFile(imagePath));
-                postUploadIDCardFrontImage(imagePath);
             }else if(Constants.ID_BACK.equals(image)){
                 id_card_back_camera_iv.setImageBitmap(BitmapFactory.decodeFile(imagePath));
-                postUploadIDCardBackImage(imagePath);
             }
 
         }
@@ -134,13 +134,14 @@ public class AuthenticationIDCardActivity extends BaseActivity {
     }
 
     /**
-     * 身份证反面
+     * 身份证正面
      */
     public void backIdCard(View view) {
         takePhoto(CameraActivity.TYPE_IDCARD_BACK);
     }
 
     public void postUploadIDCardFrontImage(String path) {
+        idNumber = input_id_number_et.getText().toString().trim();
         SharedPreferences sharepreferences = getSharedPreferences("seller_login_data", Activity.MODE_PRIVATE);
         String username = sharepreferences.getString("USERNAME", "");
 
@@ -163,6 +164,7 @@ public class AuthenticationIDCardActivity extends BaseActivity {
         Map<String,String> map = new HashMap<>();
         map.put("upload_type","2");
         map.put("username",username);
+        map.put("id_card_num",idNumber);
 
         //要上传的文字参数
         if (map != null) {
@@ -270,50 +272,6 @@ public class AuthenticationIDCardActivity extends BaseActivity {
                 } else {
                     Toast.makeText(getApplicationContext(),R.string.request_error,Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-    }
-
-    private void postHttpIDCardNum(){
-        idNumber = input_id_number_et.getText().toString().trim();
-        SharedPreferences prefs = getSharedPreferences("seller_login_data", MODE_PRIVATE); //获取对象，读取data文件
-        String username = prefs.getString("USERNAME", ""); //获取文件中的数据
-
-        String url = Constants.HTTP_URL + "saveIdCardNum";
-        Map<String,String> map = new HashMap<>();
-        map.put("username", username);
-        map.put("id_card_num", idNumber);
-
-        OkHttp3Utils.doPost(url, map, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String responeString = response.body().string();
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject jsonObject  = new JSONObject(responeString);
-                            String resultCode = jsonObject.optString("code");
-                            String data = jsonObject.optString("data");
-                            String message = jsonObject.optString("message");
-
-                            if("200".equals(resultCode)){
-                                Intent intent = new Intent(AuthenticationIDCardActivity.this, AuthenticationBusinessLicenceActivity.class);
-                                startActivity(intent);
-                            }else if("411".equals(resultCode)){
-                                Toast.makeText(getApplicationContext(),R.string.user_already_register,Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
             }
         });
     }
