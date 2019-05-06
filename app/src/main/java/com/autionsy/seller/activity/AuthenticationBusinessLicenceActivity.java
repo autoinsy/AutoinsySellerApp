@@ -91,7 +91,7 @@ public class AuthenticationBusinessLicenceActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.upload_business_licence_layout:
-                businessLicensePortrait(view);
+                businessLicenseLandscape(view);
                 break;
             case R.id.business_licence_btn:
                 postHttpBusinessLicenceNum();

@@ -109,7 +109,6 @@ public class AuthenticationIDCardActivity extends BaseActivity {
             }else if(Constants.ID_BACK.equals(image)){
                 id_card_back_camera_iv.setImageBitmap(BitmapFactory.decodeFile(imagePath));
             }
-
         }
     }
 
