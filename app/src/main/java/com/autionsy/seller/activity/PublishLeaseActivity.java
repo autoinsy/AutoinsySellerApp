@@ -105,7 +105,7 @@ public class PublishLeaseActivity extends BaseActivity{
                 ImageSelector.show(this, REQUEST_CODE_SELECT_IMG, MAX_SELECT_COUNT);
                 break;
             case R.id.submit_tv:
-
+                finish();
                 break;
         }
     }
