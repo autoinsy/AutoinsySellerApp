@@ -67,6 +67,7 @@ public class AuthenticationBusinessLicenceActivity extends BaseActivity {
     ImageView business_licence_camera_iv;
 
     private String businessLicenceNum;
+    private String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +95,7 @@ public class AuthenticationBusinessLicenceActivity extends BaseActivity {
                 businessLicenseLandscape(view);
                 break;
             case R.id.business_licence_btn:
-                postHttpBusinessLicenceNum();
+                postUploadBusinessLicenceImage(path);
                 break;
         }
     }
@@ -103,11 +104,10 @@ public class AuthenticationBusinessLicenceActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CameraActivity.REQUEST_CODE && resultCode == CameraActivity.RESULT_CODE) {
             //获取文件路径，显示图片
-            final String path = CameraActivity.getResult(data);
+            path = CameraActivity.getResult(data);
             if (!TextUtils.isEmpty(path)) {
                 business_licence_camera_iv.setVisibility(View.GONE);
                 business_licence_iv.setImageBitmap(BitmapFactory.decodeFile(path));
-                postUploadBusinessLicenceImage(path);
             }
         }
     }
@@ -140,6 +140,8 @@ public class AuthenticationBusinessLicenceActivity extends BaseActivity {
     }
 
     public void postUploadBusinessLicenceImage(String path) {
+        businessLicenceNum = input_business_licence_et.getText().toString().trim();
+
         SharedPreferences sharepreferences = getSharedPreferences("seller_login_data", Activity.MODE_PRIVATE);
         String username = sharepreferences.getString("USERNAME", "");
 
@@ -162,6 +164,7 @@ public class AuthenticationBusinessLicenceActivity extends BaseActivity {
         Map<String,String> map = new HashMap<>();
         map.put("upload_type","2");
         map.put("username",username);
+        map.put("business_licence_num", businessLicenceNum);
 
         //要上传的文字参数
         if (map != null) {
@@ -202,50 +205,6 @@ public class AuthenticationBusinessLicenceActivity extends BaseActivity {
                 } else {
                     Toast.makeText(getApplicationContext(),R.string.request_error,Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-    }
-
-    private void postHttpBusinessLicenceNum(){
-        businessLicenceNum = input_business_licence_et.getText().toString().trim();
-        SharedPreferences prefs = getSharedPreferences("seller_login_data", MODE_PRIVATE); //获取对象，读取data文件
-        String username = prefs.getString("USERNAME", ""); //获取文件中的数据
-
-        String url = Constants.HTTP_URL + "saveBusinessLicenceNum";
-        Map<String,String> map = new HashMap<>();
-        map.put("username", username);
-        map.put("business_licence_num", businessLicenceNum);
-
-        OkHttp3Utils.doPost(url, map, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String responeString = response.body().string();
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject jsonObject  = new JSONObject(responeString);
-                            String resultCode = jsonObject.optString("code");
-                            String data = jsonObject.optString("data");
-                            String message = jsonObject.optString("message");
-
-                            if("200".equals(resultCode)){
-                                Intent intent = new Intent(AuthenticationBusinessLicenceActivity.this, MainActivity.class);
-                                startActivity(intent);
-                            }else if("411".equals(resultCode)){
-                                Toast.makeText(getApplicationContext(),R.string.user_already_register,Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
             }
         });
     }
