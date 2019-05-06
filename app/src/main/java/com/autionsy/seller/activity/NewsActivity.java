@@ -74,7 +74,7 @@ public class NewsActivity extends BaseActivity {
     private void postAsynHttpNews(){
         news = new News();
 
-        String url = Constants.HTTP_URL + "allNews";
+        String url = Constants.ALL_NEWS;
 
         Map<String,String> map = new HashMap<>();
 

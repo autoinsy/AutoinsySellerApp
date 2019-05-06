@@ -8,24 +8,35 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.autionsy.seller.R;
 import com.autionsy.seller.adapter.CategoryAdapter;
 import com.autionsy.seller.adapter.MenuAdapter;
+import com.autionsy.seller.constant.Constants;
+import com.autionsy.seller.entity.Category;
 import com.autionsy.seller.entity.CategoryBean;
+import com.autionsy.seller.utils.OkHttp3Utils;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.scrat.app.selectorlibrary.ImageSelector;
+
+import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class CategoryActivity extends BaseActivity {
     private List<String> menuList = new ArrayList<>();
@@ -153,5 +164,58 @@ public class CategoryActivity extends BaseActivity {
                 finish();
                 break;
         }
+    }
+
+    private void postAsynHttpCategory(){
+        String url = Constants.CATEGORY;
+
+        Map<String,String> map = new HashMap<>();
+
+        OkHttp3Utils.doPost(url, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responeString = response.body().string();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            org.json.JSONObject jsonObject = new org.json.JSONObject(responeString);
+                            String resultCode = jsonObject.optString("code");
+                            String data = jsonObject.optString("data");
+                            String message = jsonObject.optString("message");
+
+                            if("200".equals(resultCode)){
+
+                                Category categoryJson = JSONObject.parseObject(data,Category.class);
+                                showTitle = new ArrayList<>();
+
+                                for (int i=0; i<categoryJson.getCategoryDataList().size(); i++){
+
+                                    Category.CategoryData categoryData = categoryJson.getCategoryDataList().get(i);
+
+                                }
+
+                                tv_title.setText(categoryJson.getCategoryDataList().get(0).getSubClassify());
+
+                                menuAdapter.notifyDataSetChanged();
+                                homeAdapter.notifyDataSetChanged();
+                            }else if("403".equals(resultCode)){
+                                Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(getApplicationContext(),R.string.login_fail,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
     }
 }

@@ -17,4 +17,9 @@ public class Constants {
     public static final String UPLOAD_ID_CARD_BACK = "uploadIDCardBack";
     public static final String UPLOAD_BUSINESS_LICENCE = "uploadBusinessLicence";
 
+    /**新闻*/
+    public static final String ALL_NEWS = HTTP_URL+"allNews";
+
+    /**分类*/
+    public static final String CATEGORY = HTTP_URL + "getAllClassify";
 }
