@@ -112,7 +112,7 @@ public class PublishOrnamentActivity extends BaseActivity{
                 ImageSelector.show(this, REQUEST_CODE_SELECT_IMG, MAX_SELECT_COUNT);
                 break;
             case R.id.submit_tv:
-                finish();
+                uploadImage();
                 break;
             case R.id.ornament_type_selector_layout:
                 intent = new Intent(PublishOrnamentActivity.this, CategoryActivity.class);
@@ -129,13 +129,14 @@ public class PublishOrnamentActivity extends BaseActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_SELECT_IMG) {
             showImage(data); //设置图片 跟图片目录
-            uploadImage(data);
+            path = ImageSelector.getImagePaths(data);
+//            uploadImage(data);
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void uploadImage(Intent data) {
+    private void uploadImage() {
 
         ornamentName = ornament_name_et.getText().toString().trim();
         ornamentPrice = ornament_price_et.getText().toString().trim();
@@ -150,8 +151,8 @@ public class PublishOrnamentActivity extends BaseActivity{
 
         String url = Constants.HTTP_URL + "addOrnament";
 
-        if (data != null) {
-            path = ImageSelector.getImagePaths(data);
+        if (path.size() != 0) {
+//            path = ImageSelector.getImagePaths(data);
 
             //初始化OkHttpClient
             OkHttpClient client = new OkHttpClient();
@@ -210,6 +211,7 @@ public class PublishOrnamentActivity extends BaseActivity{
                             public void run() {
                                 if("200".equals(str)){
                                     Toast.makeText(getApplicationContext(),"上传图片成功",Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }else if("403".equals(str)){
                                     Toast.makeText(getApplicationContext(),"参数错误",Toast.LENGTH_SHORT).show();
                                 }

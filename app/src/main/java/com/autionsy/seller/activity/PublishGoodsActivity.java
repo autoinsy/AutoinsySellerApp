@@ -104,7 +104,7 @@ public class PublishGoodsActivity extends BaseActivity{
                 ImageSelector.show(this, REQUEST_CODE_SELECT_IMG, MAX_SELECT_COUNT);
                 break;
             case R.id.submit_tv:
-                finish();
+                uploadImage();
                 break;
             case R.id.type_selector_layout:
                 intent = new Intent(PublishGoodsActivity.this, CategoryActivity.class);
@@ -117,13 +117,13 @@ public class PublishGoodsActivity extends BaseActivity{
         }
     }
 
-    //====================okhttp3上传多张图片=====================================================================================
     /**回调并上传多张*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_SELECT_IMG) {
             showImage(data); //设置图片 跟图片目录
-            uploadImage(data);
+            path = ImageSelector.getImagePaths(data);
+//            uploadImage(data);
             return;
         }else if(requestCode == Brand){
             Bundle brandBundle = data.getExtras();
@@ -133,8 +133,11 @@ public class PublishGoodsActivity extends BaseActivity{
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    /**okhttp3上传多张图片*/
-    private void uploadImage(Intent data) {
+    /**okhttp3上传多张图片
+     * Intent data
+     * if(data != null)
+     * */
+    private void uploadImage() {
         goodsName = goods_name_et.getText().toString().trim();
         goodsQuantity = goods_quantity_et.getText().toString().trim();
         goodsProductPlace = goods_product_place_et.getText().toString().trim();
@@ -148,8 +151,8 @@ public class PublishGoodsActivity extends BaseActivity{
 
         String url = Constants.HTTP_URL + "addGoods";
 
-        if (data != null) {
-            path = ImageSelector.getImagePaths(data);
+        if (path.size() != 0) {
+//            path = ImageSelector.getImagePaths(data);
 
             //初始化OkHttpClient
             OkHttpClient client = new OkHttpClient();
@@ -207,6 +210,7 @@ public class PublishGoodsActivity extends BaseActivity{
                             public void run() {
                                 if("200".equals(str)){
                                     Toast.makeText(getApplicationContext(),"上传图片成功",Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }else if("403".equals(str)){
                                     Toast.makeText(getApplicationContext(),"参数错误",Toast.LENGTH_SHORT).show();
                                 }
@@ -224,5 +228,4 @@ public class PublishGoodsActivity extends BaseActivity{
     private void showImage(Intent data) {
         path = ImageSelector.getImagePaths(data); //集合获取path(这里的path是集合)
     }
-    //====================okhttp3上传多张图片=====================================================================================
 }
