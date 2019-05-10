@@ -42,6 +42,23 @@ public class ManagementGoodsActivity extends BaseActivity {
     private Goods goods;
 
     @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(goods_management_lv != null){
+            goods_management_lv = null;
+        }
+        if(mList.size() != 0){
+            mList.clear();
+        }
+        if(goods != null){
+            goods = null;
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_management_goods);

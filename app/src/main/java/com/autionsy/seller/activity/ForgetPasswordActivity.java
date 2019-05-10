@@ -33,7 +33,6 @@ public class ForgetPasswordActivity extends BaseActivity{
     EditText forget_input_password_et;
 
     private String mobilePhoneNum;
-    private String verifyCode;
     private String password;
 
     @Override
@@ -103,5 +102,20 @@ public class ForgetPasswordActivity extends BaseActivity{
             }
         });
 
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(forget_input_mobile_phone_num_et != null){
+            forget_input_mobile_phone_num_et = null;
+        }
+        if(forget_input_password_et != null){
+            forget_input_password_et = null;
+        }
     }
 }

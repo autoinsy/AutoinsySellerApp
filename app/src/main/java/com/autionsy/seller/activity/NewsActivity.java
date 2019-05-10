@@ -40,10 +40,9 @@ public class NewsActivity extends BaseActivity {
     TextView title_tv;
 
     private NewsAdapter newsAdapter;
-
     private ArrayList<News> newsArrayList = new ArrayList<>();
-
     private News news;
+    private String newsId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,12 +71,8 @@ public class NewsActivity extends BaseActivity {
     }
 
     private void postAsynHttpNews(){
-        news = new News();
-
         String url = Constants.ALL_NEWS;
-
         Map<String,String> map = new HashMap<>();
-
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -98,7 +93,7 @@ public class NewsActivity extends BaseActivity {
                             String message = jsonObject.optString("message");
 
                             if("200".equals(resultCode)){
-
+                                news = new News();
                                 JSONArray jsonArray = jsonObject.getJSONArray(data);
 
                                 for (int i=0; i<jsonArray.length(); i++){
@@ -112,6 +107,8 @@ public class NewsActivity extends BaseActivity {
                                     newsArrayList.add(news);
                                 }
 
+                                newsId = String.valueOf(news.getNewsId());
+
                                 LinearLayoutManager manager=new LinearLayoutManager(NewsActivity.this);
                                 news_recycler_view.setLayoutManager(manager);
                                 news_recycler_view.addItemDecoration(new RecyclerViewDivider(NewsActivity.this, LinearLayoutManager.HORIZONTAL, 2, ContextCompat.getColor(NewsActivity.this, R.color.gray_line_2)));
@@ -122,8 +119,8 @@ public class NewsActivity extends BaseActivity {
                                     public void onItemClick(View view, News news) {
                                         Intent intent = new Intent(NewsActivity.this, NewsDetailActivity.class);
                                         Bundle bundle = new Bundle();
-                                        bundle.putSerializable("note", news);
-                                        intent.putExtra("data", bundle);
+                                        bundle.putString("newsId",newsId);
+                                        intent.putExtras(bundle);
                                         startActivity(intent);
                                     }
                                 });
@@ -140,5 +137,22 @@ public class NewsActivity extends BaseActivity {
                 });
             }
         });
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(news_recycler_view != null){
+            news_recycler_view = null;
+        }
+        if(newsArrayList.size() != 0){
+            newsArrayList.clear();
+        }
+        if(news != null){
+            news = null;
+        }
     }
 }

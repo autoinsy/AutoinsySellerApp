@@ -143,7 +143,6 @@ public class AddAddressActivity extends BaseActivity {
      * 展示选择器
      */
     private void showPickerView() {// 弹出选择器
-
         OptionsPickerView pvOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
@@ -168,7 +167,6 @@ public class AddAddressActivity extends BaseActivity {
     }
 
     private void postHttpAddress(){
-
         receiver = address_receiver_et.getText().toString().trim();
         mobileNum = address_receiver_mobile_num_et.getText().toString().trim();
         addressDetail = address_detail_et.getText().toString().trim();
@@ -214,5 +212,28 @@ public class AddAddressActivity extends BaseActivity {
             }
         });
     }
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(address_receiver_et != null){
+            address_receiver_et = null;
+        }
+        if(address_receiver_mobile_num_et != null){
+            address_receiver_mobile_num_et = null;
+        }
+        if(address_area_layout != null){
+            address_area_layout = null;
+        }
+        if(address_detail_et != null){
+            address_detail_et = null;
+        }
+        if(address_area_tv != null){
+            address_area_tv = null;
+        }
+        if(title_tv != null){
+            title_tv = null;
+        }
+    }
+
 }
 

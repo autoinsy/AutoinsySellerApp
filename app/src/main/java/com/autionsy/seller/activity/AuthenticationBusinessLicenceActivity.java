@@ -208,4 +208,21 @@ public class AuthenticationBusinessLicenceActivity extends BaseActivity {
             }
         });
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(input_business_licence_et != null){
+            input_business_licence_et = null;
+        }
+        if(business_licence_iv != null){
+            business_licence_iv = null;
+        }
+        if(business_licence_camera_iv != null){
+            business_licence_camera_iv = null;
+        }
+    }
 }

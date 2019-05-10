@@ -128,4 +128,21 @@ public class AddressManagementActivity extends BaseActivity {
             }
         });
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(address_management_lv != null){
+            address_management_lv =  null;
+        }
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(mList.size() != 0){
+            mList.clear();
+        }
+        if(address != null){
+            address = null;
+        }
+    }
 }

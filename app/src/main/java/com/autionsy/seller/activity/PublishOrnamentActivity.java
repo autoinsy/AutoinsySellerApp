@@ -68,17 +68,7 @@ public class PublishOrnamentActivity extends BaseActivity{
 
     private static final int REQUEST_CODE_SELECT_IMG = 1;
     private static final int MAX_SELECT_COUNT = 9;
-    private File file;
     private List<String> path;//路径集合
-
-    private static final int PHOTO_REQUEST_CAREMA = 2;// 拍照
-    private static final int PHOTO_REQUEST_GALLERY = 3;// 从相册中选择
-    private static final int PHOTO_REQUEST_CUT = 4;// 结果
-    /* 头像名称 */
-    private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
-    private File tempFile;
-
-    private Ornament ornament;
     private Intent intent;
 
     private SharedPreferences sharedPreferences;
@@ -228,68 +218,35 @@ public class PublishOrnamentActivity extends BaseActivity{
         path = ImageSelector.getImagePaths(data); //集合获取path(这里的path是集合)
     }
 
-    public String getFileName(String pathandname) {
-        int start = pathandname.lastIndexOf("/");
-        if (start != -1) {
-            return pathandname.substring(start + 1);
-        } else {
-            return null;
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(upload_image_gv != null){
+            upload_image_gv = null;
+        }
+        if(submit_tv != null){
+            submit_tv = null;
+        }
+        if(ornament_name_et != null){
+            ornament_name_et = null;
+        }
+        if(ornament_price_et != null){
+            ornament_price_et = null;
+        }
+        if(ornament_weight_et != null){
+            ornament_weight_et = null;
+        }
+        if(ornament_motorcycle_type_et != null){
+            ornament_motorcycle_type_et = null;
+        }
+        if(ornament_motorcycle_frame_code_et != null){
+            ornament_motorcycle_frame_code_et = null;
+        }
+        if(path.size() != 0){
+            path.clear();
         }
     }
-    private void setResult(String string, final boolean success) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (success) {
-                    Toast.makeText(PublishOrnamentActivity.this, "请求成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(PublishOrnamentActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    //=====================okhttp3上传单张图片====================================================================================
-    //保存图片到SharedPreferences
-    private void saveBitmapToSharedPreferences(Bitmap bitmap) {
-        // Bitmap bitmap=BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
-        //第一步:将Bitmap压缩至字节数组输出流ByteArrayOutputStream
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
-        //第二步:利用Base64将字节数组输出流中的数据转换成字符串String
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-        String imageString = new String(Base64.encodeToString(byteArray, Base64.DEFAULT));
-        //第三步:将String保持至SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences("upload_goods_image", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("goods_image", imageString);
-        editor.commit();
-
-        //上传头像
-        setImgByStr(imageString,"");
-    }
-
-
-    /**
-     * 上传头像
-     * @param imgStr
-     * @param imgName
-     */
-    public  void setImgByStr(String imgStr, String imgName) {
-        String url = "http://appserver.1035.mobi/MobiSoft/User_upLogo";
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("id", "11460047");// 11459832
-        params.put("data", imgStr);
-        OkHttp3UploadFileUtil.postAsync(url, params, new OkHttp3UploadFileUtil.DataCallBack() {
-            @Override
-            public void requestFailure(Request request, IOException e) {
-                Log.i("上传失败", "失败" + request.toString() + e.toString());
-            }
-            @Override
-            public void requestSuccess(String result) throws Exception {
-                Log.i("上传成功", result);
-            }
-        });
-    }
-    //=====================okhttp3上传单张图片====================================================================================
 }

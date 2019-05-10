@@ -3,10 +3,19 @@ package com.autionsy.seller.entity;
 import java.io.Serializable;
 
 public class Notice implements Serializable {
+    private long id;
     private String header;
     private String title;
     private String time;
     private String content;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getHeader() {
         return header;

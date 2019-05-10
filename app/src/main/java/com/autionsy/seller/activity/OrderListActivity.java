@@ -35,7 +35,6 @@ import okhttp3.Response;
 public class OrderListActivity extends BaseActivity {
     @BindView(R.id.title_tv)
     TextView title_tv;
-
     @BindView(R.id.trade_flow_lv)
     ListView trade_flow_lv;
 
@@ -156,5 +155,20 @@ public class OrderListActivity extends BaseActivity {
         });
     }
 
-
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(trade_flow_lv != null){
+            trade_flow_lv = null;
+        }
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(mList.size() != 0){
+            mList.clear();
+        }
+        if(order != null){
+            order = null;
+        }
+    }
 }

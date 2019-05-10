@@ -161,4 +161,45 @@ public class PublishRecruitActivity extends BaseActivity{
             }
         });
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(recruit_title_et != null){
+            recruit_title_et = null;
+        }
+        if(submit_tv != null){
+            submit_tv = null;
+        }
+        if(company_name_et != null){
+            company_name_et = null;
+        }
+        if(start_salary_et != null){
+            start_salary_et = null;
+        }
+        if(end_salary_et != null){
+            end_salary_et = null;
+        }
+        if(seller_address_et != null){
+            seller_address_et = null;
+        }
+        if(recruit_person_number_et != null){
+            recruit_person_number_et = null;
+        }
+        if(contact_phone_number_et != null){
+            contact_phone_number_et = null;
+        }
+        if(work_experience_et != null){
+            work_experience_et = null;
+        }
+        if(education_et != null){
+            education_et = null;
+        }
+        if(company_person_number_et != null){
+            company_person_number_et = null;
+        }
+    }
 }

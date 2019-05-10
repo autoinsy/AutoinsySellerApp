@@ -26,7 +26,6 @@ import okhttp3.Response;
 public class ServiceProtocolActivity extends BaseActivity {
     @BindView(R.id.title_tv)
     TextView title_tv;
-
     @BindView(R.id.law_articles)
     TextView law_articles;
 
@@ -95,5 +94,16 @@ public class ServiceProtocolActivity extends BaseActivity {
                 });
             }
         });
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(law_articles != null){
+            law_articles = null;
+        }
     }
 }

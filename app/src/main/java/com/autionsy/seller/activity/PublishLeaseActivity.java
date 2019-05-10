@@ -219,24 +219,47 @@ public class PublishLeaseActivity extends BaseActivity{
         path = ImageSelector.getImagePaths(data); //集合获取path(这里的path是集合)
     }
 
-    public String getFileName(String pathandname) {
-        int start = pathandname.lastIndexOf("/");
-        if (start != -1) {
-            return pathandname.substring(start + 1);
-        } else {
-            return null;
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
         }
-    }
-    private void setResult(String string, final boolean success) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (success) {
-                    Toast.makeText(PublishLeaseActivity.this, "请求成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(PublishLeaseActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        if(upload_image_gv != null){
+            upload_image_gv = null;
+        }
+        if(submit_tv != null){
+            submit_tv = null;
+        }
+        if(lease_title_et != null){
+            lease_title_et = null;
+        }
+        if(lease_stall_position_et != null){
+            lease_stall_position_et = null;
+        }
+        if(lease_price_et != null){
+            lease_price_et = null;
+        }
+        if(lease_describe_et != null){
+            lease_describe_et = null;
+        }
+        if(lease_contact_et != null){
+            lease_contact_et = null;
+        }
+        if(lease_mobile_phone_num_et != null){
+            lease_mobile_phone_num_et = null;
+        }
+        if(lease_time_et != null){
+            lease_time_et = null;
+        }
+        if(acreage_et != null){
+            acreage_et = null;
+        }
+        if(lease_info_source_et != null){
+            lease_info_source_et = null;
+        }
+        if(path.size() != 0){
+            path.clear();
+        }
     }
 }

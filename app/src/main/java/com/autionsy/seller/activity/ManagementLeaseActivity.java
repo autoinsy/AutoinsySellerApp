@@ -134,4 +134,21 @@ public class ManagementLeaseActivity extends BaseActivity {
             }
         });
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(lease_management_lv != null){
+            lease_management_lv = null;
+        }
+        if(mList.size() != 0){
+            mList.clear();
+        }
+        if(lease != null){
+            lease = null;
+        }
+    }
 }

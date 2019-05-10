@@ -59,6 +59,8 @@ public class PublishServiceActivity extends BaseActivity {
     EditText service_type_et;
     @BindView(R.id.service_title_et)
     EditText service_title_et;
+    @BindView(R.id.upload_image_textview)
+    TextView upload_image_textview;
 
     private String serviceStoreName;
     private String contact;
@@ -69,12 +71,8 @@ public class PublishServiceActivity extends BaseActivity {
     private String serviceType;
     private String title;
 
-    @BindView(R.id.upload_image_textview)
-    TextView upload_image_textview;
-
     private static final int REQUEST_CODE_SELECT_IMG = 1;
     private static final int MAX_SELECT_COUNT = 9;
-    private File file;
     private List<String> path;//路径集合
 
     private SharedPreferences sharedPreferences;
@@ -218,24 +216,44 @@ public class PublishServiceActivity extends BaseActivity {
         path = ImageSelector.getImagePaths(data); //集合获取path(这里的path是集合)
     }
 
-    public String getFileName(String pathandname) {
-        int start = pathandname.lastIndexOf("/");
-        if (start != -1) {
-            return pathandname.substring(start + 1);
-        } else {
-            return null;
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
         }
-    }
-    private void setResult(String string, final boolean success) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (success) {
-                    Toast.makeText(PublishServiceActivity.this, "请求成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(PublishServiceActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        if(upload_image_gv != null){
+            upload_image_gv = null;
+        }
+        if(submit_tv != null){
+            submit_tv = null;
+        }
+        if(service_store_et != null){
+            service_store_et = null;
+        }
+        if(service_contact_et != null){
+            service_contact_et = null;
+        }
+        if(contact_phone_num_et != null){
+            contact_phone_num_et = null;
+        }
+        if(service_address_et != null){
+            service_address_et = null;
+        }
+        if(service_describe_et != null){
+            service_describe_et = null;
+        }
+        if(service_area_et != null){
+            service_area_et = null;
+        }
+        if(service_type_et != null){
+            service_type_et = null;
+        }
+        if(service_title_et != null){
+            service_title_et = null;
+        }
+        if(path.size() != 0){
+            path.clear();
+        }
     }
 }

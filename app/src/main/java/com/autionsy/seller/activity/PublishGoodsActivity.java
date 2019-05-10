@@ -228,4 +228,42 @@ public class PublishGoodsActivity extends BaseActivity{
     private void showImage(Intent data) {
         path = ImageSelector.getImagePaths(data); //集合获取path(这里的path是集合)
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(upload_image_gv != null){
+            upload_image_gv = null;
+        }
+        if(submit_tv != null){
+            submit_tv = null;
+        }
+        if(goods_name_et != null){
+            goods_name_et = null;
+        }
+        if(goods_quantity_et != null){
+            goods_quantity_et = null;
+        }
+        if(goods_product_place_et != null){
+            goods_product_place_et = null;
+        }
+        if(goods_price_et != null){
+            goods_price_et = null;
+        }
+        if(motocycle_frame_code_et != null){
+            motocycle_frame_code_et = null;
+        }
+        if(goods_type_tv != null){
+            goods_type_tv = null;
+        }
+        if(goods_brand_tv != null){
+            goods_brand_tv = null;
+        }
+        if(path.size() != 0){
+            path.clear();
+        }
+    }
 }

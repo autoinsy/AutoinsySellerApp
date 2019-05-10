@@ -134,4 +134,21 @@ public class ManagementRecruitActivity extends BaseActivity {
             }
         });
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(recruit_management_lv != null){
+            recruit_management_lv = null;
+        }
+        if(mList.size() != 0){
+            mList.clear();
+        }
+        if(recruit != null){
+            recruit = null;
+        }
+    }
 }

@@ -69,8 +69,6 @@ public class NoticeActivity extends BaseActivity {
     }
 
     private void postAsynHttpNotice(){
-        notice = new Notice();
-
         String url = Constants.HTTP_URL + "noticeAll";
         Map<String,String> map = new HashMap<>();
 
@@ -94,7 +92,7 @@ public class NoticeActivity extends BaseActivity {
                             String message = jsonObject.optString("message");
 
                             if("200".equals(resultCode)){
-
+                                notice = new Notice();
                                 JSONArray jsonArray = jsonObject.getJSONArray(data);
                                 for (int i=0; i<jsonArray.length(); i++){
                                     JSONObject jsonObjectNotice = jsonArray.getJSONObject(i);
@@ -102,6 +100,7 @@ public class NoticeActivity extends BaseActivity {
                                     notice.setHeader(jsonObjectNotice.getString("noticePhoto"));
                                     notice.setTime(jsonObjectNotice.getString("noticeTime"));
                                     notice.setTitle(jsonObjectNotice.getString("noticeTitle"));
+                                    notice.setId(jsonObjectNotice.getLong("noticeId"));
                                     mList.add(notice);
                                 }
 
@@ -110,6 +109,8 @@ public class NoticeActivity extends BaseActivity {
                                 notice_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        noticeId = String.valueOf(notice.getId());
+
                                         // 实例化一个Bundle
                                         Bundle bundle = new Bundle();
                                         Intent intent = new Intent(NoticeActivity.this,NoticeDetailActivity.class);
@@ -131,5 +132,22 @@ public class NoticeActivity extends BaseActivity {
                 });
             }
         });
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(notice_lv != null){
+            notice_lv = null;
+        }
+        if(notice != null){
+            notice = null;
+        }
+        if(mList.size() != 0){
+            mList.clear();
+        }
     }
 }

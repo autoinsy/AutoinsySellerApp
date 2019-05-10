@@ -28,12 +28,10 @@ import okhttp3.Response;
 public class SellerInfoActivity extends BaseActivity{
     @BindView(R.id.title_tv)
     TextView title_tv;
-
     @BindView(R.id.nick_name_et)
     EditText nick_name_et;
 
     private String nickName;
-
     private Seller seller;
 
     @Override
@@ -106,5 +104,19 @@ public class SellerInfoActivity extends BaseActivity{
                 });
             }
         });
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(nick_name_et != null){
+            nick_name_et = null;
+        }
+        if(seller != null){
+            nick_name_et = null;
+        }
     }
 }

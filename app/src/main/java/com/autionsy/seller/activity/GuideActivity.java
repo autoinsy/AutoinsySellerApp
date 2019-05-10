@@ -87,4 +87,13 @@ public class GuideActivity extends Activity {
         }
 
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+
+        if(list.size() != 0){
+            list.clear();
+        }
+    }
 }

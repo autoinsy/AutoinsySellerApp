@@ -127,4 +127,21 @@ public class ManagementRescueActivity extends BaseActivity {
             }
         });
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(rescue_management_lv != null){
+            rescue_management_lv = null;
+        }
+        if(mList.size() != 0){
+            mList.clear();
+        }
+        if(rescue != null){
+            rescue = null;
+        }
+    }
 }

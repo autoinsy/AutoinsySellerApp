@@ -127,4 +127,21 @@ public class ManagementOrnamenActivity extends BaseActivity {
             }
         });
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(ornament_management_lv != null){
+            ornament_management_lv = null;
+        }
+        if(mList.size() != 0){
+            mList.clear();
+        }
+        if(ornament != null){
+            ornament = null;
+        }
+    }
 }

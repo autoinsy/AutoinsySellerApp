@@ -36,4 +36,12 @@ public class ExpressDeliveryCatchOrderActivity extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+    }
 }

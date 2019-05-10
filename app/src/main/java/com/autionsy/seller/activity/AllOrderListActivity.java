@@ -135,4 +135,21 @@ public class AllOrderListActivity extends BaseActivity {
             }
         });
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(all_order_lv != null){
+            all_order_lv = null;
+        }
+        if(mList.size() != 0){
+            mList.clear();
+        }
+        if(order != null){
+            order = null;
+        }
+    }
 }

@@ -131,4 +131,21 @@ public class ManagementServiceActivity extends BaseActivity {
             }
         });
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(service_management_lv != null){
+            service_management_lv = null;
+        }
+        if(mList.size() != 0){
+            mList.clear();
+        }
+        if(service != null){
+            service = null;
+        }
+    }
 }

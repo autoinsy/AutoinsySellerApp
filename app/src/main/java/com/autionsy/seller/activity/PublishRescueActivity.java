@@ -64,7 +64,6 @@ public class PublishRescueActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_SELECT_IMG = 1;
     private static final int MAX_SELECT_COUNT = 9;
-    private File file;
     private List<String> path;//路径集合
 
     private SharedPreferences sharedPreferences;
@@ -201,26 +200,5 @@ public class PublishRescueActivity extends BaseActivity {
     }
     private void showImage(Intent data) {
         path = ImageSelector.getImagePaths(data); //集合获取path(这里的path是集合)
-    }
-
-    public String getFileName(String pathandname) {
-        int start = pathandname.lastIndexOf("/");
-        if (start != -1) {
-            return pathandname.substring(start + 1);
-        } else {
-            return null;
-        }
-    }
-    private void setResult(String string, final boolean success) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (success) {
-                    Toast.makeText(PublishRescueActivity.this, "请求成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(PublishRescueActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 }

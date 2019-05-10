@@ -76,11 +76,11 @@ public class LoginActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.login_btn:
-//                postAsynHttpLogin();
+                postAsynHttpLogin();
 
-                intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+//                intent = new Intent(LoginActivity.this, MainActivity.class);
+//                startActivity(intent);
+//                finish();
                 break;
         }
     }
@@ -168,5 +168,22 @@ public class LoginActivity extends BaseActivity {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(back_btn != null){
+            back_btn = null;
+        }
+        if(input_username != null){
+            input_username = null;
+        }
+        if(input_password != null){
+            input_password = null;
+        }
+        if(title_tv != null){
+            title_tv = null;
+        }
     }
 }

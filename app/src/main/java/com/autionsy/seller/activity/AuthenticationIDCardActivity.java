@@ -100,7 +100,7 @@ public class AuthenticationIDCardActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CameraActivity.REQUEST_CODE && resultCode == CameraActivity.RESULT_CODE) {
             //获取文件路径，显示图片
-            final String imagePath = CameraActivity.getResult(data);
+            imagePath = CameraActivity.getResult(data);
 
             String image = imagePath.substring(imagePath.lastIndexOf("/")+1);
 
@@ -275,4 +275,23 @@ public class AuthenticationIDCardActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(input_id_number_et != null){
+            input_id_number_et = null;
+        }
+        if(id_card_front_iv != null){
+            id_card_front_iv = null;
+        }
+        if(id_card_front_camera_iv != null){
+            id_card_front_camera_iv = null;
+        }
+        if(id_card_back_camera_iv != null){
+            id_card_back_camera_iv = null;
+        }
+    }
 }

@@ -74,7 +74,6 @@ public class BrandActivity extends BaseActivity {
         String url = Constants.HTTP_URL + "login";
 
         Map<String,String> map = new HashMap<>();
-
         OkHttp3Utils.doPost(url, map, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -132,4 +131,20 @@ public class BrandActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(brand_gv != null){
+            brand_gv = null;
+        }
+        if(mList.size() != 0){
+            mList.clear();
+        }
+        if(brand != null){
+            brand = null;
+        }
+    }
 }

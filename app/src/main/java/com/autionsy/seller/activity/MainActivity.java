@@ -185,4 +185,30 @@ public class MainActivity extends BaseActivity {
             System.exit(0);
         }
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(home_iv != null){
+            home_iv = null;
+        }
+        if(message_iv != null){
+            message_iv = null;
+        }
+        if(mine_iv != null){
+            mine_iv = null;
+        }
+        if(message_tv != null){
+            message_tv = null;
+        }
+        if(mHomeFragment != null){
+            mHomeFragment = null;
+        }
+        if(mMessageFragment != null){
+            mMessageFragment = null;
+        }
+        if(mMineFrag != null){
+            mMineFrag = null;
+        }
+    }
 }

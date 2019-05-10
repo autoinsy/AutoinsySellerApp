@@ -176,4 +176,24 @@ public class RegisterActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(input_register_username_et != null){
+            input_register_username_et = null;
+        }
+        if(register_password_et != null){
+            register_password_et = null;
+        }
+        if(input_register_verify_code_et != null){
+            input_register_verify_code_et = null;
+        }
+        if(get_verify_code_tv != null){
+            get_verify_code_tv = null;
+        }
+    }
+
 }

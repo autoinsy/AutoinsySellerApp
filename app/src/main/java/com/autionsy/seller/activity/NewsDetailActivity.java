@@ -37,7 +37,6 @@ public class NewsDetailActivity extends BaseActivity {
     TextView news_detail_title_tv;
     @BindView(R.id.news_detail_time_tv)
     TextView news_detail_time_tv;
-
     @BindView(R.id.news_image_url_1)
     ImageView news_image_url_1;
     @BindView(R.id.news_content_tv)
@@ -45,12 +44,8 @@ public class NewsDetailActivity extends BaseActivity {
     @BindView(R.id.news_image_url_2)
     ImageView news_image_url_2;
 
-    private String myTitle;
-    private String myGroupName;
     private News news;
     private ProgressDialog loadingDialog;
-    private Subscription subsLoading;
-
     private String newsId;
 
     @Override
@@ -66,7 +61,8 @@ public class NewsDetailActivity extends BaseActivity {
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.news_detail_text);
 
-        newsId = getIntent().getStringExtra("newsId");
+        Bundle bundle = this.getIntent().getExtras();
+        newsId = bundle.getString("newsId");
 
         loadingDialog = new ProgressDialog(this);
         loadingDialog.setMessage("数据加载中...");
@@ -168,5 +164,34 @@ public class NewsDetailActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(news_detail_title_tv != null){
+            news_detail_title_tv = null;
+        }
+        if(news_detail_time_tv != null){
+            news_detail_time_tv = null;
+        }
+        if(news_image_url_1 != null){
+            news_image_url_1 = null;
+        }
+        if(news_content_tv != null){
+            news_content_tv = null;
+        }
+        if(news_image_url_2 != null){
+            news_image_url_2 = null;
+        }
+        if(loadingDialog != null){
+            loadingDialog = null;
+        }
+        if(news != null){
+            news = null;
+        }
     }
 }

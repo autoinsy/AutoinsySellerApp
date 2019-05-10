@@ -255,4 +255,15 @@ public class SettingActivity extends BaseActivity {
         }
 
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(title_tv != null){
+            title_tv = null;
+        }
+        if(setting_upload_header != null){
+            setting_upload_header = null;
+        }
+    }
 }
