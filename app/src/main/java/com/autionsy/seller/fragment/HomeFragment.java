@@ -74,11 +74,8 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
     ListViewInScrollView home_news_listview;
 
     private ArrayList<News> newsList = new ArrayList<>();
-    private News news = new News();
-    private String newsId;
-
+    private News news;
     private HomeAdapter homeAdapter;
-
     private Advertisement advertisement;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -115,7 +112,6 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
 
         postAsynHttpMainPageNews();
     }
-
 
     @OnClick({R.id.scan_btn,
             R.id.search_layout,
@@ -323,6 +319,32 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
         if(back_btn != null){
             back_btn = null;
         }
+        if(scan_btn != null){
+            scan_btn = null;
+        }
+        if(search_layout != null){
+            search_layout = null;
+        }
+        if(notice_btn != null){
+            notice_btn = null;
+        }
+        if(home_news_listview != null){
+            home_news_listview = null;
+        }
+        if(newsList.size() != 0){
+            newsList.clear();
+        }
+        if(banner != null){
+            banner = null;
+        }
+        if(imageUrlList.size() != 0){
+            imageUrlList.clear();
+        }
+        if(list_title.size() != 0){
+            list_title.clear();
+        }
+        if(view != null){
+            view = null;
+        }
     }
-
 }

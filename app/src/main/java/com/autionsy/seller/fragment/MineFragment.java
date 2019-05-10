@@ -191,4 +191,18 @@ public class MineFragment extends BaseFragment {
                 break;
         }
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(mine_header_iv != null){
+            mine_header_iv = null;
+        }
+        if(mine_username_tv != null){
+            mine_username_tv = null;
+        }
+        if(view != null){
+            view = null;
+        }
+    }
 }
