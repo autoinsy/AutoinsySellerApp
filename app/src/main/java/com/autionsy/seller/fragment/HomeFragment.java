@@ -317,4 +317,12 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
         });
     }
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(back_btn != null){
+            back_btn = null;
+        }
+    }
+
 }
