@@ -1,6 +1,5 @@
 package com.autionsy.seller.activity;
 
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.View;
@@ -19,10 +18,7 @@ import com.autionsy.seller.entity.Category;
 import com.autionsy.seller.entity.CategoryBean;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.scrat.app.selectorlibrary.ImageSelector;
-
 import org.json.JSONException;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
