@@ -73,7 +73,8 @@ public class PublishGoodsActivity extends BaseActivity{
     private SharedPreferences sharedPreferences;
     private String brandMessage;
 
-    private static final int Brand = 0;
+    private static final int BRAND = 0;
+    private static final int CATEGORY = 2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,11 +109,11 @@ public class PublishGoodsActivity extends BaseActivity{
                 break;
             case R.id.type_selector_layout:
                 intent = new Intent(PublishGoodsActivity.this, CategoryActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, CATEGORY);
                 break;
             case R.id.brand_selector_layout:
                 intent = new Intent(PublishGoodsActivity.this, BrandActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, BRAND);
                 break;
         }
     }
@@ -125,10 +126,15 @@ public class PublishGoodsActivity extends BaseActivity{
             path = ImageSelector.getImagePaths(data);
 //            uploadImage(data);
             return;
-        }else if(requestCode == Brand){
+        }else if(requestCode == BRAND){
             Bundle brandBundle = data.getExtras();
             brandMessage = brandBundle.getString("BrandName");
             goods_brand_tv.setText(brandMessage);
+        }else if(requestCode == CATEGORY){
+            Bundle brandBundle = data.getExtras();
+            brandMessage = brandBundle.getString("CategoryName");
+
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
