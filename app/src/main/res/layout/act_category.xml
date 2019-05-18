@@ -14,22 +14,24 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginBottom="@dimen/dp_10">
         <ListView
-            android:id="@+id/category_lv"
+            android:id="@+id/main_category_lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@color/white"
             android:dividerHeight="@dimen/dp_1"
             android:scrollbars="none"
-            app:layout_widthPercent="30%"/>
-        <GridView
-            android:id="@+id/category_gv"
+            app:layout_widthPercent="40%"
+            android:scrollingCache="false"/>
+        <ListView
+            android:id="@+id/sub_category_lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:numColumns="3"
-            android:layout_toRightOf="@id/category_lv"
+            android:layout_toRightOf="@id/main_category_lv"
             android:scrollbars="none"
             android:verticalSpacing="@dimen/dp_5"
             android:horizontalSpacing="@dimen/dp_5"
-            app:layout_widthPercent="70%"/>
+            app:layout_widthPercent="60%"
+            android:scrollingCache="false"
+            android:listSelector="@color/popup_right_bg_selected"/>
     </android.support.percent.PercentRelativeLayout>
 </LinearLayout>

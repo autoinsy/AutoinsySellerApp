@@ -8,7 +8,6 @@ public class CategoryMain implements Serializable {
     private String mainClassify;
     private String mainClassifyCode;
     private String mainClassifyId;
-    private String mainClassifyImageUrl;
     private List<CategorySub> dataList;
 
     public String getMainClassify() {
@@ -33,14 +32,6 @@ public class CategoryMain implements Serializable {
 
     public void setMainClassifyId(String mainClassifyId) {
         this.mainClassifyId = mainClassifyId;
-    }
-
-    public String getMainClassifyImageUrl() {
-        return mainClassifyImageUrl;
-    }
-
-    public void setMainClassifyImageUrl(String mainClassifyImageUrl) {
-        this.mainClassifyImageUrl = mainClassifyImageUrl;
     }
 
     public List<CategorySub> getDataList() {
