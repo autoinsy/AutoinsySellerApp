@@ -1,16 +1,16 @@
 package com.autionsy.seller.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
+import com.autionsy.seller.adapter.CategoryAdapter;
 import com.autionsy.seller.constant.Constants;
-import com.autionsy.seller.entity.CategoryMain;
-import com.autionsy.seller.entity.CategorySub;
-import com.autionsy.seller.utils.ListViewUtils;
+import com.autionsy.seller.entity.Category;
 import com.autionsy.seller.utils.OkHttp3Utils;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
@@ -30,20 +30,18 @@ import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 public class CategoryActivity extends BaseActivity {
 
     @BindView(R.id.title_tv)
     TextView title_tv;
-    @BindView(R.id.sub_category_lv)
-    ListView sub_category_lv;
-    @BindView(R.id.main_category_lv)
-    ListView main_category_lv;
+    @BindView(R.id.category_lv)
+    StickyListHeadersListView category_lv;
 
-    private List<CategoryMain> categoryMainList = new ArrayList<>();
-    private List<CategorySub> categorySubList = new ArrayList<>();
-    private CategoryMain categoryMain;
-    private CategorySub categorySub;
+    private List<Category> categoryList = new ArrayList<>();
+    private Category category;
+    private CategoryAdapter categoryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +57,6 @@ public class CategoryActivity extends BaseActivity {
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.category_title_text);
 
-        main_category_lv.setSelection(0);
-        sub_category_lv.setSelection(0);
     }
 
     private void loadData() {
@@ -74,7 +70,7 @@ public class CategoryActivity extends BaseActivity {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(final Call call, Response response) throws IOException {
                 final String responeString = response.body().string();
 
                 runOnUiThread(new Runnable() {
@@ -87,15 +83,35 @@ public class CategoryActivity extends BaseActivity {
                             String message = jsonObject.optString("message");
                             if("200".equals(resultCode)){
                                 JSONArray jsonArray = jsonObject.getJSONArray(data);
-                                categoryMain = new CategoryMain();
-                                categorySub = new CategorySub();
+                                category = new Category();
                                 for (int i=0; i<jsonArray.length(); i++){
                                     JSONObject jsonObjectMainData = jsonArray.getJSONObject(i);
-                                    categoryMain.setMainClassify(jsonObjectMainData.getString("mainClassify"));
-                                    categoryMain.setMainClassifyCode(jsonObjectMainData.getString("mainClassifyCode"));
-
-
+                                    String mainClassifyName = jsonObjectMainData.getString("mainClassify");
+                                    String mainClassifyCode = jsonObjectMainData.getString("mainClassifyCode");
+                                    JSONArray jsonArraySub = jsonObjectMainData.getJSONArray("subClassifySet");
+                                    for (int j=0; j<jsonArraySub.length();j++){
+                                        JSONObject jsonObjectSubData = jsonArraySub.getJSONObject(j);
+                                        category.setSubClassify(jsonObjectSubData.getString("subClassify"));
+                                        category.setSubClassifyId(jsonObjectSubData.getString("subClassifyId"));
+                                        category.setClassifyRemark(jsonObjectSubData.getString("subClassifyRemark"));
+                                        category.setMainClassifyCode(jsonObjectSubData.getString("mainClassifyCode"));
+                                        category.setSubClassifyImage(jsonObjectSubData.getString("subClassifyImage"));
+                                        categoryList.add(category);
+                                    }
                                 }
+                                categoryAdapter = new CategoryAdapter(CategoryActivity.this,categoryList);
+                                category_lv.setAdapter(categoryAdapter);
+                                category_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        Intent intent = new Intent(CategoryActivity.this, PublishGoodsActivity.class);
+                                        String categoryNameStr = category.getSubClassify();
+                                        intent.putExtra("CategoryName", categoryNameStr);
+                                        setResult(RESULT_OK, intent);
+                                        finish();
+                                    }
+                                });
+
                             }else if("410".equals(resultCode)){
                                 Toast.makeText(getApplicationContext(),"没有数据",Toast.LENGTH_SHORT).show();
                             }

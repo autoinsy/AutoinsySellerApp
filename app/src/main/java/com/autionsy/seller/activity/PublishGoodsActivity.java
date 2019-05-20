@@ -72,6 +72,7 @@ public class PublishGoodsActivity extends BaseActivity{
 
     private SharedPreferences sharedPreferences;
     private String brandMessage;
+    private String categoryMessage;
 
     private static final int BRAND = 0;
     private static final int CATEGORY = 2;
@@ -132,9 +133,8 @@ public class PublishGoodsActivity extends BaseActivity{
             goods_brand_tv.setText(brandMessage);
         }else if(requestCode == CATEGORY){
             Bundle brandBundle = data.getExtras();
-            brandMessage = brandBundle.getString("CategoryName");
-
-
+            categoryMessage = brandBundle.getString("CategoryName");
+            goods_type_tv.setText(categoryMessage);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

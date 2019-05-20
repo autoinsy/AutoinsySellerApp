@@ -1,29 +1,29 @@
 package com.autionsy.seller.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class Category implements Serializable {
-
-    private long mainClassifyId;
-    private String mainClassify;
     private String mainClassifyCode;
-    private List<CategoryData> categoryDataList;
+    private String subClassify;
+    private String subClassifyId;
+    private String subClassifyImage;
+    private String mainClassifyName;
+    private String classifyRemark;
 
-    public long getMainClassifyId() {
-        return mainClassifyId;
+    public String getMainClassifyName() {
+        return mainClassifyName;
     }
 
-    public void setMainClassifyId(long mainClassifyId) {
-        this.mainClassifyId = mainClassifyId;
+    public void setMainClassifyName(String mainClassifyName) {
+        this.mainClassifyName = mainClassifyName;
     }
 
-    public String getMainClassify() {
-        return mainClassify;
+    public String getClassifyRemark() {
+        return classifyRemark;
     }
 
-    public void setMainClassify(String mainClassify) {
-        this.mainClassify = mainClassify;
+    public void setClassifyRemark(String classifyRemark) {
+        this.classifyRemark = classifyRemark;
     }
 
     public String getMainClassifyCode() {
@@ -34,41 +34,27 @@ public class Category implements Serializable {
         this.mainClassifyCode = mainClassifyCode;
     }
 
-    public List<CategoryData> getCategoryDataList() {
-        return categoryDataList;
+    public String getSubClassify() {
+        return subClassify;
     }
 
-    public void setCategoryDataList(List<CategoryData> categoryDataList) {
-        this.categoryDataList = categoryDataList;
+    public void setSubClassify(String subClassify) {
+        this.subClassify = subClassify;
     }
 
-    public static class CategoryData{
-        private long subClassifyId;
-        private String subClassify;
-        private String subClassifyImage;
+    public String getSubClassifyId() {
+        return subClassifyId;
+    }
 
-        public long getSubClassifyId() {
-            return subClassifyId;
-        }
+    public void setSubClassifyId(String subClassifyId) {
+        this.subClassifyId = subClassifyId;
+    }
 
-        public void setSubClassifyId(long subClassifyId) {
-            this.subClassifyId = subClassifyId;
-        }
+    public String getSubClassifyImage() {
+        return subClassifyImage;
+    }
 
-        public String getSubClassify() {
-            return subClassify;
-        }
-
-        public void setSubClassify(String subClassify) {
-            this.subClassify = subClassify;
-        }
-
-        public String getSubClassifyImage() {
-            return subClassifyImage;
-        }
-
-        public void setSubClassifyImage(String subClassifyImage) {
-            this.subClassifyImage = subClassifyImage;
-        }
+    public void setSubClassifyImage(String subClassifyImage) {
+        this.subClassifyImage = subClassifyImage;
     }
 }
