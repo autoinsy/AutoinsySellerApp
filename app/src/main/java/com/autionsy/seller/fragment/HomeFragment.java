@@ -76,7 +76,6 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
     private ArrayList<News> newsList = new ArrayList<>();
     private News news;
     private HomeAdapter homeAdapter;
-    private Advertisement advertisement;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag_home, null);
@@ -263,8 +262,6 @@ public class HomeFragment extends BaseFragment implements OnBannerListener{
     }
 
     private void postAsynHttpAdvertisement(){
-        advertisement = new Advertisement();
-
         String url = Constants.HTTP_URL + "appRotateAdvertisement";
 
         Map<String,String> map = new HashMap<>();
