@@ -60,7 +60,7 @@ public class CategoryActivity extends BaseActivity {
     }
 
     private void loadData() {
-        String url = Constants.HTTP_URL;
+        String url = Constants.CATEGORY;
 
         Map<String, String> map = new HashMap<>();
         OkHttp3Utils.doPost(url, map, new Callback() {

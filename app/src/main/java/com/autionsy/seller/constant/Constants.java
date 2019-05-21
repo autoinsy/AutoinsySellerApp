@@ -1,6 +1,9 @@
 package com.autionsy.seller.constant;
 
 public class Constants {
+
+    public static String NEWS_CONTENT = "";
+
     public static String ID_FRONT = "idCardFrontCrop.jpg";
     public static String ID_BACK = "idCardBackCrop.jpg";
 
