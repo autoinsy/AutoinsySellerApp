@@ -106,7 +106,8 @@
         android:text="@string/submit"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/dp_10" />
+        android:layout_marginRight="@dimen/dp_10"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/add_blog_tv"
