@@ -41,13 +41,37 @@
             android:id="@+id/message_iv"
             android:layout_width="@dimen/icon_width"
             android:layout_height="@dimen/icon_height"
-            android:background="@mipmap/message" />
+            android:background="@mipmap/notice" />
 
         <TextView
             android:id="@+id/message_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/message"
+            android:textSize="@dimen/font_size_13"
+            android:textColor="@color/gray_text"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/notice_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="1">
+        <ImageView
+            android:id="@+id/notice_iv"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
+            android:background="@mipmap/message" />
+
+        <TextView
+            android:id="@+id/notice_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/notice_center"
             android:textSize="@dimen/font_size_13"
             android:textColor="@color/gray_text"/>
     </LinearLayout>

@@ -209,7 +209,7 @@
     <string name="input_nick_name">请输入昵称</string>
 
     <!--通知-->
-    <string name="notice_center">通知消息</string>
+    <string name="notice_center">通知</string>
 
     <!--订单列表-->
     <string name="all_order">全部订单</string>

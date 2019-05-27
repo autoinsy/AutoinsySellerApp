@@ -16,6 +16,7 @@ import com.autionsy.seller.R;
 import com.autionsy.seller.fragment.HomeFragment;
 import com.autionsy.seller.fragment.MessageFragment;
 import com.autionsy.seller.fragment.MineFragment;
+import com.autionsy.seller.fragment.NoticeFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +35,8 @@ public class MainActivity extends BaseActivity {
     ImageView message_iv;
     @BindView(R.id.mine_iv)
     ImageView mine_iv;
+    @BindView(R.id.notice_iv)
+    ImageView notice_iv;
 
     @BindView(R.id.home_tv)
     TextView home_tv;
@@ -41,10 +44,13 @@ public class MainActivity extends BaseActivity {
     TextView message_tv;
     @BindView(R.id.mine_tv)
     TextView mine_tv;
+    @BindView(R.id.notice_tv)
+    TextView notice_tv;
 
     private HomeFragment mHomeFragment;
     private MessageFragment mMessageFragment;
     private MineFragment mMineFrag;
+    private NoticeFragment mNoticeFragment;
 
     @SuppressLint("HandlerLeak")
     Handler mHandler = new Handler(){
@@ -67,7 +73,8 @@ public class MainActivity extends BaseActivity {
 
     @OnClick({R.id.home_layout,
             R.id.message_layout,
-            R.id.mine_layout})
+            R.id.mine_layout,
+            R.id.notice_layout})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.home_layout:
@@ -76,8 +83,11 @@ public class MainActivity extends BaseActivity {
             case R.id.message_layout:
                 setChioceItem(1);
                 break;
-            case R.id.mine_layout:
+            case R.id.notice_layout:
                 setChioceItem(2);
+                break;
+            case R.id.mine_layout:
+                setChioceItem(3);
                 break;
         }
     }
@@ -102,7 +112,7 @@ public class MainActivity extends BaseActivity {
                 break;
 
             case 1:
-                message_iv.setBackgroundResource(R.mipmap.message_press);
+                message_iv.setBackgroundResource(R.mipmap.notice_press);
                 message_tv.setTextColor(getResources().getColor(R.color.orange_text));
 
                 // 如果fg1为空，则创建一个并添加到界面上
@@ -116,6 +126,20 @@ public class MainActivity extends BaseActivity {
                 break;
 
             case 2:
+                notice_iv.setBackgroundResource(R.mipmap.message_press);
+                notice_tv.setTextColor(getResources().getColor(R.color.orange_text));
+
+                // 如果fg1为空，则创建一个并添加到界面上
+                if (mNoticeFragment == null) {
+                    mNoticeFragment = new NoticeFragment();
+                    fragmentTransaction.add(R.id.fragment_content, mNoticeFragment);
+                } else {
+                    // 如果不为空，则直接将它显示出来
+                    fragmentTransaction.show(mNoticeFragment);
+                }
+                break;
+
+            case 3:
                 mine_iv.setBackgroundResource(R.mipmap.mine_press);
                 mine_tv.setTextColor(getResources().getColor(R.color.orange_text));
 
@@ -138,8 +162,11 @@ public class MainActivity extends BaseActivity {
         home_iv.setBackgroundResource(R.mipmap.home);
         home_tv.setTextColor(getResources().getColor(R.color.black));
 
-        message_iv.setBackgroundResource(R.mipmap.message);
+        message_iv.setBackgroundResource(R.mipmap.notice);
         message_tv.setTextColor(getResources().getColor(R.color.black));
+
+        notice_iv.setBackgroundResource(R.mipmap.message);
+        notice_tv.setTextColor(getResources().getColor(R.color.black));
 
         mine_iv.setBackgroundResource(R.mipmap.mine);
         mine_tv.setTextColor(getResources().getColor(R.color.black));
@@ -157,6 +184,10 @@ public class MainActivity extends BaseActivity {
 
         if (mMessageFragment != null) {
             fragmentTransaction.hide(mMessageFragment);
+        }
+
+        if (mNoticeFragment != null) {
+            fragmentTransaction.hide(mNoticeFragment);
         }
 
         if (mMineFrag != null) {

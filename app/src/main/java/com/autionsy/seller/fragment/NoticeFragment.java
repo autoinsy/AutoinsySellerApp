@@ -1,14 +1,20 @@
-package com.autionsy.seller.activity;
+package com.autionsy.seller.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autionsy.seller.R;
+import com.autionsy.seller.activity.NoticeActivity;
+import com.autionsy.seller.activity.NoticeDetailActivity;
 import com.autionsy.seller.adapter.NoticeAdapter;
 import com.autionsy.seller.constant.Constants;
 import com.autionsy.seller.entity.Notice;
@@ -31,30 +37,37 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class NoticeActivity extends BaseActivity {
+public class NoticeFragment extends BaseFragment {
+    private View view;
+    private Intent intent;
 
     @BindView(R.id.notice_lv)
     ListView notice_lv;
     @BindView(R.id.title_tv)
     TextView title_tv;
+    @BindView(R.id.back_btn)
+    LinearLayout back_btn;
 
     private NoticeAdapter noticeAdapter;
     private List<Notice> mList = new ArrayList<>();
     private String noticeId;
     private Notice notice;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.frag_notice);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        view=inflater.inflate(R.layout.frag_notice, null);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        ButterKnife.bind(this);
+        ButterKnife.bind(this, view);
         initView();
+        return view;
     }
 
     private void initView(){
         title_tv.setVisibility(View.VISIBLE);
         title_tv.setText(R.string.notice_center);
+
+        back_btn.setVisibility(View.GONE);
 
         postAsynHttpNotice();
     }
@@ -63,7 +76,7 @@ public class NoticeActivity extends BaseActivity {
     public void onClick(View view){
         switch (view.getId()){
             case R.id.back_btn:
-                finish();
+                getActivity().finish();
                 break;
         }
     }
@@ -82,7 +95,7 @@ public class NoticeActivity extends BaseActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 final String responeString = response.body().string();
 
-                runOnUiThread(new Runnable() {
+                getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         try {
@@ -104,7 +117,7 @@ public class NoticeActivity extends BaseActivity {
                                     mList.add(notice);
                                 }
 
-                                noticeAdapter = new NoticeAdapter(NoticeActivity.this,mList);
+                                noticeAdapter = new NoticeAdapter(getActivity(),mList);
                                 notice_lv.setAdapter(noticeAdapter);
                                 notice_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
@@ -113,7 +126,7 @@ public class NoticeActivity extends BaseActivity {
 
                                         // 实例化一个Bundle
                                         Bundle bundle = new Bundle();
-                                        Intent intent = new Intent(NoticeActivity.this,NoticeDetailActivity.class);
+                                        Intent intent = new Intent(getActivity(), NoticeDetailActivity.class);
                                         bundle.putString("notice_id",noticeId);
                                         intent.putExtras(bundle);
                                         startActivity(intent);
@@ -121,9 +134,9 @@ public class NoticeActivity extends BaseActivity {
                                 });
                                 noticeAdapter.notifyDataSetChanged();
                             }else if("403".equals(resultCode)){
-                                Toast.makeText(getApplicationContext(),R.string.param_error,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(),R.string.param_error,Toast.LENGTH_SHORT).show();
                             }else {
-                                Toast.makeText(getApplicationContext(),R.string.login_fail,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(),R.string.login_fail,Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
