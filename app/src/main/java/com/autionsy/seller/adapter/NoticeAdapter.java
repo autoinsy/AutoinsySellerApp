@@ -66,7 +66,7 @@ public class NoticeAdapter extends BaseAdapter {
 
         RequestOptions options = new RequestOptions()
                 .placeholder(R.mipmap.default_header)
-                .transform(new GlideRoundTransform(8))
+                .transform(new GlideRoundTransform(5))
                 .override(300, 300)
                 .error(R.mipmap.default_header);
         Glide.with(context)
