@@ -38,7 +38,7 @@ dependencies {
     implementation 'com.youth.banner:banner:1.4.10'
     implementation group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '3.12.1'
     implementation project(':selectorlibrary')
-    implementation 'com.contrarywind:Android-PickerView:4.1.7'
+    implementation 'com.contrarywind:Android-PickerView:4.1.8'
     implementation 'com.facebook.fresco:fresco:0.11.0'
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.google.zxing:core:3.3.3'
